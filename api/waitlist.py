@@ -14,6 +14,7 @@ def supabase_rpc(fn, params):
     req.add_header("Content-Type", "application/json")
     req.add_header("apikey", SUPABASE_ANON_KEY)
     req.add_header("Authorization", f"Bearer {SUPABASE_ANON_KEY}")
+    req.add_header("User-Agent", "NamasteeWanderrlust/1.0")
     resp = urllib.request.urlopen(req)
     return json.loads(resp.read().decode("utf-8"))
 

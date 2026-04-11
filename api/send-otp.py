@@ -15,6 +15,7 @@ def supabase_rpc(fn, params):
     data = json.dumps(params).encode("utf-8")
     req = urllib.request.Request(url, data=data, method="POST")
     req.add_header("Content-Type", "application/json")
+    req.add_header("User-Agent", "NamasteeWanderrlust/1.0")
     req.add_header("apikey", SUPABASE_ANON_KEY)
     req.add_header("Authorization", f"Bearer {SUPABASE_ANON_KEY}")
     resp = urllib.request.urlopen(req)
@@ -69,6 +70,7 @@ class handler(BaseHTTPRequestHandler):
             req = urllib.request.Request("https://api.resend.com/emails", data=data, method="POST")
             req.add_header("Content-Type", "application/json")
             req.add_header("Authorization", f"Bearer {RESEND_API_KEY}")
+            req.add_header("User-Agent", "NamasteeWanderrlust/1.0")
             urllib.request.urlopen(req)
 
             user_info = supabase_rpc("check_user", {"user_email": email})
@@ -78,7 +80,8 @@ class handler(BaseHTTPRequestHandler):
             error_body = e.read().decode("utf-8")
             self._json(500, {"error": f"Failed: {error_body}"})
         except Exception as e:
-            self._json(500, {"error": str(e)})
+            import traceback
+            self._json(500, {"error": str(e), "trace": traceback.format_exc()})
 
     def _json(self, status, obj):
         body = json.dumps(obj).encode("utf-8")
