@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard — NamasteeWanderrlust</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,10 +14,10 @@
       theme: {
         extend: {
           colors: {
-            'sunset': '#D4773B', 'amber': '#D4A843', 'deep-black': '#1A1A1A',
-            'warm-beige': '#EDE8DC', 'teal': '#2A7B8E', 'forest': '#3B6B3A',
-            'off-white': '#F5F0E8', 'cream': '#FAF7F2',
-            'warm-brown': '#2C2418', 'muted-brown': '#6B6356',
+            'sunset': '#D4773B', 'sunset-dark': '#B8622E', 'amber': '#D4A843', 'deep-black': '#1A1A1A',
+            'warm-beige': '#EDE8DC', 'teal': '#2A7B8E', 'teal-dark': '#1D5B6B', 'forest': '#3B6B3A',
+            'off-white': '#F5F0E8', 'cream': '#FAF7F2', 'warm-brown': '#2C2418', 'muted-brown': '#6B6356',
+            'lotus': '#C75B7A',
           },
           fontFamily: { 'display': ['"Cormorant Garamond"', 'serif'], 'body': ['"DM Sans"', 'sans-serif'] }
         }
@@ -29,6 +30,12 @@
     .status-completed { background: #3B6B3A20; color: #3B6B3A; }
     .status-pending { background: #D4A84320; color: #D4A843; }
     .status-failed { background: #E5393520; color: #E53935; }
+    .tab-btn { transition: all 0.2s; }
+    .tab-btn.active { background: #D4773B; color: white; }
+    .tab-btn:not(.active) { background: transparent; color: #6B6356; }
+    .tab-btn:not(.active):hover { background: #EDE8DC; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
   </style>
 </head>
 <body class="bg-off-white min-h-screen">
@@ -39,12 +46,12 @@
       <div class="text-center mb-8">
         <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="h-16 mx-auto mb-4">
         <h1 class="font-display text-3xl font-bold text-warm-brown">Admin Dashboard</h1>
-        <p class="font-body text-sm text-muted-brown mt-1">Sign in to manage bookings</p>
+        <p class="font-body text-sm text-muted-brown mt-1">Sign in to manage your business</p>
       </div>
       <input id="adminEmail" type="email" placeholder="Admin email" class="w-full px-4 py-3 border border-warm-brown/10 rounded-xl font-body text-sm mb-3 focus:outline-none focus:border-sunset" value="jay.khut1606@gmail.com">
       <input id="adminPassword" type="password" placeholder="Password" class="w-full px-4 py-3 border border-warm-brown/10 rounded-xl font-body text-sm mb-3 focus:outline-none focus:border-sunset">
       <p id="loginError" class="text-red-500 text-xs mb-3"></p>
-      <button id="loginBtn" onclick="AdminAuth.login()" class="w-full py-3 bg-sunset text-white font-body font-semibold rounded-xl hover:bg-sunset/90 transition-colors">Sign In</button>
+      <button id="loginBtn" onclick="AdminAuth.login()" class="w-full py-3 bg-sunset text-white font-body font-semibold rounded-xl hover:bg-sunset-dark transition-colors">Sign In</button>
       <p class="text-center text-xs text-muted-brown mt-4">First time? <button onclick="AdminAuth.signUp()" class="text-sunset font-semibold hover:underline">Create admin account</button></p>
     </div>
   </div>
@@ -52,7 +59,7 @@
   <!-- Dashboard (hidden until login) -->
   <div id="dashboardScreen" class="hidden">
     <!-- Top Bar -->
-    <header class="bg-deep-black px-6 md:px-12 py-4">
+    <header class="bg-deep-black px-6 md:px-12 py-4 sticky top-0 z-50">
       <div class="max-w-7xl mx-auto flex items-center justify-between">
         <div class="flex items-center gap-3">
           <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="h-10">
@@ -69,62 +76,120 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-6 md:px-12 py-8">
+
       <!-- Stats Cards -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <div class="bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
-          <p class="font-body text-xs text-muted-brown uppercase tracking-wider mb-1">Total Bookings</p>
-          <p id="statTotal" class="font-display text-3xl font-bold text-warm-brown">0</p>
+          <p class="font-body text-[11px] text-muted-brown uppercase tracking-wider mb-1">Users</p>
+          <p id="statUsers" class="font-display text-3xl font-bold text-warm-brown">0</p>
         </div>
         <div class="bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
-          <p class="font-body text-xs text-muted-brown uppercase tracking-wider mb-1">Confirmed</p>
+          <p class="font-body text-[11px] text-muted-brown uppercase tracking-wider mb-1">Bookings</p>
+          <p id="statBookings" class="font-display text-3xl font-bold text-teal">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
+          <p class="font-body text-[11px] text-muted-brown uppercase tracking-wider mb-1">Confirmed</p>
           <p id="statConfirmed" class="font-display text-3xl font-bold text-forest">0</p>
         </div>
         <div class="bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
-          <p class="font-body text-xs text-muted-brown uppercase tracking-wider mb-1">Pending</p>
-          <p id="statPending" class="font-display text-3xl font-bold text-amber">0</p>
+          <p class="font-body text-[11px] text-muted-brown uppercase tracking-wider mb-1">Revenue</p>
+          <p id="statRevenue" class="font-display text-2xl font-bold text-sunset">₹0</p>
         </div>
         <div class="bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
-          <p class="font-body text-xs text-muted-brown uppercase tracking-wider mb-1">Total Revenue</p>
-          <p id="statRevenue" class="font-display text-3xl font-bold text-sunset">₹0</p>
+          <p class="font-body text-[11px] text-muted-brown uppercase tracking-wider mb-1">Waitlist</p>
+          <p id="statWaitlist" class="font-display text-3xl font-bold text-amber">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
+          <p class="font-body text-[11px] text-muted-brown uppercase tracking-wider mb-1">Downloads</p>
+          <p id="statDownloads" class="font-display text-3xl font-bold text-lotus">0</p>
         </div>
       </div>
 
-      <!-- Actions Bar -->
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="font-display text-2xl font-bold text-warm-brown">All Bookings</h3>
-        <button onclick="Admin.exportCSV()" class="inline-flex items-center gap-2 px-4 py-2 bg-teal text-white font-body text-sm font-semibold rounded-lg hover:bg-teal-dark transition-colors">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-          Export CSV
+      <!-- Tab Navigation -->
+      <div class="flex flex-wrap gap-2 mb-6 bg-white rounded-xl p-2 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
+        <button class="tab-btn active px-5 py-2.5 rounded-lg font-body text-sm font-semibold" onclick="Admin.switchTab('users')">
+          <span class="hidden sm:inline">👤 </span>Registered Users
+        </button>
+        <button class="tab-btn px-5 py-2.5 rounded-lg font-body text-sm font-semibold" onclick="Admin.switchTab('bookings')">
+          <span class="hidden sm:inline">🎫 </span>Bookings
+        </button>
+        <button class="tab-btn px-5 py-2.5 rounded-lg font-body text-sm font-semibold" onclick="Admin.switchTab('waitlist')">
+          <span class="hidden sm:inline">📋 </span>Waitlist
+        </button>
+        <button class="tab-btn px-5 py-2.5 rounded-lg font-body text-sm font-semibold" onclick="Admin.switchTab('downloads')">
+          <span class="hidden sm:inline">📥 </span>Downloads
         </button>
       </div>
 
-      <!-- Bookings Table -->
-      <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(44,36,24,0.04)] overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left">
-            <thead class="bg-warm-beige/50">
-              <tr>
-                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Name</th>
-                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Email</th>
-                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Phone</th>
-                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Trip</th>
-                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Package</th>
-                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Amount</th>
-                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Status</th>
-                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Date</th>
-              </tr>
-            </thead>
-            <tbody id="bookingsTableBody">
-              <tr><td colspan="8" class="px-5 py-12 text-center text-muted-brown font-body text-sm">Loading bookings...</td></tr>
-            </tbody>
-          </table>
+      <!-- ═══ TAB: Registered Users ═══ -->
+      <div id="tab-users" class="tab-panel active">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display text-2xl font-bold text-warm-brown">Registered Users</h3>
+          <button onclick="Admin.exportCSV('users')" class="inline-flex items-center gap-2 px-4 py-2 bg-teal text-white font-body text-sm font-semibold rounded-lg hover:bg-teal-dark transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Export CSV
+          </button>
+        </div>
+        <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(44,36,24,0.04)] overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-warm-beige/50">
+                <tr>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Name</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Email</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Phone</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Status</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Registered</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <tr><td colspan="5" class="px-5 py-12 text-center text-muted-brown font-body text-sm">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <!-- ═══ Waitlist Section ═══ -->
-      <div class="mt-10">
+
+      <!-- ═══ TAB: Bookings ═══ -->
+      <div id="tab-bookings" class="tab-panel">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display text-2xl font-bold text-warm-brown">All Bookings</h3>
+          <button onclick="Admin.exportCSV('bookings')" class="inline-flex items-center gap-2 px-4 py-2 bg-teal text-white font-body text-sm font-semibold rounded-lg hover:bg-teal-dark transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Export CSV
+          </button>
+        </div>
+        <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(44,36,24,0.04)] overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-warm-beige/50">
+                <tr>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Name</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Email</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Phone</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Package</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Amount</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Status</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Payment ID</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Date</th>
+                </tr>
+              </thead>
+              <tbody id="bookingsTableBody">
+                <tr><td colspan="8" class="px-5 py-12 text-center text-muted-brown font-body text-sm">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB: Waitlist ═══ -->
+      <div id="tab-waitlist" class="tab-panel">
         <div class="flex items-center justify-between mb-4">
           <h3 class="font-display text-2xl font-bold text-warm-brown">Waitlist</h3>
-          <span id="waitlistCount" class="px-3 py-1 bg-sunset/10 text-sunset font-body text-sm font-semibold rounded-full">0 entries</span>
+          <button onclick="Admin.exportCSV('waitlist')" class="inline-flex items-center gap-2 px-4 py-2 bg-teal text-white font-body text-sm font-semibold rounded-lg hover:bg-teal-dark transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Export CSV
+          </button>
         </div>
         <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(44,36,24,0.04)] overflow-hidden">
           <div class="overflow-x-auto">
@@ -137,20 +202,54 @@
                 </tr>
               </thead>
               <tbody id="waitlistTableBody">
-                <tr><td colspan="3" class="px-5 py-8 text-center text-muted-brown font-body text-sm">Loading waitlist...</td></tr>
+                <tr><td colspan="3" class="px-5 py-12 text-center text-muted-brown font-body text-sm">Loading...</td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
+
+      <!-- ═══ TAB: Itinerary Downloads ═══ -->
+      <div id="tab-downloads" class="tab-panel">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display text-2xl font-bold text-warm-brown">Itinerary Downloads</h3>
+          <button onclick="Admin.exportCSV('downloads')" class="inline-flex items-center gap-2 px-4 py-2 bg-teal text-white font-body text-sm font-semibold rounded-lg hover:bg-teal-dark transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Export CSV
+          </button>
+        </div>
+        <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(44,36,24,0.04)] overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-warm-beige/50">
+                <tr>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Name</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Email</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Trip</th>
+                  <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Downloaded At</th>
+                </tr>
+              </thead>
+              <tbody id="downloadsTableBody">
+                <tr><td colspan="4" class="px-5 py-12 text-center text-muted-brown font-body text-sm">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </main>
+
+    <!-- Footer -->
+    <footer class="bg-deep-black px-6 md:px-12 py-4 mt-8">
+      <p class="text-center font-body text-xs text-off-white/40">NamasteeWanderrlust Admin &middot; All data is confidential</p>
+    </footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js"></script>
   <script>
     // ═══════════════════════════════════════════
-    // Admin Auth
+    // Admin Auth (uses Supabase Auth + admins allowlist)
     // ═══════════════════════════════════════════
     const AdminAuth = {
       async login() {
@@ -160,6 +259,7 @@
         const btn = document.getElementById('loginBtn');
 
         errorEl.textContent = '';
+        errorEl.style.color = '';
         if (!email || !password) { errorEl.textContent = 'Email and password required'; return; }
 
         btn.disabled = true; btn.textContent = 'Signing in...';
@@ -167,7 +267,6 @@
           const { data, error } = await supabase.auth.signInWithPassword({ email, password });
           if (error) throw error;
 
-          // Check admin allowlist
           const { data: admin } = await supabase.from('admins').select('email').eq('email', email).single();
           if (!admin) {
             await supabase.auth.signOut();
@@ -192,7 +291,6 @@
           return;
         }
 
-        // Check allowlist first
         const { data: admin } = await supabase.from('admins').select('email').eq('email', email).single();
         if (!admin) { errorEl.textContent = 'This email is not in the admin allowlist'; return; }
 
@@ -207,8 +305,7 @@
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('dashboardScreen').classList.remove('hidden');
         document.getElementById('adminEmailDisplay').textContent = email;
-        Admin.loadBookings();
-        Admin.loadWaitlist();
+        Admin.loadAll();
       },
 
       async logout() {
@@ -227,130 +324,191 @@
     };
 
     // ═══════════════════════════════════════════
-    // Admin Dashboard Logic
+    // Admin Dashboard
     // ═══════════════════════════════════════════
     const Admin = {
-      bookings: [],
+      data: { users: [], bookings: [], waitlist: [], downloads: [] },
 
-      async loadBookings() {
-        const { data, error } = await supabase
-          .from('bookings')
-          .select('*, trips(name, destination)')
-          .order('created_at', { ascending: false });
+      async loadAll() {
+        // Load all data in parallel via the admin-data API
+        try {
+          const [statsRes, usersRes, bookingsRes, waitlistRes, downloadsRes] = await Promise.all([
+            this.apiCall('stats'),
+            this.apiCall('users'),
+            this.apiCall('bookings'),
+            this.apiCall('waitlist'),
+            this.apiCall('downloads'),
+          ]);
 
-        if (error) { console.error(error); return; }
-        this.bookings = data || [];
-        this.renderTable();
-        this.renderStats();
+          // Stats
+          if (statsRes) {
+            document.getElementById('statUsers').textContent = statsRes.total_users || 0;
+            document.getElementById('statBookings').textContent = statsRes.total_bookings || 0;
+            document.getElementById('statConfirmed').textContent = statsRes.confirmed_bookings || 0;
+            document.getElementById('statRevenue').textContent = '₹' + ((statsRes.total_revenue || 0) / 100).toLocaleString('en-IN');
+            document.getElementById('statWaitlist').textContent = statsRes.total_waitlist || 0;
+            document.getElementById('statDownloads').textContent = statsRes.total_downloads || 0;
+          }
+
+          // Users
+          this.data.users = usersRes?.users || [];
+          this.renderUsers();
+
+          // Bookings
+          this.data.bookings = bookingsRes?.bookings || [];
+          this.renderBookings();
+
+          // Waitlist
+          this.data.waitlist = waitlistRes?.waitlist || [];
+          this.renderWaitlist();
+
+          // Downloads
+          this.data.downloads = downloadsRes?.downloads || [];
+          this.renderDownloads();
+
+        } catch (err) {
+          console.error('Admin load error:', err);
+        }
       },
 
-      renderTable() {
+      async apiCall(action) {
+        const res = await fetch('/api/admin-data', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action })
+        });
+        return await res.json();
+      },
+
+      // ─── Tab Switching ───
+      switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+          const tabs = ['users', 'bookings', 'waitlist', 'downloads'];
+          btn.classList.toggle('active', tabs[i] === tab);
+        });
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(`tab-${tab}`).classList.add('active');
+      },
+
+      // ─── Render: Users ───
+      renderUsers() {
+        const tbody = document.getElementById('usersTableBody');
+        if (!this.data.users.length) {
+          tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-12 text-center text-muted-brown font-body text-sm">No registered users yet</td></tr>';
+          return;
+        }
+        tbody.innerHTML = this.data.users.map(u => `
+          <tr class="border-t border-warm-beige/50 hover:bg-cream/50 transition-colors">
+            <td class="px-5 py-4 font-body text-sm font-semibold text-warm-brown">${u.name || '-'}</td>
+            <td class="px-5 py-4 font-body text-sm text-muted-brown">${u.email}</td>
+            <td class="px-5 py-4 font-body text-sm text-muted-brown">${u.phone || '-'}</td>
+            <td class="px-5 py-4">
+              <span class="inline-flex px-2.5 py-1 rounded-full font-body text-xs font-semibold ${u.is_new ? 'status-pending' : 'status-completed'}">
+                ${u.is_new ? 'New' : 'Active'}
+              </span>
+            </td>
+            <td class="px-5 py-4 font-body text-xs text-muted-brown">${this.formatDate(u.created_at)}</td>
+          </tr>
+        `).join('');
+      },
+
+      // ─── Render: Bookings ───
+      renderBookings() {
         const tbody = document.getElementById('bookingsTableBody');
-        if (!this.bookings.length) {
+        if (!this.data.bookings.length) {
           tbody.innerHTML = '<tr><td colspan="8" class="px-5 py-12 text-center text-muted-brown font-body text-sm">No bookings yet</td></tr>';
           return;
         }
-
-        tbody.innerHTML = this.bookings.map(b => `
+        tbody.innerHTML = this.data.bookings.map(b => `
           <tr class="border-t border-warm-beige/50 hover:bg-cream/50 transition-colors">
-            <td class="px-5 py-4 font-body text-sm font-semibold text-warm-brown">${b.user_name}</td>
+            <td class="px-5 py-4 font-body text-sm font-semibold text-warm-brown">${b.user_name || '-'}</td>
             <td class="px-5 py-4 font-body text-sm text-muted-brown">${b.user_email}</td>
-            <td class="px-5 py-4 font-body text-sm text-muted-brown">${b.user_phone}</td>
-            <td class="px-5 py-4 font-body text-sm text-warm-brown">${b.trips?.name || '-'}</td>
-            <td class="px-5 py-4 font-body text-sm text-warm-brown capitalize">${b.package_type.replace('_', ' ')}</td>
-            <td class="px-5 py-4 font-body text-sm font-semibold text-warm-brown">₹${(b.amount_paise / 100).toLocaleString('en-IN')}</td>
+            <td class="px-5 py-4 font-body text-sm text-muted-brown">${b.user_phone || '-'}</td>
+            <td class="px-5 py-4 font-body text-sm text-warm-brown capitalize">${(b.package_type || '-').replace('_', ' ')}</td>
+            <td class="px-5 py-4 font-body text-sm font-semibold text-warm-brown">₹${b.amount_paise ? (b.amount_paise / 100).toLocaleString('en-IN') : '0'}</td>
             <td class="px-5 py-4">
-              <span class="inline-flex px-2.5 py-1 rounded-full font-body text-xs font-semibold status-${b.payment_status}">
-                ${b.payment_status}
+              <span class="inline-flex px-2.5 py-1 rounded-full font-body text-xs font-semibold status-${b.payment_status || 'pending'}">
+                ${b.payment_status || 'pending'}
               </span>
             </td>
-            <td class="px-5 py-4 font-body text-xs text-muted-brown">${new Date(b.created_at).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}</td>
+            <td class="px-5 py-4 font-body text-xs text-muted-brown">${b.razorpay_payment_id || '-'}</td>
+            <td class="px-5 py-4 font-body text-xs text-muted-brown">${this.formatDate(b.created_at)}</td>
           </tr>
         `).join('');
       },
 
-      renderStats() {
-        const total = this.bookings.length;
-        const confirmed = this.bookings.filter(b => b.payment_status === 'completed').length;
-        const pending = this.bookings.filter(b => b.payment_status === 'pending').length;
-        const revenue = this.bookings
-          .filter(b => b.payment_status === 'completed')
-          .reduce((sum, b) => sum + (b.amount_paise / 100), 0);
-
-        document.getElementById('statTotal').textContent = total;
-        document.getElementById('statConfirmed').textContent = confirmed;
-        document.getElementById('statPending').textContent = pending;
-        document.getElementById('statRevenue').textContent = '₹' + revenue.toLocaleString('en-IN');
-      },
-
-      // ─── Waitlist ───
-      waitlist: [],
-
-      async loadWaitlist() {
-        try {
-          const res = await fetch('/api/waitlist-admin');
-          // Fallback: use Supabase RPC
-          const url = `${SUPABASE_URL}/rest/v1/rpc/get_waitlist`;
-          const resp = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-            },
-            body: '{}'
-          });
-          const data = await resp.json();
-          this.waitlist = data || [];
-          this.renderWaitlist();
-        } catch (err) {
-          console.error('Waitlist error:', err);
-        }
-      },
-
+      // ─── Render: Waitlist ───
       renderWaitlist() {
         const tbody = document.getElementById('waitlistTableBody');
-        const countEl = document.getElementById('waitlistCount');
-        if (countEl) countEl.textContent = `${this.waitlist.length} entries`;
-
-        if (!this.waitlist.length) {
-          tbody.innerHTML = '<tr><td colspan="3" class="px-5 py-8 text-center text-muted-brown font-body text-sm">No waitlist entries yet</td></tr>';
+        if (!this.data.waitlist.length) {
+          tbody.innerHTML = '<tr><td colspan="3" class="px-5 py-12 text-center text-muted-brown font-body text-sm">No waitlist entries yet</td></tr>';
           return;
         }
-
-        tbody.innerHTML = this.waitlist.map(w => `
+        tbody.innerHTML = this.data.waitlist.map(w => `
           <tr class="border-t border-warm-beige/50 hover:bg-cream/50 transition-colors">
             <td class="px-5 py-4 font-body text-sm font-semibold text-warm-brown">${w.email}</td>
             <td class="px-5 py-4 font-body text-sm text-muted-brown">${w.trip_interest || '-'}</td>
-            <td class="px-5 py-4 font-body text-xs text-muted-brown">${new Date(w.created_at).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}</td>
+            <td class="px-5 py-4 font-body text-xs text-muted-brown">${this.formatDate(w.created_at)}</td>
           </tr>
         `).join('');
       },
 
-      exportCSV() {
-        if (!this.bookings.length) { alert('No bookings to export'); return; }
+      // ─── Render: Downloads ───
+      renderDownloads() {
+        const tbody = document.getElementById('downloadsTableBody');
+        if (!this.data.downloads.length) {
+          tbody.innerHTML = '<tr><td colspan="4" class="px-5 py-12 text-center text-muted-brown font-body text-sm">No itinerary downloads yet</td></tr>';
+          return;
+        }
+        tbody.innerHTML = this.data.downloads.map(d => `
+          <tr class="border-t border-warm-beige/50 hover:bg-cream/50 transition-colors">
+            <td class="px-5 py-4 font-body text-sm font-semibold text-warm-brown">${d.user_name || '-'}</td>
+            <td class="px-5 py-4 font-body text-sm text-muted-brown">${d.user_email}</td>
+            <td class="px-5 py-4 font-body text-sm text-muted-brown">${d.trip || '-'}</td>
+            <td class="px-5 py-4 font-body text-xs text-muted-brown">${this.formatDate(d.created_at)}</td>
+          </tr>
+        `).join('');
+      },
 
-        const headers = ['Name', 'Email', 'Phone', 'Trip', 'Package', 'Amount (INR)', 'Payment Status', 'Payment ID', 'Booking Date'];
-        const rows = this.bookings.map(b => [
-          b.user_name,
-          b.user_email,
-          b.user_phone,
-          b.trips?.name || '-',
-          b.package_type.replace('_', ' '),
-          (b.amount_paise / 100),
-          b.payment_status,
-          b.razorpay_payment_id || '-',
-          new Date(b.created_at).toLocaleDateString('en-IN'),
-        ]);
+      // ─── CSV Export ───
+      exportCSV(type) {
+        const items = this.data[type];
+        if (!items || !items.length) { alert(`No ${type} data to export`); return; }
+
+        let headers, rows;
+
+        switch (type) {
+          case 'users':
+            headers = ['Name', 'Email', 'Phone', 'Status', 'Registered'];
+            rows = items.map(u => [u.name || '-', u.email, u.phone || '-', u.is_new ? 'New' : 'Active', this.formatDate(u.created_at)]);
+            break;
+          case 'bookings':
+            headers = ['Name', 'Email', 'Phone', 'Package', 'Amount (INR)', 'Status', 'Payment ID', 'Date'];
+            rows = items.map(b => [b.user_name || '-', b.user_email, b.user_phone || '-', (b.package_type || '-').replace('_', ' '), b.amount_paise ? (b.amount_paise / 100) : 0, b.payment_status || 'pending', b.razorpay_payment_id || '-', this.formatDate(b.created_at)]);
+            break;
+          case 'waitlist':
+            headers = ['Email', 'Trip Interest', 'Date'];
+            rows = items.map(w => [w.email, w.trip_interest || '-', this.formatDate(w.created_at)]);
+            break;
+          case 'downloads':
+            headers = ['Name', 'Email', 'Trip', 'Downloaded At'];
+            rows = items.map(d => [d.user_name || '-', d.user_email, d.trip || '-', this.formatDate(d.created_at)]);
+            break;
+        }
 
         const csv = [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
         const blob = new Blob([csv], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `NamasteeWanderrlust-Bookings-${new Date().toISOString().slice(0,10)}.csv`;
+        a.download = `NamasteeWanderrlust-${type}-${new Date().toISOString().slice(0,10)}.csv`;
         a.click();
         URL.revokeObjectURL(url);
+      },
+
+      formatDate(dateStr) {
+        if (!dateStr) return '-';
+        return new Date(dateStr).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
       }
     };
 

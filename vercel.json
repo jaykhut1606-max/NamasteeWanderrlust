@@ -5,7 +5,10 @@
     { "source": "/api/register", "destination": "/api/register" },
     { "source": "/api/login", "destination": "/api/login" },
     { "source": "/api/profile", "destination": "/api/profile" },
-    { "source": "/api/waitlist", "destination": "/api/waitlist" }
+    { "source": "/api/waitlist", "destination": "/api/waitlist" },
+    { "source": "/api/track-download", "destination": "/api/track-download" },
+    { "source": "/api/admin-data", "destination": "/api/admin-data" },
+    { "source": "/admin", "destination": "/admin.html" }
   ],
   "headers": [
     {

@@ -570,10 +570,10 @@
 
             <!-- Dual CTAs -->
             <div class="flex gap-3">
-              <a href="assets/NamasteeWanderrlust-Munnar-Itinerary.pdf" download="NamasteeWanderrlust-Munnar-Itinerary.pdf" class="btn-secondary flex-1 inline-flex items-center gap-2 justify-center px-4 py-3 border-[1.5px] border-warm-brown text-warm-brown font-body font-semibold text-sm rounded-lg no-underline">
+              <button onclick="downloadItinerary()" class="btn-secondary flex-1 inline-flex items-center gap-2 justify-center px-4 py-3 border-[1.5px] border-warm-brown text-warm-brown font-body font-semibold text-sm rounded-lg">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 Itinerary
-              </a>
+              </button>
               <button onclick="BookingModal.open('2fe5d15a-1b62-4087-a640-7b3c21a9b92e', 'Munnar')" class="btn-primary flex-1 inline-flex items-center gap-2 justify-center px-4 py-3 bg-sunset text-white font-body font-semibold text-sm rounded-lg">
                 Book Now
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -1427,6 +1427,44 @@
   <script src="js/booking-modal.js"></script>
   <script src="js/razorpay.js"></script>
   <script src="js/pdf.js"></script>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- ITINERARY DOWNLOAD (gated behind login) -->
+  <!-- ═══════════════════════════════════════════ -->
+  <script>
+    async function downloadItinerary() {
+      if (!Auth.isLoggedIn()) {
+        // Not signed in — open login modal
+        LoginModal.open();
+        // Set a flag so after login, the download triggers
+        window._pendingItineraryDownload = true;
+        return;
+      }
+
+      // Track the download
+      try {
+        await fetch('/api/track-download', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: Auth.currentUser.email,
+            name: Auth.currentUser.name || '',
+            trip: 'Munnar'
+          })
+        });
+      } catch (e) {
+        console.error('Download tracking failed:', e);
+      }
+
+      // Trigger actual PDF download
+      const a = document.createElement('a');
+      a.href = 'assets/NamasteeWanderrlust-Munnar-Itinerary.pdf';
+      a.download = 'NamasteeWanderrlust-Munnar-Itinerary.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SCRIPTS -->
