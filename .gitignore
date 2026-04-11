@@ -5,3 +5,4 @@ temporary screenshots/
 __pycache__/
 *.pyc
 .vercel/
+.ghconfig/
