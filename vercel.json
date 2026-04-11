@@ -7,6 +7,7 @@
     { "source": "/api/profile", "destination": "/api/profile" },
     { "source": "/api/waitlist", "destination": "/api/waitlist" },
     { "source": "/api/track-download", "destination": "/api/track-download" },
+    { "source": "/api/admin-login", "destination": "/api/admin-login" },
     { "source": "/api/admin-data", "destination": "/api/admin-data" },
     { "source": "/admin", "destination": "/admin.html" }
   ],

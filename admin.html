@@ -48,11 +48,10 @@
         <h1 class="font-display text-3xl font-bold text-warm-brown">Admin Dashboard</h1>
         <p class="font-body text-sm text-muted-brown mt-1">Sign in to manage your business</p>
       </div>
-      <input id="adminEmail" type="email" placeholder="Admin email" class="w-full px-4 py-3 border border-warm-brown/10 rounded-xl font-body text-sm mb-3 focus:outline-none focus:border-sunset" value="jay.khut1606@gmail.com">
+      <input id="adminEmail" type="email" placeholder="Admin email" class="w-full px-4 py-3 border border-warm-brown/10 rounded-xl font-body text-sm mb-3 focus:outline-none focus:border-sunset">
       <input id="adminPassword" type="password" placeholder="Password" class="w-full px-4 py-3 border border-warm-brown/10 rounded-xl font-body text-sm mb-3 focus:outline-none focus:border-sunset">
       <p id="loginError" class="text-red-500 text-xs mb-3"></p>
       <button id="loginBtn" onclick="AdminAuth.login()" class="w-full py-3 bg-sunset text-white font-body font-semibold rounded-xl hover:bg-sunset-dark transition-colors">Sign In</button>
-      <p class="text-center text-xs text-muted-brown mt-4">First time? <button onclick="AdminAuth.signUp()" class="text-sunset font-semibold hover:underline">Create admin account</button></p>
     </div>
   </div>
 
@@ -245,60 +244,41 @@
     </footer>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js"></script>
   <script>
     // ═══════════════════════════════════════════
-    // Admin Auth (uses Supabase Auth + admins allowlist)
+    // Admin Auth (custom — no Supabase Auth)
     // ═══════════════════════════════════════════
     const AdminAuth = {
       async login() {
-        const email = document.getElementById('adminEmail').value.trim();
+        const email = document.getElementById('adminEmail').value.trim().toLowerCase();
         const password = document.getElementById('adminPassword').value;
         const errorEl = document.getElementById('loginError');
         const btn = document.getElementById('loginBtn');
 
         errorEl.textContent = '';
-        errorEl.style.color = '';
         if (!email || !password) { errorEl.textContent = 'Email and password required'; return; }
 
         btn.disabled = true; btn.textContent = 'Signing in...';
         try {
-          const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-          if (error) throw error;
+          const res = await fetch('/api/admin-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          const data = await res.json();
 
-          const { data: admin } = await supabase.from('admins').select('email').eq('email', email).single();
-          if (!admin) {
-            await supabase.auth.signOut();
-            throw new Error('Not authorized as admin');
+          if (!res.ok || data.error) {
+            throw new Error(data.error || 'Invalid credentials');
           }
 
-          this.showDashboard(email);
+          // Store admin session
+          sessionStorage.setItem('nw_admin', JSON.stringify({ email: data.email }));
+          this.showDashboard(data.email);
         } catch (err) {
           errorEl.textContent = err.message;
         } finally {
           btn.disabled = false; btn.textContent = 'Sign In';
         }
-      },
-
-      async signUp() {
-        const email = document.getElementById('adminEmail').value.trim();
-        const password = document.getElementById('adminPassword').value;
-        const errorEl = document.getElementById('loginError');
-
-        if (!email || !password || password.length < 6) {
-          errorEl.textContent = 'Email and password (min 6 chars) required';
-          return;
-        }
-
-        const { data: admin } = await supabase.from('admins').select('email').eq('email', email).single();
-        if (!admin) { errorEl.textContent = 'This email is not in the admin allowlist'; return; }
-
-        const { error } = await supabase.auth.signUp({ email, password });
-        if (error) { errorEl.textContent = error.message; return; }
-
-        errorEl.style.color = '#3B6B3A';
-        errorEl.textContent = 'Account created! Check your email to confirm, then sign in.';
       },
 
       showDashboard(email) {
@@ -308,17 +288,21 @@
         Admin.loadAll();
       },
 
-      async logout() {
-        await supabase.auth.signOut();
+      logout() {
+        sessionStorage.removeItem('nw_admin');
         document.getElementById('dashboardScreen').classList.add('hidden');
         document.getElementById('loginScreen').classList.remove('hidden');
       },
 
-      async checkSession() {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-          const { data: admin } = await supabase.from('admins').select('email').eq('email', session.user.email).single();
-          if (admin) { this.showDashboard(session.user.email); }
+      checkSession() {
+        const stored = sessionStorage.getItem('nw_admin');
+        if (stored) {
+          try {
+            const admin = JSON.parse(stored);
+            if (admin.email) this.showDashboard(admin.email);
+          } catch(e) {
+            sessionStorage.removeItem('nw_admin');
+          }
         }
       }
     };
