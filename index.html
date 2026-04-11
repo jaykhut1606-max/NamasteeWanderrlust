@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NamasteeWanderrlust — Travel the World with Your Favorite Influencer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'sunset': '#D4773B',
+            'sunset-dark': '#B8622E',
+            'amber': '#D4A843',
+            'deep-black': '#1A1A1A',
+            'warm-beige': '#EDE8DC',
+            'teal': '#2A7B8E',
+            'teal-dark': '#1D5B6B',
+            'forest': '#3B6B3A',
+            'sky-blue': '#5BA4C9',
+            'lotus': '#C75B7A',
+            'terracotta': '#B85C38',
+            'sand': '#C4A97D',
+            'off-white': '#F5F0E8',
+            'cream': '#FAF7F2',
+            'warm-brown': '#2C2418',
+            'muted-brown': '#6B6356',
+          },
+          fontFamily: {
+            'display': ['"Cormorant Garamond"', 'serif'],
+            'body': ['"DM Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --color-primary: #1A1A1A;
+      --color-primary-warm: #D4773B;
+      --color-accent: #D4A843;
+      --color-accent-soft: #EDE8DC;
+      --color-teal: #2A7B8E;
+      --color-teal-dark: #1D5B6B;
+      --color-forest: #3B6B3A;
+      --color-bg: #F5F0E8;
+      --color-bg-light: #FAF7F2;
+      --color-bg-warm: #EDE8DC;
+      --color-text: #2C2418;
+      --color-text-muted: #6B6356;
+      --color-text-light: #F5F0E8;
+      --color-border: rgba(44, 36, 24, 0.08);
+      --color-shadow: rgba(44, 36, 24, 0.06);
+      --color-shadow-hover: rgba(44, 36, 24, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: #2C2418;
+      background: #F5F0E8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Heading typography */
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: -0.03em;
+    }
+
+    /* Body line height */
+    p, li, span { line-height: 1.7; }
+
+    /* Animated underline for nav links */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #D4773B;
+      transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .nav-link:hover::after,
+    .nav-link:focus-visible::after {
+      width: 100%;
+    }
+
+    /* Card hover lift */
+    .trip-card {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .trip-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(44, 36, 24, 0.12), 0 8px 16px rgba(44, 36, 24, 0.08);
+    }
+
+    /* Image zoom on hover */
+    .trip-card:hover .trip-img {
+      transform: scale(1.05);
+    }
+    .trip-img {
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Button spring hover */
+    .btn-primary {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background-color 0.3s ease,
+                  box-shadow 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background-color: #B8622E;
+      box-shadow: 0 8px 24px rgba(212, 119, 59, 0.3);
+    }
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    .btn-primary:focus-visible {
+      outline: 2px solid #D4773B;
+      outline-offset: 3px;
+    }
+
+    .btn-secondary {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background-color 0.3s ease,
+                  color 0.3s ease;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      background-color: #2C2418;
+      color: #F5F0E8;
+    }
+    .btn-secondary:active {
+      transform: translateY(0);
+    }
+    .btn-secondary:focus-visible {
+      outline: 2px solid #2C2418;
+      outline-offset: 3px;
+    }
+
+    /* Influencer scroll */
+    .influencer-scroll::-webkit-scrollbar { display: none; }
+    .influencer-scroll {
+      scroll-snap-type: x mandatory;
+      scroll-padding-left: 24px;
+    }
+    .influencer-scroll > .influencer-card {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      width: 260px;
+    }
+    @media (min-width: 768px) {
+      .influencer-scroll > .influencer-card { width: 300px; }
+    }
+    @media (min-width: 1024px) {
+      .influencer-scroll > .influencer-card { width: 340px; }
+    }
+
+    /* Influencer card */
+    .influencer-card {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .influencer-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(44, 36, 24, 0.1);
+    }
+    .influencer-card:hover .trip-img {
+      transform: scale(1.03);
+    }
+
+    /* Reel card hover */
+    .reel-card {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reel-card:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    /* Line clamp */
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Noise texture overlay */
+    .noise-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Scroll-triggered fade in */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Navbar scroll state */
+    .navbar {
+      transition: background-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    .navbar.scrolled {
+      background-color: rgba(237, 232, 220, 0.92);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 2px 16px rgba(44, 36, 24, 0.06);
+    }
+
+    /* Star rating */
+    .star { color: #D4A843; }
+
+    /* Mobile menu */
+    .mobile-menu {
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  opacity 0.4s ease;
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    .mobile-menu.open {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Badge pill */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Input focus */
+    input:focus-visible, textarea:focus-visible {
+      outline: 2px solid #D4773B;
+      outline-offset: 2px;
+    }
+  </style>
+  <link rel="stylesheet" href="css/booking-modal.css">
+</head>
+<body class="bg-off-white">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- NAVBAR -->
+  <!-- ═══════════════════════════════════════════ -->
+  <nav class="navbar fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-1 group">
+        <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm">
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#trips" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest">Trips</a>
+        <a href="#about" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest">About</a>
+        <a href="#influencers" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest">Influencers</a>
+        <a href="#contact" class="btn-primary inline-flex items-center px-6 py-2.5 bg-sunset text-white font-body text-sm font-semibold rounded-lg">
+          Explore Trips
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button id="menuToggle" class="md:hidden flex flex-col gap-1.5 p-2 group" aria-label="Toggle menu">
+        <span class="block w-6 h-0.5 bg-warm-brown transition-transform duration-300 origin-center" id="bar1"></span>
+        <span class="block w-6 h-0.5 bg-warm-brown transition-opacity duration-300" id="bar2"></span>
+        <span class="block w-6 h-0.5 bg-warm-brown transition-transform duration-300 origin-center" id="bar3"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed inset-0 top-16 bg-off-white/98 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 md:hidden">
+      <a href="#trips" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Trips</a>
+      <a href="#about" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">About</a>
+      <a href="#influencers" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Influencers</a>
+      <a href="#contact" class="btn-primary inline-flex items-center px-8 py-3 bg-sunset text-white font-body text-base font-semibold rounded-lg" onclick="closeMobileMenu()">
+        Explore Trips
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- HERO SECTION -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden noise-overlay">
+    <!-- Hero Carousel Background -->
+    <div class="absolute inset-0" id="heroCarousel">
+      <!-- Slide 1: Mountains -->
+      <div class="hero-slide absolute inset-0 opacity-100 transition-opacity duration-[1500ms] ease-in-out">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80" alt="Breathtaking mountain landscape" class="w-full h-full object-cover">
+      </div>
+      <!-- Slide 2: Tropical Beach -->
+      <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-[1500ms] ease-in-out">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80" alt="Tropical beach with crystal clear water" class="w-full h-full object-cover">
+      </div>
+      <!-- Slide 3: Island Paradise -->
+      <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-[1500ms] ease-in-out">
+        <img src="https://images.unsplash.com/photo-1559628233-100c798642d4?w=1920&q=80" alt="Stunning aerial view of turquoise island waters" class="w-full h-full object-cover">
+      </div>
+      <!-- Gradient overlays (on top of all slides) -->
+      <div class="absolute inset-0 bg-gradient-to-t from-deep-black/80 via-deep-black/30 to-transparent z-[1]"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-deep-black/40 to-transparent z-[1]"></div>
+      <div class="absolute inset-0 bg-sunset/10 mix-blend-multiply z-[1]"></div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 max-w-5xl mx-auto px-6 text-center mt-12">
+      <!-- Brand Logo -->
+      <div class="mb-4">
+        <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="h-28 sm:h-36 md:h-44 w-auto mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.3)]">
+      </div>
+
+      <!-- Brand Name -->
+      <h1 class="mb-2">
+        <span class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">Namastee</span>
+        <span class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-amber tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">Wanderrlust</span>
+      </h1>
+
+      <!-- Tagline -->
+      <div class="inline-flex items-center gap-2 mb-6">
+        <span class="block w-8 h-px bg-amber/60"></span>
+        <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-amber/80">Travel the World with Your Favorite Influencer</span>
+        <span class="block w-8 h-px bg-amber/60"></span>
+      </div>
+
+      <!-- Subheadline -->
+      <p class="font-body text-lg md:text-xl text-off-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
+        Curated group adventures led by your favorite creators. Small groups, big memories, zero planning stress.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#trips" class="btn-primary px-8 py-4 bg-sunset text-white font-body font-semibold text-base rounded-lg">
+          Explore Upcoming Trips
+        </a>
+        <a href="#about" class="btn-secondary px-8 py-4 border-[1.5px] border-white/40 text-white font-body font-semibold text-base rounded-lg hover:bg-white hover:text-warm-brown">
+          How It Works
+        </a>
+      </div>
+
+      <!-- Trust Line -->
+      <p class="mt-8 font-body text-sm text-off-white/50">Join 500+ travelers who've explored with us</p>
+    </div>
+
+    <!-- Carousel Dots -->
+    <div class="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3" id="heroDots">
+      <button class="hero-dot w-3 h-3 rounded-full bg-white/80 transition-all duration-300" data-slide="0" aria-label="Slide 1"></button>
+      <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/30 transition-all duration-300 hover:bg-white/50" data-slide="1" aria-label="Slide 2"></button>
+      <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/30 transition-all duration-300 hover:bg-white/50" data-slide="2" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 animate-bounce">
+      <svg width="20" height="20" fill="none" stroke="currentColor" class="text-off-white/40" stroke-width="2">
+        <path d="M10 4v12M4 10l6 6 6-6"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- FEATURED TRIPS -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="trips" class="py-20 md:py-28 px-6 md:px-12 bg-cream">
+    <div class="max-w-7xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16 fade-up">
+        <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-sunset mb-4 block">Upcoming Adventures</span>
+        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-brown mb-4">Featured Trips</h2>
+        <p class="font-body text-muted-brown text-lg max-w-xl mx-auto">Handpicked destinations, expertly planned itineraries, unforgettable memories.</p>
+      </div>
+
+      <!-- Trip Cards Grid -->
+      <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+
+        <!-- Trip 1: Munnar -->
+        <div class="trip-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up">
+          <div class="relative overflow-hidden aspect-[4/3]">
+            <img
+              src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=800&q=80"
+              alt="Munnar tea plantations in Kerala, India"
+              class="trip-img w-full h-full object-cover"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-teal/10 mix-blend-multiply"></div>
+
+            <!-- Status Badge -->
+            <div class="absolute top-4 left-4 z-10">
+              <span class="badge bg-forest/90 text-white backdrop-blur-sm">Filling Fast</span>
+            </div>
+
+            <!-- Price -->
+            <div class="absolute top-4 right-4 z-10 text-right">
+              <span class="font-body text-xs text-off-white/70 block">Starting from</span>
+              <span class="font-display text-xl font-bold text-amber">₹30,010</span>
+              <span class="font-body text-[10px] text-off-white/60 block">per person incl. GST</span>
+            </div>
+
+            <!-- Bottom info on image -->
+            <div class="absolute bottom-4 left-4 right-4 z-10">
+              <h3 class="font-display text-3xl font-bold text-white mb-1">Munnar</h3>
+              <p class="font-body text-sm text-off-white/80">Kerala, India</p>
+            </div>
+          </div>
+
+          <div class="p-6 md:p-8">
+            <!-- Trip Meta -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="badge bg-teal/10 text-teal-dark">4 Days</span>
+              <span class="badge bg-sunset/10 text-sunset">Apr 29 – May 2</span>
+              <span class="badge bg-forest/10 text-forest">Small Group</span>
+              <span class="badge bg-lotus/10 text-lotus">Nature & Wellness</span>
+            </div>
+
+            <p class="font-body text-muted-brown text-sm mb-6">
+              Explore the misty tea hills of Munnar — lush plantations, serene lakes, spice gardens, and mountain trails. An intimate escape into Kerala's green heart.
+            </p>
+
+            <!-- Highlights -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Tea Plantation Tours</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Mountain Trekking</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Spice Garden Visit</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Lakeside Camping</span>
+              </div>
+            </div>
+
+            <!-- Pricing Summary -->
+            <div class="bg-warm-beige/60 rounded-xl p-4 mb-5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-body text-xs text-muted-brown">Per Person</span>
+                <span class="font-display text-lg font-bold text-warm-brown">₹30,010 <span class="font-body text-[10px] font-normal text-muted-brown">incl. GST</span></span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="font-body text-xs text-muted-brown">Per Couple</span>
+                <span class="font-display text-lg font-bold text-warm-brown">₹40,440 <span class="font-body text-[10px] font-normal text-muted-brown">incl. GST</span></span>
+              </div>
+            </div>
+
+            <!-- Dual CTAs -->
+            <div class="flex gap-3">
+              <button onclick="PDFGenerator.downloadItinerary()" class="btn-secondary flex-1 inline-flex items-center gap-2 justify-center px-4 py-3 border-[1.5px] border-warm-brown text-warm-brown font-body font-semibold text-sm rounded-lg">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Itinerary
+              </button>
+              <button onclick="BookingModal.open('2fe5d15a-1b62-4087-a640-7b3c21a9b92e', 'Munnar')" class="btn-primary flex-1 inline-flex items-center gap-2 justify-center px-4 py-3 bg-sunset text-white font-body font-semibold text-sm rounded-lg">
+                Book Now
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trip 2: Bali -->
+        <div class="trip-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.1s;">
+          <div class="relative overflow-hidden aspect-[4/3]">
+            <img
+              src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80"
+              alt="Bali rice terraces and temple in Indonesia"
+              class="trip-img w-full h-full object-cover"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-sunset/10 mix-blend-multiply"></div>
+
+            <!-- Status Badge -->
+            <div class="absolute top-4 left-4 z-10">
+              <span class="badge bg-amber/90 text-deep-black backdrop-blur-sm">Coming Soon</span>
+            </div>
+
+            <!-- Price -->
+            <div class="absolute top-4 right-4 z-10 text-right">
+              <span class="font-body text-xs text-off-white/70 block">Starting from</span>
+              <span class="font-display text-2xl font-bold text-amber">TBA</span>
+            </div>
+
+            <!-- Bottom info on image -->
+            <div class="absolute bottom-4 left-4 right-4 z-10">
+              <h3 class="font-display text-3xl font-bold text-white mb-1">Bali</h3>
+              <p class="font-body text-sm text-off-white/80">Indonesia</p>
+            </div>
+          </div>
+
+          <div class="p-6 md:p-8">
+            <!-- Trip Meta -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="badge bg-teal/10 text-teal-dark">Dates TBD</span>
+              <span class="badge bg-sunset/10 text-sunset">International</span>
+              <span class="badge bg-forest/10 text-forest">Small Group</span>
+              <span class="badge bg-lotus/10 text-lotus">Culture & Adventure</span>
+            </div>
+
+            <p class="font-body text-muted-brown text-sm mb-6">
+              Temples, rice terraces, hidden waterfalls, and vibrant culture — Bali is where adventure meets serenity. Join us for an unforgettable island journey.
+            </p>
+
+            <!-- Highlights -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Temple Exploration</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Rice Terrace Walks</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Waterfall Chasing</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Sunset Dinners</span>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <a href="#contact" class="btn-secondary inline-flex items-center gap-2 w-full justify-center px-6 py-3.5 border-[1.5px] border-warm-brown text-warm-brown font-body font-semibold text-sm rounded-lg">
+              Join the Waitlist
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coming Soon Teaser -->
+      <div class="mt-12 text-center fade-up">
+        <p class="font-body text-muted-brown text-sm mb-2">More destinations being planned...</p>
+        <p class="font-display text-2xl md:text-3xl text-warm-brown italic">Where should we go next?</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- HOW IT WORKS -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="about" class="py-20 md:py-28 px-6 md:px-12 bg-warm-beige relative noise-overlay">
+    <div class="max-w-6xl mx-auto relative z-10">
+      <!-- Section Header -->
+      <div class="text-center mb-16 fade-up">
+        <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-muted-brown mb-4 block">Simple Process</span>
+        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-brown mb-4">How It <span class="text-sunset">Works</span></h2>
+      </div>
+
+      <!-- 4-Step Process with connecting lines -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 relative">
+
+        <!-- Dashed connecting line (desktop only) -->
+        <div class="hidden md:block absolute top-[72px] left-[15%] right-[15%] h-px border-t-2 border-dashed border-sand/60 z-0"></div>
+
+        <!-- Step 1: Choose Your Trip -->
+        <div class="text-center relative z-10 fade-up">
+          <!-- Number badge -->
+          <div class="w-7 h-7 mx-auto mb-4 rounded-full bg-teal flex items-center justify-center shadow-sm">
+            <span class="font-body text-xs font-bold text-white">1</span>
+          </div>
+          <!-- Icon card -->
+          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-teal/8 border border-teal/10 flex items-center justify-center shadow-[0_2px_12px_rgba(42,123,142,0.08)]">
+            <svg class="w-9 h-9 text-teal" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+            </svg>
+          </div>
+          <h3 class="font-display text-xl md:text-2xl font-bold text-warm-brown mb-2">Choose Your Trip</h3>
+          <p class="font-body text-muted-brown text-xs md:text-sm leading-relaxed max-w-[200px] mx-auto">Browse upcoming trips with your favorite influencers. Each journey is uniquely curated.</p>
+        </div>
+
+        <!-- Step 2: Sign Up & Book -->
+        <div class="text-center relative z-10 fade-up" style="transition-delay: 0.1s;">
+          <div class="w-7 h-7 mx-auto mb-4 rounded-full bg-sunset flex items-center justify-center shadow-sm">
+            <span class="font-body text-xs font-bold text-white">2</span>
+          </div>
+          <!-- Highlighted card -->
+          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-sunset/8 border border-sunset/10 flex items-center justify-center shadow-[0_4px_20px_rgba(212,119,59,0.12)] md:scale-110">
+            <svg class="w-9 h-9 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-display text-xl md:text-2xl font-bold text-warm-brown mb-2">Sign Up & Book</h3>
+          <p class="font-body text-muted-brown text-xs md:text-sm leading-relaxed max-w-[200px] mx-auto">Quick sign-in with email OTP. Select your package and secure your spot instantly.</p>
+        </div>
+
+        <!-- Step 3: Make Payment -->
+        <div class="text-center relative z-10 fade-up" style="transition-delay: 0.2s;">
+          <div class="w-7 h-7 mx-auto mb-4 rounded-full bg-amber flex items-center justify-center shadow-sm">
+            <span class="font-body text-xs font-bold text-white">3</span>
+          </div>
+          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-amber/8 border border-amber/10 flex items-center justify-center shadow-[0_2px_12px_rgba(212,168,67,0.08)]">
+            <svg class="w-9 h-9 text-amber" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
+            </svg>
+          </div>
+          <h3 class="font-display text-xl md:text-2xl font-bold text-warm-brown mb-2">Make Payment</h3>
+          <p class="font-body text-muted-brown text-xs md:text-sm leading-relaxed max-w-[200px] mx-auto">Secure payment via Razorpay. Pay the full amount or reserve with a deposit.</p>
+        </div>
+
+        <!-- Step 4: Travel & Create -->
+        <div class="text-center relative z-10 fade-up" style="transition-delay: 0.3s;">
+          <div class="w-7 h-7 mx-auto mb-4 rounded-full bg-forest flex items-center justify-center shadow-sm">
+            <span class="font-body text-xs font-bold text-white">4</span>
+          </div>
+          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-forest/8 border border-forest/10 flex items-center justify-center shadow-[0_2px_12px_rgba(59,107,58,0.08)]">
+            <svg class="w-9 h-9 text-forest" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
+            </svg>
+          </div>
+          <h3 class="font-display text-xl md:text-2xl font-bold text-warm-brown mb-2">Travel & Create</h3>
+          <p class="font-body text-muted-brown text-xs md:text-sm leading-relaxed max-w-[200px] mx-auto">Pack your bags! Travel, create content, and make memories with your favorite creators.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- MEET THE INFLUENCERS -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="influencers" class="py-20 md:py-28 px-6 md:px-12 bg-warm-beige">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 fade-up">
+        <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-muted-brown mb-4 block">Your Travel Companions</span>
+        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-brown mb-4">Meet the <span class="text-sunset">Influencers</span></h2>
+      </div>
+
+      <!-- Horizontal auto-scroll influencer carousel -->
+      <div class="influencer-scroll flex gap-6 overflow-x-auto pb-6 -mx-6 px-6" style="scrollbar-width: none; -ms-overflow-style: none;">
+        <!-- Influencer 1: Aditi Sharma -->
+        <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up">
+          <div class="relative overflow-hidden aspect-[3/4]">
+            <img src="brand_assets/images/influencers/aditi-sharma.jpeg" alt="Aditi Sharma" class="trip-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
+            <!-- Follower Badge -->
+            <div class="absolute bottom-4 right-4 z-10">
+              <span class="inline-flex items-center px-3 py-1.5 bg-teal text-white font-body text-xs font-bold rounded-full shadow-lg">1.5M</span>
+            </div>
+            <!-- Top accent line -->
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-bold text-warm-brown mb-1">Aditi Sharma</h3>
+            <a href="https://instagram.com/officialaditisharma" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-body text-sm text-muted-brown hover:text-sunset transition-colors duration-300 mb-3">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              @officialaditisharma
+            </a>
+            <p class="font-body text-sm text-muted-brown mb-5 line-clamp-2">Actress & travel lover sharing her adventures and inspiring her followers to explore the world.</p>
+            <div class="flex items-center justify-between">
+              <span class="badge bg-forest/10 text-forest">
+                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Bali Trip
+              </span>
+              <a href="https://instagram.com/officialaditisharma" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-1.5 px-4 py-2 bg-sunset text-white font-body text-xs font-semibold rounded-full">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
+                Follow
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Influencer 2: Nikki Sharma -->
+        <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.1s;">
+          <div class="relative overflow-hidden aspect-[3/4]">
+            <img src="brand_assets/images/influencers/nikki-sharma.jpeg" alt="Nikki Sharma" class="trip-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
+            <div class="absolute bottom-4 right-4 z-10">
+              <span class="inline-flex items-center px-3 py-1.5 bg-teal text-white font-body text-xs font-bold rounded-full shadow-lg">2.1M</span>
+            </div>
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-bold text-warm-brown mb-1">Nikki Sharma</h3>
+            <a href="https://instagram.com/nikkisharmaofficial" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-body text-sm text-muted-brown hover:text-sunset transition-colors duration-300 mb-3">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              @nikkisharmaofficial
+            </a>
+            <p class="font-body text-sm text-muted-brown mb-5 line-clamp-2">Actress & content creator blending fashion, fitness & wanderlust. From TV screens to dream destinations.</p>
+            <div class="flex items-center justify-between">
+              <span class="badge bg-forest/10 text-forest">
+                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Bali Trip
+              </span>
+              <a href="https://instagram.com/nikkisharmaofficial" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-1.5 px-4 py-2 bg-sunset text-white font-body text-xs font-semibold rounded-full">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
+                Follow
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Influencer 3: Nyrraa Banerjee -->
+        <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.2s;">
+          <div class="relative overflow-hidden aspect-[3/4]">
+            <img src="brand_assets/images/influencers/nyrraa-banerjee.jpeg" alt="Nyrraa Banerjee" class="trip-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
+            <div class="absolute bottom-4 right-4 z-10">
+              <span class="inline-flex items-center px-3 py-1.5 bg-teal text-white font-body text-xs font-bold rounded-full shadow-lg">3.8M</span>
+            </div>
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-bold text-warm-brown mb-1">Nyrraa Banerjee</h3>
+            <a href="https://instagram.com/nyra_banerjee" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-body text-sm text-muted-brown hover:text-sunset transition-colors duration-300 mb-3">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              @nyra_banerjee
+            </a>
+            <p class="font-body text-sm text-muted-brown mb-5 line-clamp-2">Actress, dancer & globe-trotter. Known for her bold style and adventurous spirit, Nyrraa turns every trip into magic.</p>
+            <div class="flex items-center justify-between">
+              <span class="badge bg-forest/10 text-forest">
+                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Bali Trip
+              </span>
+              <a href="https://instagram.com/nyra_banerjee" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-1.5 px-4 py-2 bg-sunset text-white font-body text-xs font-semibold rounded-full">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
+                Follow
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Influencer 4: Aditi Shetty -->
+        <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.3s;">
+          <div class="relative overflow-hidden aspect-[3/4]">
+            <img src="brand_assets/images/influencers/aditi-shetty.jpeg" alt="Aditi Shetty" class="trip-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
+            <!-- Top accent line -->
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-bold text-warm-brown mb-1">Aditi Shetty</h3>
+            <a href="https://www.instagram.com/aditishetty22" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-body text-sm text-muted-brown hover:text-sunset transition-colors duration-300 mb-3">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              @aditishetty22
+            </a>
+            <p class="font-body text-sm text-muted-brown mb-5 line-clamp-2">Influencer & travel enthusiast capturing beautiful moments and inspiring wanderlust across the globe.</p>
+            <div class="flex items-center justify-between">
+              <span class="badge bg-sunset/10 text-sunset">
+                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Influencer
+              </span>
+              <a href="https://www.instagram.com/aditishetty22" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-1.5 px-4 py-2 bg-sunset text-white font-body text-xs font-semibold rounded-full">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
+                Follow
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Influencer 5: Maera Mishra -->
+        <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.4s;">
+          <div class="relative overflow-hidden aspect-[3/4]">
+            <img src="brand_assets/images/influencers/maera-mishra.jpeg" alt="Maera Mishra" class="trip-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
+            <!-- Top accent line -->
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-bold text-warm-brown mb-1">Maera Mishra</h3>
+            <a href="https://www.instagram.com/maeramishra" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-body text-sm text-muted-brown hover:text-sunset transition-colors duration-300 mb-3">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              @maeramishra
+            </a>
+            <p class="font-body text-sm text-muted-brown mb-5 line-clamp-2">Actress & content creator with a passion for exploring new cultures and sharing authentic travel experiences.</p>
+            <div class="flex items-center justify-between">
+              <span class="badge bg-sunset/10 text-sunset">
+                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Influencer
+              </span>
+              <a href="https://www.instagram.com/maeramishra" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-1.5 px-4 py-2 bg-sunset text-white font-body text-xs font-semibold rounded-full">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
+                Follow
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- FOLLOW OUR JOURNEY / INSTAGRAM EMBEDS -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="highlights" class="py-20 md:py-28 px-6 md:px-12 bg-cream overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 fade-up">
+        <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-amber mb-4 block">Follow Our Journey</span>
+        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-brown mb-4">Catch Us on <span class="text-sunset">Instagram</span></h2>
+        <p class="font-body text-muted-brown text-lg max-w-2xl mx-auto">Watch our latest reels and relive the magic of every adventure — right here!</p>
+      </div>
+
+      <!-- Horizontal scroll embedded reels -->
+      <div class="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide -mx-6 px-6" style="scrollbar-width: none; -ms-overflow-style: none;">
+        <!-- Reel 1 -->
+        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white">
+            <iframe src="https://www.instagram.com/reel/DW6u2mmCNzl/embed/" class="w-full border-0" style="height: 520px; border-radius: 16px;" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <!-- Reel 2 -->
+        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white">
+            <iframe src="https://www.instagram.com/reel/DW294veiCGc/embed/" class="w-full border-0" style="height: 520px; border-radius: 16px;" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <!-- Post 3 -->
+        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white">
+            <iframe src="https://www.instagram.com/p/DWnsSV3kdA5/embed/" class="w-full border-0" style="height: 520px; border-radius: 16px;" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <!-- Reel 4 -->
+        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white">
+            <iframe src="https://www.instagram.com/reel/DWjRsPtk9aK/embed/" class="w-full border-0" style="height: 520px; border-radius: 16px;" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <!-- Reel 5 -->
+        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white">
+            <iframe src="https://www.instagram.com/reel/DWbb3DNkXTz/embed/" class="w-full border-0" style="height: 520px; border-radius: 16px;" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-8 fade-up">
+        <a href="https://instagram.com/namasteewanderrlust" target="_blank" rel="noopener" class="btn-secondary inline-flex items-center gap-2 px-6 py-3 border-[1.5px] border-warm-brown text-warm-brown font-body font-semibold text-sm rounded-lg">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
+          Follow @namasteewanderrlust
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- JOIN OUR COMMUNITY -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="community" class="py-20 md:py-28 bg-warm-beige overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid md:grid-cols-2 items-stretch min-h-[500px]">
+        <!-- Left: Image -->
+        <div class="relative overflow-hidden md:rounded-r-none">
+          <img
+            src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=800&q=80"
+            alt="Group of happy travelers looking at sunset"
+            class="w-full h-full object-cover min-h-[400px] md:min-h-full"
+          >
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent to-warm-beige/30 hidden md:block"></div>
+          <div class="absolute inset-0 bg-sunset/5 mix-blend-multiply"></div>
+        </div>
+
+        <!-- Right: Content -->
+        <div class="px-8 md:px-16 py-12 md:py-16 flex flex-col justify-center">
+          <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-teal mb-4 block fade-up">Join the Vibe</span>
+          <h2 class="font-display text-4xl md:text-5xl font-bold text-warm-brown mb-4 fade-up">A Community of <span class="text-sunset">Happy Travelers</span></h2>
+          <p class="font-body text-muted-brown text-base mb-8 leading-relaxed fade-up">Experience travel like never before. Join thousands of wanderers sharing stories, creating content, and building friendships that last a lifetime.</p>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-6 mb-10 fade-up">
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-sunset/10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+              </div>
+              <p class="font-display text-2xl font-bold text-warm-brown">5k+</p>
+              <p class="font-body text-xs text-muted-brown">Members</p>
+            </div>
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-teal/10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-teal" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+              </div>
+              <p class="font-display text-2xl font-bold text-warm-brown">12k+</p>
+              <p class="font-body text-xs text-muted-brown">Smiles</p>
+            </div>
+            <div class="text-center">
+              <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-forest/10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-forest" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/></svg>
+              </div>
+              <p class="font-display text-2xl font-bold text-warm-brown">500+</p>
+              <p class="font-body text-xs text-muted-brown">Trips</p>
+            </div>
+          </div>
+
+          <!-- WhatsApp CTA -->
+          <a href="https://chat.whatsapp.com/CvFg3sXzsoXG4h2uoAnzbJ" class="btn-primary inline-flex items-center justify-center gap-3 px-8 py-4 bg-sunset text-white font-body font-semibold text-base rounded-xl w-full max-w-md fade-up">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Join Our WhatsApp Community
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- OUR STORY -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="story" class="py-20 md:py-28 px-6 md:px-12 bg-cream">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16 fade-up">
+        <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-muted-brown mb-4 block">Our Story</span>
+        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-brown mb-2">Founded by <span class="text-sunset">Parul & Anagh</span></h2>
+        <span class="text-amber text-2xl">&#10022;</span>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Founder 1: Parul -->
+        <div class="relative group fade-up">
+          <div class="relative overflow-hidden rounded-2xl aspect-[3/4] shadow-[0_8px_32px_rgba(44,36,24,0.1)]">
+            <img src="brand_assets/images/founders/parul-chaudhary.jpeg" alt="Parul Chaudhary - Co-Founder" class="trip-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/70 via-deep-black/20 to-transparent"></div>
+
+            <!-- Role icon badge -->
+            <div class="absolute top-4 right-4 z-10">
+              <div class="w-12 h-12 rounded-xl bg-sunset flex items-center justify-center shadow-lg">
+                <span class="text-2xl">&#127916;</span>
+              </div>
+            </div>
+
+            <!-- Bottom info -->
+            <div class="absolute bottom-6 left-6 right-6 z-10">
+              <h3 class="font-display text-3xl font-bold text-white mb-1">Parul Chaudhary</h3>
+              <p class="font-body text-sm text-off-white/80">Co-Founder &middot; Storyteller &middot; Host</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Founder 2: Anagh -->
+        <div class="relative group fade-up" style="transition-delay: 0.15s;">
+          <div class="relative overflow-hidden rounded-2xl aspect-[3/4] shadow-[0_8px_32px_rgba(44,36,24,0.1)]">
+            <img src="brand_assets/images/founders/anagh-bharat.jpeg" alt="Anagh Bharat - Co-Founder" class="trip-img w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/70 via-deep-black/20 to-transparent"></div>
+
+            <!-- Role icon badge -->
+            <div class="absolute top-4 right-4 z-10">
+              <div class="w-12 h-12 rounded-xl bg-teal flex items-center justify-center shadow-lg">
+                <span class="text-2xl">&#128640;</span>
+              </div>
+            </div>
+
+            <!-- Bottom info -->
+            <div class="absolute bottom-6 left-6 right-6 z-10">
+              <h3 class="font-display text-3xl font-bold text-white mb-1">Anagh Bharat</h3>
+              <p class="font-body text-sm text-off-white/80">Co-Founder &middot; Strategist &middot; Curator</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- CTA SECTION -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="contact" class="relative py-24 md:py-32 px-6 md:px-12 overflow-hidden noise-overlay">
+    <!-- Background -->
+    <div class="absolute inset-0">
+      <img
+        src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80"
+        alt="Tropical sunset beach"
+        class="w-full h-full object-cover"
+      >
+      <div class="absolute inset-0 bg-gradient-to-t from-deep-black/85 via-deep-black/60 to-deep-black/40"></div>
+      <div class="absolute inset-0 bg-sunset/5 mix-blend-multiply"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto text-center">
+      <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-amber mb-4 block">Don't Miss Out</span>
+      <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Ready to Wander?</h2>
+      <p class="font-body text-lg text-off-white/70 mb-10 max-w-xl mx-auto">
+        Limited spots for our upcoming trips. Reserve yours today and travel with soul.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+        <a href="#trips" class="btn-primary px-10 py-4 bg-sunset text-white font-body font-semibold text-base rounded-lg">
+          Secure My Spot
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="btn-secondary px-10 py-4 border-[1.5px] border-white/40 text-white font-body font-semibold text-base rounded-lg hover:bg-white hover:text-warm-brown">
+          Follow Our Journey
+        </a>
+      </div>
+
+      <p class="font-body text-xs text-off-white/40">Free cancellation up to 30 days before departure</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- FOOTER -->
+  <!-- ═══════════════════════════════════════════ -->
+  <footer class="bg-deep-black py-16 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid md:grid-cols-3 gap-12 mb-12">
+        <!-- Brand Column -->
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="h-12 w-auto object-contain brightness-110">
+          </div>
+          <p class="font-body text-sm text-off-white/50 mb-6 leading-relaxed">Travel the World with Your Favorite Influencer. Curated group adventures designed for connection, discovery, and soul.</p>
+          <!-- Social Icons -->
+          <div class="flex gap-4">
+            <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-sunset/20 transition-colors duration-300" aria-label="Instagram">
+              <svg class="w-5 h-5 text-off-white/60" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-sunset/20 transition-colors duration-300" aria-label="YouTube">
+              <svg class="w-5 h-5 text-off-white/60" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-sunset/20 transition-colors duration-300" aria-label="Twitter">
+              <svg class="w-5 h-5 text-off-white/60" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="font-body text-sm font-semibold text-off-white uppercase tracking-wider mb-6">Quick Links</h4>
+          <ul class="space-y-3">
+            <li><a href="#trips" class="font-body text-sm text-off-white/50 hover:text-sunset transition-colors duration-300">Upcoming Trips</a></li>
+            <li><a href="#about" class="font-body text-sm text-off-white/50 hover:text-sunset transition-colors duration-300">How It Works</a></li>
+            <li><a href="#influencers" class="font-body text-sm text-off-white/50 hover:text-sunset transition-colors duration-300">Our Influencers</a></li>
+            <li><a href="#contact" class="font-body text-sm text-off-white/50 hover:text-sunset transition-colors duration-300">Contact Us</a></li>
+            <li><a href="#" class="font-body text-sm text-off-white/50 hover:text-sunset transition-colors duration-300">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div>
+          <h4 class="font-body text-sm font-semibold text-off-white uppercase tracking-wider mb-6">Get Early Access</h4>
+          <p class="font-body text-sm text-off-white/50 mb-4">Be the first to know about new trips, early-bird pricing, and exclusive content.</p>
+          <form class="flex gap-2" onsubmit="event.preventDefault()">
+            <input
+              type="email"
+              placeholder="your@email.com"
+              class="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-lg font-body text-sm text-off-white placeholder:text-off-white/30 focus:border-sunset/50"
+            >
+            <button type="submit" class="btn-primary px-5 py-3 bg-sunset text-white font-body text-sm font-semibold rounded-lg flex-shrink-0">
+              Join
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="font-body text-xs text-off-white/30">&copy; 2026 NamasteeWanderrlust. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="font-body text-xs text-off-white/30 hover:text-off-white/60 transition-colors duration-300">Privacy Policy</a>
+          <a href="#" class="font-body text-xs text-off-white/30 hover:text-off-white/60 transition-colors duration-300">Terms of Service</a>
+          <a href="#" class="font-body text-xs text-off-white/30 hover:text-off-white/60 transition-colors duration-300">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- BOOKING MODAL -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="bookingModal" class="hidden">
+    <div class="modal-backdrop" onclick="if(event.target===this)BookingModal.close()">
+      <div class="modal-container">
+        <!-- Header -->
+        <div class="modal-header">
+          <div>
+            <p class="font-body text-xs text-muted-brown uppercase tracking-wider">Book Your Trip</p>
+            <h3 id="bookingTripName" class="font-display text-xl font-bold text-warm-brown">Munnar</h3>
+          </div>
+          <button class="modal-close" onclick="BookingModal.close()" aria-label="Close">
+            <svg class="w-5 h-5 text-muted-brown" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+          <div class="step-dot bg-sunset"></div>
+          <div class="step-dot bg-sand/40"></div>
+          <div class="step-dot bg-sand/40"></div>
+          <div class="step-dot bg-sand/40"></div>
+          <div class="step-dot bg-sand/40"></div>
+          <div class="step-dot bg-sand/40"></div>
+        </div>
+
+        <div id="bookingModalContent">
+          <!-- ─── Step 1: Email ─── -->
+          <div class="booking-step modal-body" data-step="1">
+            <div class="text-center mb-6">
+              <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sunset/10 flex items-center justify-center">
+                <svg class="w-7 h-7 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+              </div>
+              <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Enter Your Email</h4>
+              <p class="font-body text-sm text-muted-brown">We'll send a 6-digit verification code</p>
+            </div>
+            <input id="authEmail" type="email" class="modal-input mb-3" placeholder="your@email.com" autocomplete="email">
+            <p id="emailError" class="error-text"></p>
+            <button id="sendOtpBtn" onclick="BookingModal.submitEmail()" class="modal-btn modal-btn-primary mt-4">Send OTP</button>
+          </div>
+
+          <!-- ─── Step 2: OTP ─── -->
+          <div class="booking-step modal-body hidden" data-step="2">
+            <div class="text-center mb-6">
+              <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-teal/10 flex items-center justify-center">
+                <svg class="w-7 h-7 text-teal" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+              </div>
+              <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Verify OTP</h4>
+              <p class="font-body text-sm text-muted-brown">Enter the 6-digit code sent to</p>
+              <p id="otpEmailDisplay" class="font-body text-sm font-semibold text-sunset mt-1"></p>
+            </div>
+            <div class="otp-container mb-3">
+              <input class="otp-input" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+              <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+              <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+              <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+              <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+              <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+            </div>
+            <p id="otpError" class="error-text text-center"></p>
+            <button id="verifyOtpBtn" onclick="BookingModal.submitOtp()" class="modal-btn modal-btn-primary mt-4">Verify & Continue</button>
+            <div class="flex items-center justify-center gap-4 mt-3">
+              <button onclick="BookingModal.goTo(1)" class="text-sm text-muted-brown hover:text-warm-brown transition-colors">← Change email</button>
+              <span class="text-sand/40">|</span>
+              <button id="resendOtpBtn" onclick="BookingModal.resendOtp()" class="text-sm text-sunset hover:text-sunset/80 font-medium transition-colors">Resend Code</button>
+            </div>
+          </div>
+
+          <!-- ─── Step 3: Name & Phone ─── -->
+          <div class="booking-step modal-body hidden" data-step="3">
+            <div class="text-center mb-6">
+              <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-amber/10 flex items-center justify-center">
+                <svg class="w-7 h-7 text-amber" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+              </div>
+              <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Your Details</h4>
+              <p class="font-body text-sm text-muted-brown">Tell us a bit about yourself</p>
+            </div>
+            <input id="userName" type="text" class="modal-input mb-3" placeholder="Full Name" autocomplete="name">
+            <input id="userPhone" type="tel" class="modal-input mb-3" placeholder="Phone Number (10 digits)" autocomplete="tel" maxlength="10" inputmode="numeric">
+            <p id="detailsError" class="error-text"></p>
+            <button onclick="BookingModal.submitDetails()" class="modal-btn modal-btn-primary mt-4">Continue</button>
+          </div>
+
+          <!-- ─── Step 4: Package Selection ─── -->
+          <div class="booking-step modal-body hidden" data-step="4">
+            <div class="text-center mb-6">
+              <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Select Package</h4>
+              <p class="font-body text-sm text-muted-brown">Choose the best option for you</p>
+            </div>
+
+            <div class="space-y-4 mb-6">
+              <div class="package-card" data-package="per_person" onclick="BookingModal.selectPackage('per_person')">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="font-display text-lg font-bold text-warm-brown">Per Person</p>
+                    <p class="font-body text-xs text-muted-brown">Solo traveler package</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="font-display text-2xl font-bold text-sunset">₹30,010</p>
+                    <p class="font-body text-[10px] text-muted-brown">Including GST</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="package-card" data-package="per_couple" onclick="BookingModal.selectPackage('per_couple')">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="font-display text-lg font-bold text-warm-brown">Per Couple</p>
+                    <p class="font-body text-xs text-muted-brown">Travel with your partner</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="font-display text-2xl font-bold text-sunset">₹40,440</p>
+                    <p class="font-body text-[10px] text-muted-brown">Including GST</p>
+                  </div>
+                </div>
+                <div class="mt-2 inline-flex items-center gap-1 px-2 py-0.5 bg-forest/10 rounded-full">
+                  <span class="font-body text-[10px] font-semibold text-forest">SAVE ₹19,580</span>
+                </div>
+              </div>
+            </div>
+
+            <button id="proceedPayBtn" onclick="BookingModal.proceedToPayment()" class="modal-btn modal-btn-primary" disabled>Proceed to Pay</button>
+            <button onclick="BookingModal.goTo(3)" class="modal-btn modal-btn-secondary mt-2">Back</button>
+          </div>
+
+          <!-- ─── Step 5: Payment Processing (shown briefly) ─── -->
+          <div class="booking-step modal-body hidden" data-step="5">
+            <div class="text-center py-8">
+              <div class="w-12 h-12 mx-auto mb-4 border-3 border-sunset/30 border-t-sunset rounded-full animate-spin"></div>
+              <h4 class="font-display text-xl font-bold text-warm-brown mb-2">Processing Payment</h4>
+              <p class="font-body text-sm text-muted-brown">Please complete the payment in the Razorpay window...</p>
+            </div>
+          </div>
+
+          <!-- ─── Step 6: Success ─── -->
+          <div class="booking-step modal-body hidden" data-step="6">
+            <div class="text-center">
+              <div class="success-icon">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
+              </div>
+              <h4 class="font-display text-2xl font-bold text-warm-brown mb-2">Booking Confirmed!</h4>
+              <p class="font-body text-sm text-muted-brown mb-6">Your spot has been secured. See you on the trip!</p>
+
+              <div class="bg-white rounded-xl p-5 text-left mb-6 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
+                <div class="grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <p class="font-body text-xs text-muted-brown">Booking ID</p>
+                    <p id="successBookingId" class="font-body font-semibold text-warm-brown text-xs break-all">-</p>
+                  </div>
+                  <div>
+                    <p class="font-body text-xs text-muted-brown">Payment ID</p>
+                    <p id="successPaymentId" class="font-body font-semibold text-warm-brown text-xs">-</p>
+                  </div>
+                  <div>
+                    <p class="font-body text-xs text-muted-brown">Trip</p>
+                    <p id="successTripName" class="font-body font-semibold text-warm-brown">-</p>
+                  </div>
+                  <div>
+                    <p class="font-body text-xs text-muted-brown">Package</p>
+                    <p id="successPackage" class="font-body font-semibold text-warm-brown">-</p>
+                  </div>
+                  <div class="col-span-2">
+                    <p class="font-body text-xs text-muted-brown">Amount Paid</p>
+                    <p id="successAmount" class="font-display text-2xl font-bold text-sunset">-</p>
+                  </div>
+                </div>
+              </div>
+
+              <button onclick="PDFGenerator.downloadReceipt({bookingId:document.getElementById('successBookingId').textContent,paymentId:document.getElementById('successPaymentId').textContent,tripName:document.getElementById('successTripName').textContent,packageLabel:document.getElementById('successPackage').textContent,amountDisplay:document.getElementById('successAmount').textContent,userName:BookingModal.state.name,userEmail:BookingModal.state.email,userPhone:BookingModal.state.phone})" class="modal-btn modal-btn-primary mb-2">
+                <span class="inline-flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                  Download Receipt
+                </span>
+              </button>
+              <button onclick="BookingModal.close()" class="modal-btn modal-btn-secondary">Done</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- CDN LIBRARIES -->
+  <!-- ═══════════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1/dist/confetti.browser.min.js"></script>
+
+  <!-- App JS Modules -->
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/booking-modal.js"></script>
+  <script src="js/razorpay.js"></script>
+  <script src="js/pdf.js"></script>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCRIPTS -->
+  <!-- ═══════════════════════════════════════════ -->
+  <script>
+    // Influencer infinite carousel
+    (function() {
+      const scroll = document.querySelector('.influencer-scroll');
+      if (!scroll) return;
+
+      // Clone all cards and append for seamless loop
+      const cards = Array.from(scroll.children);
+      cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        scroll.appendChild(clone);
+      });
+
+      let paused = false;
+      let speed = 0.8; // pixels per frame
+
+      scroll.addEventListener('mouseenter', () => paused = true);
+      scroll.addEventListener('mouseleave', () => paused = false);
+      scroll.addEventListener('touchstart', () => paused = true);
+      scroll.addEventListener('touchend', () => { setTimeout(() => paused = false, 2000); });
+
+      // Get the width of the original set of cards (before clones)
+      function getOriginalWidth() {
+        const gap = 24; // gap-6 = 24px
+        let total = 0;
+        for (let i = 0; i < cards.length; i++) {
+          total += cards[i].offsetWidth + gap;
+        }
+        return total;
+      }
+
+      function animate() {
+        if (!paused) {
+          scroll.scrollLeft += speed;
+          // When we've scrolled past all original cards, jump back seamlessly
+          const origWidth = getOriginalWidth();
+          if (scroll.scrollLeft >= origWidth) {
+            scroll.scrollLeft -= origWidth;
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+
+      // Disable snap for smooth continuous scroll
+      scroll.style.scrollSnapType = 'none';
+      requestAnimationFrame(animate);
+    })();
+
+    // Hero carousel auto-scroll
+    (function() {
+      const slides = document.querySelectorAll('.hero-slide');
+      const dots = document.querySelectorAll('.hero-dot');
+      let current = 0;
+      const total = slides.length;
+      let interval;
+
+      function goToSlide(index) {
+        slides[current].style.opacity = '0';
+        dots[current].classList.replace('bg-white/80', 'bg-white/30');
+        dots[current].classList.replace('w-3', 'w-2.5');
+        dots[current].classList.replace('h-3', 'h-2.5');
+        current = index;
+        slides[current].style.opacity = '1';
+        dots[current].classList.replace('bg-white/30', 'bg-white/80');
+        dots[current].classList.replace('w-2.5', 'w-3');
+        dots[current].classList.replace('h-2.5', 'h-3');
+      }
+
+      function startAutoplay() {
+        interval = setInterval(() => goToSlide((current + 1) % total), 5000);
+      }
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          clearInterval(interval);
+          goToSlide(parseInt(dot.dataset.slide));
+          startAutoplay();
+        });
+      });
+
+      startAutoplay();
+    })();
+
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const bar1 = document.getElementById('bar1');
+    const bar2 = document.getElementById('bar2');
+    const bar3 = document.getElementById('bar3');
+    let menuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      bar1.style.transform = menuOpen ? 'rotate(45deg) translate(4px, 4px)' : '';
+      bar2.style.opacity = menuOpen ? '0' : '1';
+      bar3.style.transform = menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : '';
+    });
+
+    function closeMobileMenu() {
+      menuOpen = false;
+      mobileMenu.classList.remove('open');
+      bar1.style.transform = '';
+      bar2.style.opacity = '1';
+      bar3.style.transform = '';
+    }
+
+    // Scroll-triggered fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

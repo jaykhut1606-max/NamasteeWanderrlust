@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — NamasteeWanderrlust</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'sunset': '#D4773B', 'amber': '#D4A843', 'deep-black': '#1A1A1A',
+            'warm-beige': '#EDE8DC', 'teal': '#2A7B8E', 'forest': '#3B6B3A',
+            'off-white': '#F5F0E8', 'cream': '#FAF7F2',
+            'warm-brown': '#2C2418', 'muted-brown': '#6B6356',
+          },
+          fontFamily: { 'display': ['"Cormorant Garamond"', 'serif'], 'body': ['"DM Sans"', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; color: #2C2418; background: #F5F0E8; }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+    .status-completed { background: #3B6B3A20; color: #3B6B3A; }
+    .status-pending { background: #D4A84320; color: #D4A843; }
+    .status-failed { background: #E5393520; color: #E53935; }
+  </style>
+</head>
+<body class="bg-off-white min-h-screen">
+
+  <!-- Login Screen -->
+  <div id="loginScreen" class="min-h-screen flex items-center justify-center px-6">
+    <div class="bg-white rounded-2xl shadow-[0_8px_32px_rgba(44,36,24,0.08)] p-8 max-w-md w-full">
+      <div class="text-center mb-8">
+        <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="h-16 mx-auto mb-4">
+        <h1 class="font-display text-3xl font-bold text-warm-brown">Admin Dashboard</h1>
+        <p class="font-body text-sm text-muted-brown mt-1">Sign in to manage bookings</p>
+      </div>
+      <input id="adminEmail" type="email" placeholder="Admin email" class="w-full px-4 py-3 border border-warm-brown/10 rounded-xl font-body text-sm mb-3 focus:outline-none focus:border-sunset" value="jay.khut1606@gmail.com">
+      <input id="adminPassword" type="password" placeholder="Password" class="w-full px-4 py-3 border border-warm-brown/10 rounded-xl font-body text-sm mb-3 focus:outline-none focus:border-sunset">
+      <p id="loginError" class="text-red-500 text-xs mb-3"></p>
+      <button id="loginBtn" onclick="AdminAuth.login()" class="w-full py-3 bg-sunset text-white font-body font-semibold rounded-xl hover:bg-sunset/90 transition-colors">Sign In</button>
+      <p class="text-center text-xs text-muted-brown mt-4">First time? <button onclick="AdminAuth.signUp()" class="text-sunset font-semibold hover:underline">Create admin account</button></p>
+    </div>
+  </div>
+
+  <!-- Dashboard (hidden until login) -->
+  <div id="dashboardScreen" class="hidden">
+    <!-- Top Bar -->
+    <header class="bg-deep-black px-6 md:px-12 py-4">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="h-10">
+          <div>
+            <h2 class="font-display text-lg font-bold text-off-white">Admin Dashboard</h2>
+            <p id="adminEmailDisplay" class="font-body text-xs text-off-white/50"></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="index.html" class="font-body text-xs text-off-white/60 hover:text-sunset transition-colors">View Site</a>
+          <button onclick="AdminAuth.logout()" class="px-4 py-2 border border-white/10 text-off-white/80 font-body text-xs rounded-lg hover:bg-white/5 transition-colors">Sign Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 md:px-12 py-8">
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
+          <p class="font-body text-xs text-muted-brown uppercase tracking-wider mb-1">Total Bookings</p>
+          <p id="statTotal" class="font-display text-3xl font-bold text-warm-brown">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
+          <p class="font-body text-xs text-muted-brown uppercase tracking-wider mb-1">Confirmed</p>
+          <p id="statConfirmed" class="font-display text-3xl font-bold text-forest">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
+          <p class="font-body text-xs text-muted-brown uppercase tracking-wider mb-1">Pending</p>
+          <p id="statPending" class="font-display text-3xl font-bold text-amber">0</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
+          <p class="font-body text-xs text-muted-brown uppercase tracking-wider mb-1">Total Revenue</p>
+          <p id="statRevenue" class="font-display text-3xl font-bold text-sunset">₹0</p>
+        </div>
+      </div>
+
+      <!-- Actions Bar -->
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-display text-2xl font-bold text-warm-brown">All Bookings</h3>
+        <button onclick="Admin.exportCSV()" class="inline-flex items-center gap-2 px-4 py-2 bg-teal text-white font-body text-sm font-semibold rounded-lg hover:bg-teal-dark transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Export CSV
+        </button>
+      </div>
+
+      <!-- Bookings Table -->
+      <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(44,36,24,0.04)] overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-warm-beige/50">
+              <tr>
+                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Name</th>
+                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Email</th>
+                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Phone</th>
+                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Trip</th>
+                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Package</th>
+                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Amount</th>
+                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Status</th>
+                <th class="font-body text-xs font-semibold text-muted-brown uppercase tracking-wider px-5 py-3">Date</th>
+              </tr>
+            </thead>
+            <tbody id="bookingsTableBody">
+              <tr><td colspan="8" class="px-5 py-12 text-center text-muted-brown font-body text-sm">Loading bookings...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script>
+    // ═══════════════════════════════════════════
+    // Admin Auth
+    // ═══════════════════════════════════════════
+    const AdminAuth = {
+      async login() {
+        const email = document.getElementById('adminEmail').value.trim();
+        const password = document.getElementById('adminPassword').value;
+        const errorEl = document.getElementById('loginError');
+        const btn = document.getElementById('loginBtn');
+
+        errorEl.textContent = '';
+        if (!email || !password) { errorEl.textContent = 'Email and password required'; return; }
+
+        btn.disabled = true; btn.textContent = 'Signing in...';
+        try {
+          const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+
+          // Check admin allowlist
+          const { data: admin } = await supabase.from('admins').select('email').eq('email', email).single();
+          if (!admin) {
+            await supabase.auth.signOut();
+            throw new Error('Not authorized as admin');
+          }
+
+          this.showDashboard(email);
+        } catch (err) {
+          errorEl.textContent = err.message;
+        } finally {
+          btn.disabled = false; btn.textContent = 'Sign In';
+        }
+      },
+
+      async signUp() {
+        const email = document.getElementById('adminEmail').value.trim();
+        const password = document.getElementById('adminPassword').value;
+        const errorEl = document.getElementById('loginError');
+
+        if (!email || !password || password.length < 6) {
+          errorEl.textContent = 'Email and password (min 6 chars) required';
+          return;
+        }
+
+        // Check allowlist first
+        const { data: admin } = await supabase.from('admins').select('email').eq('email', email).single();
+        if (!admin) { errorEl.textContent = 'This email is not in the admin allowlist'; return; }
+
+        const { error } = await supabase.auth.signUp({ email, password });
+        if (error) { errorEl.textContent = error.message; return; }
+
+        errorEl.style.color = '#3B6B3A';
+        errorEl.textContent = 'Account created! Check your email to confirm, then sign in.';
+      },
+
+      showDashboard(email) {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('dashboardScreen').classList.remove('hidden');
+        document.getElementById('adminEmailDisplay').textContent = email;
+        Admin.loadBookings();
+      },
+
+      async logout() {
+        await supabase.auth.signOut();
+        document.getElementById('dashboardScreen').classList.add('hidden');
+        document.getElementById('loginScreen').classList.remove('hidden');
+      },
+
+      async checkSession() {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          const { data: admin } = await supabase.from('admins').select('email').eq('email', session.user.email).single();
+          if (admin) { this.showDashboard(session.user.email); }
+        }
+      }
+    };
+
+    // ═══════════════════════════════════════════
+    // Admin Dashboard Logic
+    // ═══════════════════════════════════════════
+    const Admin = {
+      bookings: [],
+
+      async loadBookings() {
+        const { data, error } = await supabase
+          .from('bookings')
+          .select('*, trips(name, destination)')
+          .order('created_at', { ascending: false });
+
+        if (error) { console.error(error); return; }
+        this.bookings = data || [];
+        this.renderTable();
+        this.renderStats();
+      },
+
+      renderTable() {
+        const tbody = document.getElementById('bookingsTableBody');
+        if (!this.bookings.length) {
+          tbody.innerHTML = '<tr><td colspan="8" class="px-5 py-12 text-center text-muted-brown font-body text-sm">No bookings yet</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = this.bookings.map(b => `
+          <tr class="border-t border-warm-beige/50 hover:bg-cream/50 transition-colors">
+            <td class="px-5 py-4 font-body text-sm font-semibold text-warm-brown">${b.user_name}</td>
+            <td class="px-5 py-4 font-body text-sm text-muted-brown">${b.user_email}</td>
+            <td class="px-5 py-4 font-body text-sm text-muted-brown">${b.user_phone}</td>
+            <td class="px-5 py-4 font-body text-sm text-warm-brown">${b.trips?.name || '-'}</td>
+            <td class="px-5 py-4 font-body text-sm text-warm-brown capitalize">${b.package_type.replace('_', ' ')}</td>
+            <td class="px-5 py-4 font-body text-sm font-semibold text-warm-brown">₹${(b.amount_paise / 100).toLocaleString('en-IN')}</td>
+            <td class="px-5 py-4">
+              <span class="inline-flex px-2.5 py-1 rounded-full font-body text-xs font-semibold status-${b.payment_status}">
+                ${b.payment_status}
+              </span>
+            </td>
+            <td class="px-5 py-4 font-body text-xs text-muted-brown">${new Date(b.created_at).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}</td>
+          </tr>
+        `).join('');
+      },
+
+      renderStats() {
+        const total = this.bookings.length;
+        const confirmed = this.bookings.filter(b => b.payment_status === 'completed').length;
+        const pending = this.bookings.filter(b => b.payment_status === 'pending').length;
+        const revenue = this.bookings
+          .filter(b => b.payment_status === 'completed')
+          .reduce((sum, b) => sum + (b.amount_paise / 100), 0);
+
+        document.getElementById('statTotal').textContent = total;
+        document.getElementById('statConfirmed').textContent = confirmed;
+        document.getElementById('statPending').textContent = pending;
+        document.getElementById('statRevenue').textContent = '₹' + revenue.toLocaleString('en-IN');
+      },
+
+      exportCSV() {
+        if (!this.bookings.length) { alert('No bookings to export'); return; }
+
+        const headers = ['Name', 'Email', 'Phone', 'Trip', 'Package', 'Amount (INR)', 'Payment Status', 'Payment ID', 'Booking Date'];
+        const rows = this.bookings.map(b => [
+          b.user_name,
+          b.user_email,
+          b.user_phone,
+          b.trips?.name || '-',
+          b.package_type.replace('_', ' '),
+          (b.amount_paise / 100),
+          b.payment_status,
+          b.razorpay_payment_id || '-',
+          new Date(b.created_at).toLocaleDateString('en-IN'),
+        ]);
+
+        const csv = [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `NamasteeWanderrlust-Bookings-${new Date().toISOString().slice(0,10)}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    };
+
+    // Init
+    AdminAuth.checkSession();
+  </script>
+</body>
+</html>
