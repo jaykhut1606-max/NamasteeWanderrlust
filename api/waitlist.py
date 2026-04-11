@@ -1,4 +1,4 @@
-"""Vercel Serverless Function: Verify OTP code."""
+"""Vercel Serverless Function: Add email to waitlist."""
 import json
 import os
 import urllib.request
@@ -29,18 +29,14 @@ def handler(request):
     try:
         body = json.loads(request.body)
         email = body.get("email", "").strip().lower()
-        code = body.get("code", "").strip()
+        trip = body.get("trip", "Bali")
 
-        if not email or not code:
-            return {"statusCode": 400, "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}, "body": json.dumps({"error": "Email and code are required"})}
+        if not email or "@" not in email:
+            return {"statusCode": 400, "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}, "body": json.dumps({"error": "Invalid email address"})}
 
-        is_valid = supabase_rpc("verify_otp", {"user_email": email, "user_code": code})
+        result = supabase_rpc("add_to_waitlist", {"user_email": email, "trip": trip})
 
-        if is_valid:
-            user_info = supabase_rpc("check_user", {"user_email": email})
-            return {"statusCode": 200, "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}, "body": json.dumps({"success": True, "verified": True, "user_exists": user_info.get("exists", False), "has_password": user_info.get("has_password", False)})}
-        else:
-            return {"statusCode": 401, "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}, "body": json.dumps({"success": False, "error": "Invalid or expired OTP"})}
+        return {"statusCode": 200, "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}, "body": json.dumps(result)}
 
     except Exception as e:
         return {"statusCode": 500, "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}, "body": json.dumps({"error": str(e)})}

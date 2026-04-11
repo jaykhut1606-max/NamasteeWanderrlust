@@ -284,7 +284,16 @@
         <a href="#trips" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest">Trips</a>
         <a href="#about" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest">About</a>
         <a href="#influencers" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest">Influencers</a>
-        <a href="#contact" class="btn-primary inline-flex items-center px-6 py-2.5 bg-sunset text-white font-body text-sm font-semibold rounded-lg">
+        <!-- Login Button (shown when logged out) -->
+        <button id="navLoginBtn" onclick="LoginModal.open()" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest cursor-pointer bg-transparent border-none">Login</button>
+        <!-- Profile Button (shown when logged in) -->
+        <button id="navProfileBtn" onclick="ProfileModal.open()" class="hidden inline-flex items-center gap-2 px-4 py-2 bg-warm-beige rounded-full cursor-pointer border-none">
+          <div class="w-7 h-7 rounded-full bg-gradient-to-br from-sunset to-amber flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+          </div>
+          <span class="profile-name font-body text-sm font-medium text-warm-brown">Profile</span>
+        </button>
+        <a href="#trips" class="btn-primary inline-flex items-center px-6 py-2.5 bg-sunset text-white font-body text-sm font-semibold rounded-lg">
           Explore Trips
         </a>
       </div>
@@ -302,7 +311,9 @@
       <a href="#trips" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Trips</a>
       <a href="#about" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">About</a>
       <a href="#influencers" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Influencers</a>
-      <a href="#contact" class="btn-primary inline-flex items-center px-8 py-3 bg-sunset text-white font-body text-base font-semibold rounded-lg" onclick="closeMobileMenu()">
+      <button id="navLoginBtnMobile" onclick="closeMobileMenu(); LoginModal.open()" class="font-display text-3xl text-warm-brown bg-transparent border-none cursor-pointer">Login</button>
+      <button id="navProfileBtnMobile" onclick="closeMobileMenu(); ProfileModal.open()" class="hidden font-display text-3xl text-sunset bg-transparent border-none cursor-pointer"><span class="profile-name">Profile</span></button>
+      <a href="#trips" class="btn-primary inline-flex items-center px-8 py-3 bg-sunset text-white font-body text-base font-semibold rounded-lg" onclick="closeMobileMenu()">
         Explore Trips
       </a>
     </div>
@@ -552,11 +563,16 @@
               </div>
             </div>
 
-            <!-- CTA -->
-            <a href="#contact" class="btn-secondary inline-flex items-center gap-2 w-full justify-center px-6 py-3.5 border-[1.5px] border-warm-brown text-warm-brown font-body font-semibold text-sm rounded-lg">
-              Join the Waitlist
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
+            <!-- CTA: Waitlist -->
+            <form class="w-full" onsubmit="event.preventDefault(); submitWaitlist(this, 'Bali')">
+              <div class="flex gap-2">
+                <input type="email" placeholder="your@email.com" class="flex-1 px-4 py-3 bg-warm-beige/50 border border-sand/30 rounded-lg font-body text-sm text-warm-brown placeholder:text-muted-brown/50 focus:border-sunset/50 focus:outline-none">
+                <button type="submit" class="btn-primary inline-flex items-center gap-2 px-5 py-3 bg-sunset text-white font-body font-semibold text-sm rounded-lg flex-shrink-0 transition-colors">
+                  Join
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -1057,11 +1073,11 @@
           </ul>
         </div>
 
-        <!-- Newsletter -->
+        <!-- Newsletter / Waitlist -->
         <div>
           <h4 class="font-body text-sm font-semibold text-off-white uppercase tracking-wider mb-6">Get Early Access</h4>
           <p class="font-body text-sm text-off-white/50 mb-4">Be the first to know about new trips, early-bird pricing, and exclusive content.</p>
-          <form class="flex gap-2" onsubmit="event.preventDefault()">
+          <form class="flex gap-2" onsubmit="event.preventDefault(); submitWaitlist(this, 'General')">
             <input
               type="email"
               placeholder="your@email.com"
@@ -1125,7 +1141,7 @@
             </div>
             <input id="authEmail" type="email" class="modal-input mb-3" placeholder="your@email.com" autocomplete="email">
             <p id="emailError" class="error-text"></p>
-            <button id="sendOtpBtn" onclick="BookingModal.submitEmail()" class="modal-btn modal-btn-primary mt-4">Send OTP</button>
+            <button id="sendOtpBtn" onclick="BookingModal.submitEmail()" class="modal-btn modal-btn-primary mt-4">Continue</button>
           </div>
 
           <!-- ─── Step 2: OTP ─── -->
@@ -1155,19 +1171,25 @@
             </div>
           </div>
 
-          <!-- ─── Step 3: Name & Phone ─── -->
+          <!-- ─── Step 3: Account Setup (Password + Details) ─── -->
           <div class="booking-step modal-body hidden" data-step="3">
             <div class="text-center mb-6">
               <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-amber/10 flex items-center justify-center">
                 <svg class="w-7 h-7 text-amber" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
               </div>
-              <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Your Details</h4>
-              <p class="font-body text-sm text-muted-brown">Tell us a bit about yourself</p>
+              <h4 id="setupTitle" class="font-display text-2xl font-bold text-warm-brown mb-1">Create Your Account</h4>
+              <p id="setupDesc" class="font-body text-sm text-muted-brown">Set up your password and details</p>
             </div>
-            <input id="userName" type="text" class="modal-input mb-3" placeholder="Full Name" autocomplete="name">
-            <input id="userPhone" type="tel" class="modal-input mb-3" placeholder="Phone Number (10 digits)" autocomplete="tel" maxlength="10" inputmode="numeric">
-            <p id="detailsError" class="error-text"></p>
-            <button onclick="BookingModal.submitDetails()" class="modal-btn modal-btn-primary mt-4">Continue</button>
+            <div id="namePhoneFields">
+              <input id="userName" type="text" class="modal-input mb-3" placeholder="Full Name" autocomplete="name">
+              <input id="userPhone" type="tel" class="modal-input mb-3" placeholder="Phone Number (10 digits)" autocomplete="tel" maxlength="10" inputmode="numeric">
+            </div>
+            <div id="passwordField">
+              <input id="userPassword" type="password" class="modal-input mb-3" placeholder="Create Password (min 6 characters)" autocomplete="new-password">
+            </div>
+            <p id="setupError" class="error-text"></p>
+            <button id="setupBtn" onclick="BookingModal.submitSetup()" class="modal-btn modal-btn-primary mt-4">Create Account & Continue</button>
+            <button onclick="BookingModal.goTo(1)" class="modal-btn modal-btn-secondary mt-2">Back</button>
           </div>
 
           <!-- ─── Step 4: Package Selection ─── -->
@@ -1265,6 +1287,44 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- LOGIN MODAL -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="loginModal" class="hidden">
+    <div class="modal-backdrop" onclick="if(event.target===this)LoginModal.close()">
+      <div class="modal-container" style="max-width:420px;">
+        <div class="modal-header">
+          <div>
+            <h3 class="font-display text-xl font-bold text-warm-brown">Sign In</h3>
+          </div>
+          <button class="modal-close" onclick="LoginModal.close()" aria-label="Close">
+            <svg class="w-5 h-5 text-muted-brown" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div id="loginModalContent" class="modal-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PROFILE MODAL -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="profileModal" class="hidden">
+    <div class="modal-backdrop" onclick="if(event.target===this)ProfileModal.close()">
+      <div class="modal-container" style="max-width:440px;">
+        <div class="modal-header">
+          <div>
+            <h3 class="font-display text-xl font-bold text-warm-brown">My Profile</h3>
+          </div>
+          <button class="modal-close" onclick="ProfileModal.close()" aria-label="Close">
+            <svg class="w-5 h-5 text-muted-brown" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div id="profileContent" class="modal-body" style="max-height:70vh;overflow-y:auto;"></div>
       </div>
     </div>
   </div>

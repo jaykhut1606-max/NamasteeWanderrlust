@@ -1,7 +1,11 @@
 {
   "rewrites": [
     { "source": "/api/send-otp", "destination": "/api/send-otp" },
-    { "source": "/api/verify-otp", "destination": "/api/verify-otp" }
+    { "source": "/api/verify-otp", "destination": "/api/verify-otp" },
+    { "source": "/api/register", "destination": "/api/register" },
+    { "source": "/api/login", "destination": "/api/login" },
+    { "source": "/api/profile", "destination": "/api/profile" },
+    { "source": "/api/waitlist", "destination": "/api/waitlist" }
   ],
   "headers": [
     {

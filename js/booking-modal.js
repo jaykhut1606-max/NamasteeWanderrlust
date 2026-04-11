@@ -1,16 +1,19 @@
 // ═══════════════════════════════════════════
 // Booking Modal — State Machine
+// Flow: Email → (New: OTP → Password Setup) or (Returning: Password) → Details → Package → Pay → Success
 // ═══════════════════════════════════════════
 
 const BookingModal = {
   currentStep: 1,
   tripId: null,
   tripName: null,
+  isNewUser: false,
   state: {
     email: '',
     otp: '',
     name: '',
     phone: '',
+    password: '',
     packageType: null,
     amount: 0,
   },
@@ -24,12 +27,15 @@ const BookingModal = {
     this.tripId = tripId;
     this.tripName = tripName;
     this.currentStep = 1;
-    this.state = { email: '', otp: '', name: '', phone: '', packageType: null, amount: 0 };
+    this.isNewUser = false;
+    this.state = { email: '', otp: '', name: '', phone: '', password: '', packageType: null, amount: 0 };
 
-    // Check if already logged in
+    // If already logged in, skip to details/package
     if (Auth.isLoggedIn()) {
       this.state.email = Auth.currentUser.email;
-      this.currentStep = 3; // Skip to name/phone
+      this.state.name = Auth.currentUser.name || '';
+      this.state.phone = Auth.currentUser.phone || '';
+      this.currentStep = 4; // Skip to package selection
     }
 
     document.getElementById('bookingModal').classList.remove('hidden');
@@ -46,14 +52,33 @@ const BookingModal = {
     this.currentStep = step;
     this.render();
 
-    // When entering OTP step, show email and clear inputs
+    // Step-specific setup
     if (step === 2) {
+      // OTP step
       const emailDisplay = document.getElementById('otpEmailDisplay');
       if (emailDisplay) emailDisplay.textContent = this.state.email;
-      // Clear OTP inputs and focus first
       const inputs = document.querySelectorAll('.otp-input');
       inputs.forEach(i => i.value = '');
       setTimeout(() => { if (inputs[0]) inputs[0].focus(); }, 100);
+    }
+    if (step === 3) {
+      // Setup step — show/hide password fields based on new vs returning
+      const setupTitle = document.getElementById('setupTitle');
+      const setupDesc = document.getElementById('setupDesc');
+      const namePhoneFields = document.getElementById('namePhoneFields');
+      const passwordField = document.getElementById('passwordField');
+
+      if (this.isNewUser) {
+        if (setupTitle) setupTitle.textContent = 'Create Your Account';
+        if (setupDesc) setupDesc.textContent = 'Set up your password and details';
+        if (namePhoneFields) namePhoneFields.classList.remove('hidden');
+        if (passwordField) passwordField.classList.remove('hidden');
+      } else {
+        if (setupTitle) setupTitle.textContent = 'Welcome Back!';
+        if (setupDesc) setupDesc.textContent = 'Enter your password to continue';
+        if (namePhoneFields) namePhoneFields.classList.add('hidden');
+        if (passwordField) passwordField.classList.remove('hidden');
+      }
     }
   },
 
@@ -71,7 +96,6 @@ const BookingModal = {
       dot.classList.toggle('bg-sand/40', i >= this.currentStep);
     });
 
-    // Update trip name in modal header
     const headerEl = document.getElementById('bookingTripName');
     if (headerEl) headerEl.textContent = this.tripName || 'Book Your Trip';
   },
@@ -79,7 +103,7 @@ const BookingModal = {
   // ─── Step 1: Email Input ───
   async submitEmail() {
     const emailInput = document.getElementById('authEmail');
-    const email = emailInput.value.trim();
+    const email = emailInput.value.trim().toLowerCase();
     const errorEl = document.getElementById('emailError');
     const btn = document.getElementById('sendOtpBtn');
 
@@ -90,21 +114,30 @@ const BookingModal = {
     }
 
     btn.disabled = true;
-    btn.textContent = 'Sending OTP...';
+    btn.textContent = 'Checking...';
 
     try {
-      await Auth.sendOtp(email);
+      const result = await Auth.sendOtp(email);
       this.state.email = email;
-      this.goTo(2);
+
+      if (result.has_password) {
+        // Returning user — go to password login (skip OTP)
+        this.isNewUser = false;
+        this.goTo(3);
+      } else {
+        // New user — verify OTP first
+        this.isNewUser = true;
+        this.goTo(2);
+      }
     } catch (err) {
       errorEl.textContent = err.message || 'Failed to send OTP. Try again.';
     } finally {
       btn.disabled = false;
-      btn.textContent = 'Send OTP';
+      btn.textContent = 'Continue';
     }
   },
 
-  // ─── Step 2: OTP Verification ───
+  // ─── Step 2: OTP Verification (new users only) ───
   async submitOtp() {
     const inputs = document.querySelectorAll('.otp-input');
     const otp = Array.from(inputs).map(i => i.value).join('');
@@ -123,6 +156,7 @@ const BookingModal = {
     try {
       await Auth.verifyOtp(this.state.email, otp);
       this.state.otp = otp;
+      // Go to account setup (password + name/phone)
       this.goTo(3);
     } catch (err) {
       errorEl.textContent = err.message || 'Invalid or expired OTP. Please try again.';
@@ -132,25 +166,70 @@ const BookingModal = {
     }
   },
 
-  // ─── Step 3: Name & Phone ───
-  submitDetails() {
-    const name = document.getElementById('userName').value.trim();
-    const phone = document.getElementById('userPhone').value.trim();
-    const errorEl = document.getElementById('detailsError');
+  // ─── Step 3: Password + Details (register or login) ───
+  async submitSetup() {
+    const password = document.getElementById('userPassword').value;
+    const errorEl = document.getElementById('setupError');
+    const btn = document.getElementById('setupBtn');
 
     errorEl.textContent = '';
-    if (!name || name.length < 2) {
-      errorEl.textContent = 'Please enter your full name';
-      return;
-    }
-    if (!phone || !/^[6-9]\d{9}$/.test(phone)) {
-      errorEl.textContent = 'Please enter a valid 10-digit Indian phone number';
-      return;
-    }
 
-    this.state.name = name;
-    this.state.phone = phone;
-    this.goTo(4);
+    if (this.isNewUser) {
+      // New user — register with password + name + phone
+      const name = document.getElementById('userName').value.trim();
+      const phone = document.getElementById('userPhone').value.trim();
+
+      if (!name || name.length < 2) {
+        errorEl.textContent = 'Please enter your full name';
+        return;
+      }
+      if (!phone || !/^[6-9]\d{9}$/.test(phone)) {
+        errorEl.textContent = 'Please enter a valid 10-digit phone number';
+        return;
+      }
+      if (!password || password.length < 6) {
+        errorEl.textContent = 'Password must be at least 6 characters';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Creating account...';
+
+      try {
+        await Auth.register(this.state.email, password, name, phone);
+        this.state.name = name;
+        this.state.phone = phone;
+        Auth._updateUI();
+        this.goTo(4); // Package selection
+      } catch (err) {
+        errorEl.textContent = err.message || 'Registration failed';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Create Account & Continue';
+      }
+    } else {
+      // Returning user — login with password
+      if (!password) {
+        errorEl.textContent = 'Please enter your password';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Logging in...';
+
+      try {
+        const result = await Auth.login(this.state.email, password);
+        this.state.name = result.user.name || '';
+        this.state.phone = result.user.phone || '';
+        Auth._updateUI();
+        this.goTo(4); // Package selection
+      } catch (err) {
+        errorEl.textContent = err.message || 'Invalid password';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Login & Continue';
+      }
+    }
   },
 
   // ─── Step 4: Package Selection ───
@@ -158,7 +237,6 @@ const BookingModal = {
     this.state.packageType = type;
     this.state.amount = this.packages[type].amount;
 
-    // Highlight selected card
     document.querySelectorAll('.package-card').forEach(card => {
       card.classList.toggle('ring-2', card.dataset.package === type);
       card.classList.toggle('ring-sunset', card.dataset.package === type);
@@ -203,10 +281,36 @@ const BookingModal = {
     document.getElementById('successAmount').textContent = this.packages[this.state.packageType].display;
     document.getElementById('successPaymentId').textContent = bookingData.paymentId || '-';
 
-    // Confetti
     if (window.confetti) {
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
       setTimeout(() => confetti({ particleCount: 80, spread: 100, origin: { y: 0.5 } }), 500);
+    }
+  },
+
+  // ─── Resend OTP ───
+  async resendOtp() {
+    const errorEl = document.getElementById('otpError');
+    const resendBtn = document.getElementById('resendOtpBtn');
+    if (resendBtn) {
+      resendBtn.disabled = true;
+      resendBtn.textContent = 'Sending...';
+    }
+    try {
+      await Auth.sendOtp(this.state.email);
+      errorEl.textContent = '';
+      if (resendBtn) resendBtn.textContent = 'Code resent ✓';
+      setTimeout(() => {
+        if (resendBtn) {
+          resendBtn.disabled = false;
+          resendBtn.textContent = 'Resend Code';
+        }
+      }, 30000);
+    } catch (err) {
+      errorEl.textContent = err.message || 'Failed to resend. Try again.';
+      if (resendBtn) {
+        resendBtn.disabled = false;
+        resendBtn.textContent = 'Resend Code';
+      }
     }
   }
 };
@@ -233,29 +337,321 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') BookingModal.close();
 });
 
-// ─── Resend OTP handler ───
-BookingModal.resendOtp = async function() {
-  const errorEl = document.getElementById('otpError');
-  const resendBtn = document.getElementById('resendOtpBtn');
-  if (resendBtn) {
-    resendBtn.disabled = true;
-    resendBtn.textContent = 'Sending...';
+// ─── Profile Modal ───
+const ProfileModal = {
+  async open() {
+    if (!Auth.isLoggedIn()) return;
+
+    const modal = document.getElementById('profileModal');
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    // Show loading
+    document.getElementById('profileContent').innerHTML = `
+      <div class="text-center py-8">
+        <div class="w-10 h-10 mx-auto mb-4 border-3 border-sunset/30 border-t-sunset rounded-full animate-spin"></div>
+        <p class="font-body text-sm text-muted-brown">Loading profile...</p>
+      </div>`;
+
+    try {
+      const profile = await Auth.getProfile();
+      this.renderProfile(profile);
+    } catch (err) {
+      document.getElementById('profileContent').innerHTML = `
+        <div class="text-center py-8">
+          <p class="font-body text-sm text-red-500">Failed to load profile</p>
+        </div>`;
+    }
+  },
+
+  close() {
+    document.getElementById('profileModal').classList.add('hidden');
+    document.body.style.overflow = '';
+  },
+
+  renderProfile(profile) {
+    const initials = (profile.name || 'U').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    const bookings = profile.bookings || [];
+    const memberSince = new Date(profile.created_at).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+
+    let bookingsHtml = '';
+    if (bookings.length === 0) {
+      bookingsHtml = `
+        <div class="text-center py-6">
+          <p class="font-body text-sm text-muted-brown mb-2">No trips booked yet</p>
+          <button onclick="ProfileModal.close(); document.getElementById('trips').scrollIntoView({behavior:'smooth'})" class="font-body text-sm text-sunset font-semibold hover:underline">Explore Trips →</button>
+        </div>`;
+    } else {
+      bookingsHtml = bookings.map(b => {
+        const amount = b.amount_paise ? `₹${(b.amount_paise / 100).toLocaleString('en-IN')}` : '-';
+        const date = new Date(b.created_at).toLocaleDateString('en-IN', { dateStyle: 'medium' });
+        const statusColor = b.payment_status === 'completed' ? 'bg-forest/10 text-forest' : 'bg-amber/10 text-amber';
+        return `
+          <div class="bg-white rounded-xl p-4 shadow-[0_2px_12px_rgba(44,36,24,0.04)]">
+            <div class="flex items-center justify-between mb-2">
+              <p class="font-body font-semibold text-warm-brown text-sm">Munnar Trip</p>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusColor}">${b.payment_status || 'pending'}</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div><span class="text-muted-brown">Package:</span> <span class="text-warm-brown font-medium">${b.package_type === 'per_couple' ? 'Couple' : 'Solo'}</span></div>
+              <div><span class="text-muted-brown">Amount:</span> <span class="text-warm-brown font-medium">${amount}</span></div>
+              <div><span class="text-muted-brown">Date:</span> <span class="text-warm-brown font-medium">${date}</span></div>
+              <div><span class="text-muted-brown">Payment:</span> <span class="text-warm-brown font-medium">${b.razorpay_payment_id || '-'}</span></div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    document.getElementById('profileContent').innerHTML = `
+      <!-- Avatar & Info -->
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-sunset to-amber flex items-center justify-center">
+          <span class="text-white font-display text-xl font-bold">${initials}</span>
+        </div>
+        <h4 class="font-display text-xl font-bold text-warm-brown">${profile.name || 'Traveler'}</h4>
+        <p class="font-body text-sm text-muted-brown">${profile.email}</p>
+        <p class="font-body text-xs text-sand mt-1">Member since ${memberSince}</p>
+      </div>
+
+      <!-- Contact -->
+      <div class="bg-warm-beige/50 rounded-xl p-4 mb-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="font-body text-xs text-muted-brown">Phone</p>
+            <p class="font-body text-sm font-medium text-warm-brown">${profile.phone || 'Not set'}</p>
+          </div>
+          <div>
+            <p class="font-body text-xs text-muted-brown">Email</p>
+            <p class="font-body text-sm font-medium text-warm-brown">${profile.email}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookings -->
+      <div class="mb-4">
+        <h5 class="font-display text-lg font-bold text-warm-brown mb-3">My Trips</h5>
+        <div class="space-y-3">${bookingsHtml}</div>
+      </div>
+
+      <!-- Sign Out -->
+      <button onclick="Auth.signOut(); ProfileModal.close();" class="modal-btn modal-btn-secondary w-full mt-2">Sign Out</button>
+    `;
   }
+};
+
+// ─── Waitlist ───
+async function submitWaitlist(formEl, trip) {
+  const emailInput = formEl.querySelector('input[type="email"]');
+  const btn = formEl.querySelector('button[type="submit"]');
+  const email = emailInput.value.trim().toLowerCase();
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    emailInput.classList.add('border-red-400');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Joining...';
+
   try {
-    await Auth.sendOtp(this.state.email);
-    errorEl.textContent = '';
-    if (resendBtn) resendBtn.textContent = 'Code resent ✓';
+    const res = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, trip })
+    });
+    const data = await res.json();
+
+    emailInput.value = '';
+    emailInput.classList.remove('border-red-400');
+    btn.textContent = '✓ Joined!';
+    btn.classList.add('bg-forest');
     setTimeout(() => {
-      if (resendBtn) {
-        resendBtn.disabled = false;
-        resendBtn.textContent = 'Resend Code';
-      }
-    }, 30000); // 30 second cooldown
+      btn.textContent = 'Join';
+      btn.classList.remove('bg-forest');
+      btn.disabled = false;
+    }, 3000);
   } catch (err) {
-    errorEl.textContent = err.message || 'Failed to resend. Try again.';
-    if (resendBtn) {
-      resendBtn.disabled = false;
-      resendBtn.textContent = 'Resend Code';
+    btn.textContent = 'Error';
+    setTimeout(() => {
+      btn.textContent = 'Join';
+      btn.disabled = false;
+    }, 2000);
+  }
+}
+
+// ─── Login Modal (standalone, for navbar login) ───
+const LoginModal = {
+  open() {
+    document.getElementById('loginModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    this.showEmailStep();
+  },
+
+  close() {
+    document.getElementById('loginModal').classList.add('hidden');
+    document.body.style.overflow = '';
+  },
+
+  showEmailStep() {
+    document.getElementById('loginModalContent').innerHTML = `
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sunset/10 flex items-center justify-center">
+          <svg class="w-7 h-7 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+        </div>
+        <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Sign In</h4>
+        <p class="font-body text-sm text-muted-brown">Enter your email to continue</p>
+      </div>
+      <input id="loginEmail" type="email" class="modal-input mb-3" placeholder="your@email.com" autocomplete="email">
+      <p id="loginError" class="error-text"></p>
+      <button id="loginSubmitBtn" onclick="LoginModal.submitEmail()" class="modal-btn modal-btn-primary mt-4">Continue</button>
+    `;
+  },
+
+  async submitEmail() {
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const errorEl = document.getElementById('loginError');
+    const btn = document.getElementById('loginSubmitBtn');
+
+    errorEl.textContent = '';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.textContent = 'Please enter a valid email';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Checking...';
+
+    try {
+      const result = await Auth.sendOtp(email);
+
+      if (result.has_password) {
+        // Show password login
+        this.showPasswordStep(email);
+      } else {
+        // Show OTP verification
+        this.showOtpStep(email);
+      }
+    } catch (err) {
+      errorEl.textContent = err.message;
+      btn.disabled = false;
+      btn.textContent = 'Continue';
+    }
+  },
+
+  showPasswordStep(email) {
+    document.getElementById('loginModalContent').innerHTML = `
+      <div class="text-center mb-6">
+        <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Welcome Back!</h4>
+        <p class="font-body text-sm text-muted-brown">${email}</p>
+      </div>
+      <input id="loginPassword" type="password" class="modal-input mb-3" placeholder="Your password" autocomplete="current-password">
+      <p id="loginError" class="error-text"></p>
+      <button onclick="LoginModal.submitPassword('${email}')" class="modal-btn modal-btn-primary mt-4">Sign In</button>
+      <button onclick="LoginModal.forgotPassword('${email}')" class="text-sm text-sunset hover:text-sunset/80 font-medium mt-3 block mx-auto">Forgot password? Login with OTP</button>
+    `;
+    setTimeout(() => document.getElementById('loginPassword').focus(), 100);
+  },
+
+  async submitPassword(email) {
+    const password = document.getElementById('loginPassword').value;
+    const errorEl = document.getElementById('loginError');
+
+    if (!password) { errorEl.textContent = 'Enter your password'; return; }
+
+    try {
+      await Auth.login(email, password);
+      Auth._updateUI();
+      this.close();
+    } catch (err) {
+      errorEl.textContent = err.message || 'Invalid password';
+    }
+  },
+
+  async forgotPassword(email) {
+    try {
+      await Auth.sendOtp(email);
+      this.showOtpStep(email);
+    } catch (err) {
+      alert('Failed to send OTP: ' + err.message);
+    }
+  },
+
+  showOtpStep(email) {
+    document.getElementById('loginModalContent').innerHTML = `
+      <div class="text-center mb-6">
+        <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Verify Email</h4>
+        <p class="font-body text-sm text-muted-brown">Enter the code sent to</p>
+        <p class="font-body text-sm font-semibold text-sunset mt-1">${email}</p>
+      </div>
+      <div class="otp-container mb-3">
+        <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+        <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+        <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+        <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+        <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+        <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
+      </div>
+      <p id="loginError" class="error-text text-center"></p>
+      <button onclick="LoginModal.submitOtp('${email}')" class="modal-btn modal-btn-primary mt-4">Verify</button>
+    `;
+    setTimeout(() => document.querySelector('#loginModalContent .otp-input')?.focus(), 100);
+  },
+
+  async submitOtp(email) {
+    const inputs = document.querySelectorAll('#loginModalContent .otp-input');
+    const otp = Array.from(inputs).map(i => i.value).join('');
+    const errorEl = document.getElementById('loginError');
+
+    if (otp.length !== 6) { errorEl.textContent = 'Enter the 6-digit code'; return; }
+
+    try {
+      const result = await Auth.verifyOtp(email, otp);
+
+      if (result.has_password) {
+        // Existing user verified via OTP — log them in directly
+        Auth.currentUser = { email };
+        localStorage.setItem('nw_user', JSON.stringify({ email }));
+        Auth._updateUI();
+        this.close();
+      } else {
+        // New user — show registration form
+        this.showRegisterStep(email);
+      }
+    } catch (err) {
+      errorEl.textContent = err.message;
+    }
+  },
+
+  showRegisterStep(email) {
+    document.getElementById('loginModalContent').innerHTML = `
+      <div class="text-center mb-6">
+        <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Create Account</h4>
+        <p class="font-body text-sm text-muted-brown">Set up your profile</p>
+      </div>
+      <input id="regName" type="text" class="modal-input mb-3" placeholder="Full Name" autocomplete="name">
+      <input id="regPhone" type="tel" class="modal-input mb-3" placeholder="Phone (10 digits)" maxlength="10" inputmode="numeric">
+      <input id="regPassword" type="password" class="modal-input mb-3" placeholder="Create Password (min 6 chars)" autocomplete="new-password">
+      <p id="loginError" class="error-text"></p>
+      <button onclick="LoginModal.submitRegister('${email}')" class="modal-btn modal-btn-primary mt-4">Create Account</button>
+    `;
+  },
+
+  async submitRegister(email) {
+    const name = document.getElementById('regName').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const errorEl = document.getElementById('loginError');
+
+    if (!name || name.length < 2) { errorEl.textContent = 'Enter your full name'; return; }
+    if (!phone || !/^[6-9]\d{9}$/.test(phone)) { errorEl.textContent = 'Enter a valid 10-digit phone number'; return; }
+    if (!password || password.length < 6) { errorEl.textContent = 'Password must be at least 6 characters'; return; }
+
+    try {
+      await Auth.register(email, password, name, phone);
+      Auth._updateUI();
+      this.close();
+    } catch (err) {
+      errorEl.textContent = err.message;
     }
   }
 };
