@@ -357,10 +357,24 @@ const ProfileModal = {
       const profile = await Auth.getProfile();
       this.renderProfile(profile);
     } catch (err) {
-      document.getElementById('profileContent').innerHTML = `
-        <div class="text-center py-8">
-          <p class="font-body text-sm text-red-500">Failed to load profile</p>
-        </div>`;
+      console.error('Profile load error:', err);
+      // If profile API fails, show basic profile from local session
+      const user = Auth.currentUser;
+      if (user) {
+        this.renderProfile({
+          name: user.name || 'Traveler',
+          email: user.email,
+          phone: user.phone || '',
+          created_at: user.created_at || new Date().toISOString(),
+          bookings: []
+        });
+      } else {
+        document.getElementById('profileContent').innerHTML = `
+          <div class="text-center py-8">
+            <p class="font-body text-sm text-red-500">Failed to load profile</p>
+            <button onclick="Auth.signOut(); ProfileModal.close();" class="mt-4 text-sm text-sunset font-semibold hover:underline">Sign Out & Try Again</button>
+          </div>`;
+      }
     }
   },
 
@@ -608,9 +622,12 @@ const LoginModal = {
       const result = await Auth.verifyOtp(email, otp);
 
       if (result.has_password) {
-        // Existing user verified via OTP — log them in directly
+        // Existing user verified via OTP — log them in and fetch full profile
         Auth.currentUser = { email };
         localStorage.setItem('nw_user', JSON.stringify({ email }));
+        try {
+          await Auth.getProfile(email); // fetches and stores full user data
+        } catch(e) { /* profile will load from basic data */ }
         Auth._updateUI();
         this.close();
       } else {

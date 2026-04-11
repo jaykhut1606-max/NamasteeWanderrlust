@@ -61,13 +61,21 @@ const Auth = {
 
   // Get profile with bookings
   async getProfile(email) {
+    const userEmail = email || this.currentUser?.email;
+    if (!userEmail) throw new Error('No email found');
+
     const res = await fetch('/api/profile', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email || this.currentUser?.email })
+      body: JSON.stringify({ email: userEmail })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Failed to load profile');
+    // Update local session with full profile data
+    if (data.profile) {
+      this.currentUser = { ...this.currentUser, ...data.profile };
+      localStorage.setItem('nw_user', JSON.stringify(this.currentUser));
+    }
     return data.profile;
   },
 
