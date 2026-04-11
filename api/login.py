@@ -1,15 +1,14 @@
-"""Vercel Serverless Function: Login with email + password."""
+from http.server import BaseHTTPRequestHandler
 import json
 import os
 import urllib.request
-import urllib.error
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://aczvtyyjliocxtmfhflx.supabase.co")
 SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
 
 
-def supabase_rpc(function_name, params):
-    url = f"{SUPABASE_URL}/rest/v1/rpc/{function_name}"
+def supabase_rpc(fn, params):
+    url = f"{SUPABASE_URL}/rest/v1/rpc/{fn}"
     data = json.dumps(params).encode("utf-8")
     req = urllib.request.Request(url, data=data, method="POST")
     req.add_header("Content-Type", "application/json")
@@ -19,27 +18,38 @@ def supabase_rpc(function_name, params):
     return json.loads(resp.read().decode("utf-8"))
 
 
-def handler(request):
-    if request.method == "OPTIONS":
-        return {"statusCode": 204, "headers": {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type"}}
+class handler(BaseHTTPRequestHandler):
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
 
-    if request.method != "POST":
-        return {"statusCode": 405, "body": json.dumps({"error": "Method not allowed"})}
+    def do_POST(self):
+        try:
+            length = int(self.headers.get("Content-Length", 0))
+            body = json.loads(self.rfile.read(length)) if length else {}
+            email = body.get("email", "").strip().lower()
+            password = body.get("password", "")
 
-    try:
-        body = json.loads(request.body)
-        email = body.get("email", "").strip().lower()
-        password = body.get("password", "")
+            if not email or not password:
+                return self._json(400, {"error": "Email and password are required"})
 
-        if not email or not password:
-            return {"statusCode": 400, "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}, "body": json.dumps({"error": "Email and password are required"})}
+            result = supabase_rpc("login_user", {"user_email": email, "user_password": password})
 
-        result = supabase_rpc("login_user", {"user_email": email, "user_password": password})
+            if isinstance(result, dict) and result.get("error"):
+                return self._json(401, {"error": result["error"]})
 
-        if isinstance(result, dict) and result.get("error"):
-            return {"statusCode": 401, "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}, "body": json.dumps({"error": result["error"]})}
+            self._json(200, {"success": True, "user": result})
+        except Exception as e:
+            self._json(500, {"error": str(e)})
 
-        return {"statusCode": 200, "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}, "body": json.dumps({"success": True, "user": result})}
-
-    except Exception as e:
-        return {"statusCode": 500, "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}, "body": json.dumps({"error": str(e)})}
+    def _json(self, status, obj):
+        body = json.dumps(obj).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
