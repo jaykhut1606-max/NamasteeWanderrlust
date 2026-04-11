@@ -349,7 +349,7 @@ const ProfileModal = {
     // Show loading
     document.getElementById('profileContent').innerHTML = `
       <div class="text-center py-8">
-        <div class="w-10 h-10 mx-auto mb-4 border-3 border-sunset/30 border-t-sunset rounded-full animate-spin"></div>
+        <div class="w-10 h-10 mx-auto mb-4 spinner-border-3 border-sunset/30 border-t-sunset rounded-full animate-spin"></div>
         <p class="font-body text-sm text-muted-brown">Loading profile...</p>
       </div>`;
 
