@@ -178,23 +178,26 @@ const BookingModal = {
 
     errorEl.textContent = '';
     btn.disabled = true;
-    btn.textContent = 'Sending OTP...';
+    btn.textContent = 'Checking...';
 
     try {
-      const result = await Auth.sendOtp(email);
+      // First check user status — NO OTP sent
+      const check = await Auth.checkUser(email);
       this.state.email = email;
 
-      if (result.has_password) {
-        // Returning user — go to password login (skip OTP)
+      if (check.has_password) {
+        // Returning user with password — go straight to password login (no OTP)
         this.isNewUser = false;
         this.goTo(3);
       } else {
-        // New user — verify OTP first
+        // New user — now send OTP for email verification
+        btn.textContent = 'Sending OTP...';
+        await Auth.sendOtp(email);
         this.isNewUser = true;
         this.goTo(2);
       }
     } catch (err) {
-      errorEl.textContent = err.message || 'Failed to send OTP. Try again.';
+      errorEl.textContent = err.message || 'Failed. Try again.';
     } finally {
       btn.disabled = false;
       btn.textContent = 'Continue';
@@ -557,12 +560,14 @@ async function submitWaitlist(formEl, trip) {
 const LoginModal = {
   _pendingName: '',
   _pendingPhone: '',
+  _forgotPasswordMode: false,
 
   open() {
     document.getElementById('loginModal').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     this._pendingName = '';
     this._pendingPhone = '';
+    this._forgotPasswordMode = false;
     this.showSignupStep();
   },
 
@@ -612,16 +617,21 @@ const LoginModal = {
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = 'Please enter a valid email address'; return; }
 
     btn.disabled = true;
-    btn.textContent = 'Sending OTP...';
+    btn.textContent = 'Checking...';
 
     try {
-      const result = await Auth.sendOtp(email);
+      // First check if user already exists — no OTP yet
+      const check = await Auth.checkUser(email);
 
-      if (result.has_password) {
-        // Already registered — redirect to sign in
+      if (check.has_password) {
+        // Already registered with password — go straight to password login
         this.showPasswordStep(email);
         return;
       }
+
+      // New user (or user without password) — now send OTP
+      btn.textContent = 'Sending OTP...';
+      await Auth.sendOtp(email);
 
       // Save name & phone for after OTP verification
       this._pendingName = name;
@@ -664,12 +674,17 @@ const LoginModal = {
     btn.textContent = 'Checking...';
 
     try {
-      const result = await Auth.sendOtp(email);
+      // Just check user status — NO OTP sent
+      const result = await Auth.checkUser(email);
 
       if (result.has_password) {
         this.showPasswordStep(email);
+      } else if (result.user_exists) {
+        // User exists but no password — send OTP to set password
+        await Auth.sendOtp(email);
+        this.showOtpStep(email, false);
       } else {
-        // No account yet — redirect to sign up
+        // No account — redirect to sign up
         this.showSignupStep();
         setTimeout(() => {
           const errEl = document.getElementById('loginError');
@@ -693,7 +708,7 @@ const LoginModal = {
       <input id="loginPassword" type="password" class="modal-input mb-3" placeholder="Your password" autocomplete="current-password">
       <p id="loginError" class="error-text"></p>
       <button onclick="LoginModal.submitPassword('${email}')" class="modal-btn modal-btn-primary mt-4">Sign In</button>
-      <button onclick="LoginModal.forgotPassword('${email}')" class="text-sm text-sunset hover:text-sunset/80 font-medium mt-3 block mx-auto">Forgot password? Login with OTP</button>
+      <button onclick="LoginModal.forgotPassword('${email}')" class="text-sm text-sunset hover:text-sunset/80 font-medium mt-3 block mx-auto">Forgot Password?</button>
     `;
     setTimeout(() => document.getElementById('loginPassword').focus(), 100);
   },
@@ -714,11 +729,22 @@ const LoginModal = {
   },
 
   async forgotPassword(email) {
+    // Show a loading state
+    document.getElementById('loginModalContent').innerHTML = `
+      <div class="text-center py-8">
+        <div class="w-10 h-10 mx-auto mb-4 border-3 border-sunset/30 border-t-sunset rounded-full animate-spin"></div>
+        <p class="font-body text-sm text-muted-brown">Sending OTP to ${email}...</p>
+      </div>`;
     try {
       await Auth.sendOtp(email);
+      this._forgotPasswordMode = true;
       this.showOtpStep(email, false);
     } catch (err) {
-      alert('Failed to send OTP: ' + err.message);
+      this.showPasswordStep(email);
+      setTimeout(() => {
+        const errEl = document.getElementById('loginError');
+        if (errEl) errEl.textContent = 'Failed to send OTP: ' + err.message;
+      }, 100);
     }
   },
 
@@ -775,8 +801,13 @@ const LoginModal = {
         // Show set password step
         this.showSetPasswordStep(email);
         return;
+      } else if (this._forgotPasswordMode) {
+        // Forgot password flow — show reset password step
+        this._forgotPasswordMode = false;
+        this.showResetPasswordStep(email);
+        return;
       } else {
-        // Existing user verified via OTP (forgot password flow)
+        // Existing user verified via OTP (fallback)
         Auth.currentUser = { email };
         localStorage.setItem('nw_user', JSON.stringify({ email }));
         try {
@@ -787,6 +818,62 @@ const LoginModal = {
       }
     } catch (err) {
       errorEl.textContent = err.message;
+    }
+  },
+
+  // ─── Reset Password Step (forgot password flow) ───
+  showResetPasswordStep(email) {
+    document.getElementById('loginModalContent').innerHTML = `
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sunset/10 flex items-center justify-center">
+          <svg class="w-7 h-7 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
+        </div>
+        <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Reset Password</h4>
+        <p class="font-body text-sm text-muted-brown">Create a new password for <span class="font-semibold text-sunset">${email}</span></p>
+      </div>
+      <input id="resetNewPassword" type="password" class="modal-input mb-3" placeholder="New Password (min 6 characters)" autocomplete="new-password">
+      <input id="resetConfirmPassword" type="password" class="modal-input mb-3" placeholder="Confirm New Password" autocomplete="new-password">
+      <p id="loginError" class="error-text"></p>
+      <button id="resetPasswordBtn" onclick="LoginModal.submitResetPassword('${email}')" class="modal-btn modal-btn-primary mt-4">Reset Password & Sign In</button>
+    `;
+    setTimeout(() => document.getElementById('resetNewPassword')?.focus(), 100);
+  },
+
+  async submitResetPassword(email) {
+    const password = document.getElementById('resetNewPassword').value;
+    const confirm = document.getElementById('resetConfirmPassword').value;
+    const errorEl = document.getElementById('loginError');
+    const btn = document.getElementById('resetPasswordBtn');
+
+    errorEl.textContent = '';
+    if (!password || password.length < 6) { errorEl.textContent = 'Password must be at least 6 characters'; return; }
+    if (password !== confirm) { errorEl.textContent = 'Passwords do not match'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Resetting...';
+
+    try {
+      // Set new password
+      await Auth.setPassword(email, password);
+      // Auto-login with new password
+      await Auth.login(email, password);
+      Auth._updateUI();
+
+      // Show success briefly then close
+      document.getElementById('loginModalContent').innerHTML = `
+        <div class="text-center py-8">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-forest/10 flex items-center justify-center">
+            <svg class="w-8 h-8 text-forest" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h4 class="font-display text-2xl font-bold text-warm-brown mb-2">Password Reset!</h4>
+          <p class="font-body text-sm text-muted-brown">You're now signed in.</p>
+        </div>
+      `;
+      setTimeout(() => this.close(), 1500);
+    } catch (err) {
+      errorEl.textContent = err.message || 'Failed to reset password';
+      btn.disabled = false;
+      btn.textContent = 'Reset Password & Sign In';
     }
   },
 

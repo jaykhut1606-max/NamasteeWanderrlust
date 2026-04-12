@@ -53,10 +53,21 @@ class handler(BaseHTTPRequestHandler):
             length = int(self.headers.get("Content-Length", 0))
             body = json.loads(self.rfile.read(length)) if length else {}
             email = body.get("email", "").strip().lower()
+            check_only = body.get("check_only", False)
 
             if not email or "@" not in email:
                 return self._json(400, {"error": "Invalid email address"})
 
+            # Check-only mode: just return user status without sending OTP
+            if check_only:
+                user_info = supabase_rpc("check_user", {"user_email": email})
+                return self._json(200, {
+                    "success": True,
+                    "user_exists": user_info.get("exists", False),
+                    "has_password": user_info.get("has_password", False)
+                })
+
+            # Full mode: generate OTP and send email
             otp_code = supabase_rpc("generate_otp", {"user_email": email})
 
             # Send email via Resend
