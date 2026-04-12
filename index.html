@@ -199,6 +199,31 @@
       transform: translateY(-4px) scale(1.02);
     }
 
+    /* Reel cover fade out when playing */
+    .reel-cover {
+      transition: opacity 0.4s ease;
+    }
+    .reel-cover.hidden-cover {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Reel iframe — clip out Instagram header/footer chrome */
+    .reel-iframe-wrapper {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    .reel-iframe-wrapper iframe {
+      position: absolute;
+      top: -56px;
+      left: -1px;
+      width: calc(100% + 2px);
+      height: calc(100% + 260px);
+      border: 0;
+    }
+
     /* Line clamp */
     .line-clamp-2 {
       display: -webkit-box;
@@ -1202,125 +1227,85 @@
         <p class="font-body text-muted-brown text-lg max-w-2xl mx-auto">Watch our latest reels and relive the magic of every adventure — right here!</p>
       </div>
 
-      <!-- Horizontal scroll reels — clean video cards -->
+      <!-- Horizontal scroll reels — click to play inside card -->
       <div class="flex gap-5 overflow-x-auto pb-6 snap-x snap-mandatory -mx-6 px-6" style="scrollbar-width: none; -ms-overflow-style: none;">
-        <!-- Reel 1 -->
-        <a href="https://www.instagram.com/reel/DW6u2mmCNzl/" target="_blank" rel="noopener" class="reel-card flex-shrink-0 w-[220px] md:w-[260px] snap-start group">
-          <div class="relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black aspect-[9/16]">
-            <img src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=400&q=80" alt="Munnar reel" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
-            <!-- Play button -->
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
-                <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-            </div>
-            <!-- Reel info -->
-            <div class="absolute bottom-0 left-0 right-0 p-4">
-              <div class="flex items-center gap-2 mb-2">
-                <img src="brand_assets/images/logo.png" alt="" class="w-6 h-6 rounded-full object-cover">
-                <span class="font-body text-xs font-semibold text-white">parullchaudhry</span>
-              </div>
-              <p class="font-body text-[11px] text-white/80 line-clamp-2">MUNNAR! Last few spots left</p>
-            </div>
-            <!-- Instagram icon -->
-            <div class="absolute top-3 right-3">
-              <svg class="w-5 h-5 text-white/70" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
-            </div>
-          </div>
-        </a>
 
-        <!-- Reel 2 -->
-        <a href="https://www.instagram.com/reel/DW294veiCGc/" target="_blank" rel="noopener" class="reel-card flex-shrink-0 w-[220px] md:w-[260px] snap-start group">
-          <div class="relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black aspect-[9/16]">
-            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80" alt="Travel reel" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
-                <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DW6u2mmCNzl/embed/" onclick="playReel(this)">
+          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
+            <!-- Cover (visible by default) -->
+            <div class="reel-cover absolute inset-0 cursor-pointer z-10">
+              <img src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=400&q=80" alt="Munnar reel" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
+              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
+              <div class="absolute bottom-0 left-0 right-0 p-4">
+                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">parullchaudhry</span></div>
+                <p class="font-body text-[11px] text-white/80 line-clamp-2">MUNNAR! Last few spots left</p>
               </div>
-            </div>
-            <div class="absolute bottom-0 left-0 right-0 p-4">
-              <div class="flex items-center gap-2 mb-2">
-                <img src="brand_assets/images/logo.png" alt="" class="w-6 h-6 rounded-full object-cover">
-                <span class="font-body text-xs font-semibold text-white">maeramishra</span>
-              </div>
-              <p class="font-body text-[11px] text-white/80 line-clamp-2">Travel diaries with NamasteeWanderrlust</p>
-            </div>
-            <div class="absolute top-3 right-3">
-              <svg class="w-5 h-5 text-white/70" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
             </div>
           </div>
-        </a>
+        </div>
 
-        <!-- Reel 3 -->
-        <a href="https://www.instagram.com/p/DWnsSV3kdA5/" target="_blank" rel="noopener" class="reel-card flex-shrink-0 w-[220px] md:w-[260px] snap-start group">
-          <div class="relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black aspect-[9/16]">
-            <img src="https://images.unsplash.com/photo-1605531321045-59731b348442?w=400&q=80" alt="Munnar trip reel" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
-                <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DW294veiCGc/embed/" onclick="playReel(this)">
+          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
+            <div class="reel-cover absolute inset-0 cursor-pointer z-10">
+              <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80" alt="Travel reel" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
+              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
+              <div class="absolute bottom-0 left-0 right-0 p-4">
+                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">maeramishra</span></div>
+                <p class="font-body text-[11px] text-white/80 line-clamp-2">Travel diaries with NamasteeWanderrlust</p>
               </div>
-            </div>
-            <div class="absolute bottom-0 left-0 right-0 p-4">
-              <div class="flex items-center gap-2 mb-2">
-                <img src="brand_assets/images/logo.png" alt="" class="w-6 h-6 rounded-full object-cover">
-                <span class="font-body text-xs font-semibold text-white">namasteewanderrlust</span>
-              </div>
-              <p class="font-body text-[11px] text-white/80 line-clamp-2">3N/4D of Munnar — Book today!</p>
-            </div>
-            <div class="absolute top-3 right-3">
-              <svg class="w-5 h-5 text-white/70" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
             </div>
           </div>
-        </a>
+        </div>
 
-        <!-- Reel 4 -->
-        <a href="https://www.instagram.com/reel/DWjRsPtk9aK/" target="_blank" rel="noopener" class="reel-card flex-shrink-0 w-[220px] md:w-[260px] snap-start group">
-          <div class="relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black aspect-[9/16]">
-            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&q=80" alt="Bali adventure reel" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
-                <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/p/DWnsSV3kdA5/embed/" onclick="playReel(this)">
+          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
+            <div class="reel-cover absolute inset-0 cursor-pointer z-10">
+              <img src="https://images.unsplash.com/photo-1605531321045-59731b348442?w=400&q=80" alt="Munnar trip reel" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
+              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
+              <div class="absolute bottom-0 left-0 right-0 p-4">
+                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">namasteewanderrlust</span></div>
+                <p class="font-body text-[11px] text-white/80 line-clamp-2">3N/4D of Munnar — Book today!</p>
               </div>
-            </div>
-            <div class="absolute bottom-0 left-0 right-0 p-4">
-              <div class="flex items-center gap-2 mb-2">
-                <img src="brand_assets/images/logo.png" alt="" class="w-6 h-6 rounded-full object-cover">
-                <span class="font-body text-xs font-semibold text-white">parullchaudhry</span>
-              </div>
-              <p class="font-body text-[11px] text-white/80 line-clamp-2">Munnar with me?? Let's go!</p>
-            </div>
-            <div class="absolute top-3 right-3">
-              <svg class="w-5 h-5 text-white/70" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
             </div>
           </div>
-        </a>
+        </div>
 
-        <!-- Reel 5 -->
-        <a href="https://www.instagram.com/reel/DWbb3DNkXTz/" target="_blank" rel="noopener" class="reel-card flex-shrink-0 w-[220px] md:w-[260px] snap-start group">
-          <div class="relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black aspect-[9/16]">
-            <img src="https://images.unsplash.com/photo-1559628233-100c798642d4?w=400&q=80" alt="Island adventure reel" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
-                <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DWjRsPtk9aK/embed/" onclick="playReel(this)">
+          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
+            <div class="reel-cover absolute inset-0 cursor-pointer z-10">
+              <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&q=80" alt="Bali adventure reel" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
+              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
+              <div class="absolute bottom-0 left-0 right-0 p-4">
+                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">parullchaudhry</span></div>
+                <p class="font-body text-[11px] text-white/80 line-clamp-2">Munnar with me?? Let's go!</p>
               </div>
-            </div>
-            <div class="absolute bottom-0 left-0 right-0 p-4">
-              <div class="flex items-center gap-2 mb-2">
-                <img src="brand_assets/images/logo.png" alt="" class="w-6 h-6 rounded-full object-cover">
-                <span class="font-body text-xs font-semibold text-white">namasteewanderrlust</span>
-              </div>
-              <p class="font-body text-[11px] text-white/80 line-clamp-2">Adventure awaits — island vibes</p>
-            </div>
-            <div class="absolute top-3 right-3">
-              <svg class="w-5 h-5 text-white/70" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
             </div>
           </div>
-        </a>
+        </div>
+
+        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DWbb3DNkXTz/embed/" onclick="playReel(this)">
+          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
+            <div class="reel-cover absolute inset-0 cursor-pointer z-10">
+              <img src="https://images.unsplash.com/photo-1559628233-100c798642d4?w=400&q=80" alt="Island adventure reel" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
+              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
+              <div class="absolute bottom-0 left-0 right-0 p-4">
+                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">namasteewanderrlust</span></div>
+                <p class="font-body text-[11px] text-white/80 line-clamp-2">Adventure awaits — island vibes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div class="text-center mt-8 fade-up">
@@ -1806,6 +1791,32 @@
   <script src="js/booking-modal.js"></script>
   <script src="js/razorpay.js"></script>
   <script src="js/pdf.js"></script>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- REEL PLAYER — loads Instagram embed on click -->
+  <!-- ═══════════════════════════════════════════ -->
+  <script>
+    function playReel(card) {
+      const wrapper = card.querySelector('.reel-wrapper');
+      const cover = card.querySelector('.reel-cover');
+      const url = card.getAttribute('data-reel-url');
+
+      // Don't re-inject if already playing
+      if (wrapper.querySelector('.reel-iframe-wrapper')) {
+        cover.classList.add('hidden-cover');
+        return;
+      }
+
+      // Create iframe wrapper (clips the Instagram chrome)
+      const iframeDiv = document.createElement('div');
+      iframeDiv.className = 'reel-iframe-wrapper';
+      iframeDiv.innerHTML = `<iframe src="${url}" allowfullscreen loading="eager" scrolling="no"></iframe>`;
+      wrapper.insertBefore(iframeDiv, cover);
+
+      // Fade out the cover
+      cover.classList.add('hidden-cover');
+    }
+  </script>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- ITINERARY DOWNLOAD (gated behind login) -->
