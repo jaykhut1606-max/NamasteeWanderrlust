@@ -334,6 +334,34 @@
       height: 1px;
       background: linear-gradient(to right, transparent, rgba(44, 36, 24, 0.08), transparent);
     }
+
+    /* Text shadow utility */
+    .text-shadow-sm { text-shadow: 0 1px 8px rgba(0,0,0,0.3); }
+
+    /* L-bracket brand element */
+    .hero-brackets {
+      position: relative;
+    }
+    .hero-brackets::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 50px;
+      height: 50px;
+      border-left: 3px solid #D4A843;
+      border-top: 3px solid #D4A843;
+    }
+    .hero-brackets::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 50px;
+      height: 50px;
+      border-right: 3px solid #D4A843;
+      border-bottom: 3px solid #D4A843;
+    }
   </style>
   <link rel="stylesheet" href="css/booking-modal.css">
 </head>
@@ -397,32 +425,32 @@
     <div class="absolute inset-0" id="heroCarousel">
       <!-- Slide 1: Mountains -->
       <div class="hero-slide absolute inset-0 opacity-100 transition-opacity duration-[1500ms] ease-in-out">
-        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80" alt="Breathtaking mountain landscape" class="w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=1920&q=80" alt="Breathtaking mountain landscape" class="w-full h-full object-cover">
       </div>
       <!-- Slide 2: Tropical Beach -->
       <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-[1500ms] ease-in-out">
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80" alt="Tropical beach with crystal clear water" class="w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1920&q=80" alt="Tropical beach with crystal clear water" class="w-full h-full object-cover">
       </div>
       <!-- Slide 3: Island Paradise -->
       <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-[1500ms] ease-in-out">
-        <img src="https://images.unsplash.com/photo-1559628233-100c798642d4?w=1920&q=80" alt="Stunning aerial view of turquoise island waters" class="w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1559628233-100c798642d4?w=1920&q=80" alt="Stunning aerial view of turquoise island waters" class="w-full h-full object-cover" loading="lazy">
       </div>
       <!-- Slide 4: Bali Diamond Beach -->
       <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-[1500ms] ease-in-out">
-        <img src="assets/hero/bali-beach.jpg" alt="Bali Diamond Beach with turquoise waters and limestone cliffs" class="w-full h-full object-cover">
+        <img src="assets/hero/bali-beach.jpg" alt="Bali Diamond Beach with turquoise waters and limestone cliffs" class="w-full h-full object-cover" loading="lazy">
       </div>
       <!-- Slide 5: Bali Cliff Viewpoint -->
       <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-[1500ms] ease-in-out">
-        <img src="assets/hero/bali-cliff.jpg" alt="Woman enjoying Bali cliff viewpoint overlooking ocean" class="w-full h-full object-cover">
+        <img src="assets/hero/bali-cliff.jpg" alt="Woman enjoying Bali cliff viewpoint overlooking ocean" class="w-full h-full object-cover" loading="lazy">
       </div>
       <!-- Gradient overlays (on top of all slides) -->
-      <div class="absolute inset-0 bg-gradient-to-t from-deep-black/80 via-deep-black/30 to-transparent z-[1]"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-deep-black/85 via-deep-black/40 to-transparent z-[1]"></div>
       <div class="absolute inset-0 bg-gradient-to-r from-deep-black/40 to-transparent z-[1]"></div>
       <div class="absolute inset-0 bg-sunset/10 mix-blend-multiply z-[1]"></div>
     </div>
 
     <!-- Hero Content -->
-    <div class="relative z-10 max-w-5xl mx-auto px-6 text-center mt-12">
+    <div class="hero-brackets relative z-10 max-w-5xl mx-auto px-6 text-center mt-12">
       <!-- Brand Logo -->
       <div class="mb-4">
         <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="h-28 sm:h-36 md:h-44 w-auto mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.3)]">
@@ -430,19 +458,19 @@
 
       <!-- Brand Name -->
       <h1 class="mb-2">
-        <span class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">Namastee</span>
-        <span class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-amber tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">Wanderrlust</span>
+        <span class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]" style="text-shadow: 0 2px 20px rgba(0,0,0,0.5)">Namastee</span>
+        <span class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-amber tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]" style="text-shadow: 0 2px 20px rgba(0,0,0,0.5)">Wanderrlust</span>
       </h1>
 
       <!-- Tagline -->
       <div class="inline-flex items-center gap-2 mb-6">
         <span class="block w-8 h-px bg-amber/60"></span>
-        <span class="font-body text-[11px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-amber/90">Travel the World with Your Favorite Influencer</span>
+        <span class="font-body text-[11px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-amber/90" style="text-shadow: 0 1px 10px rgba(0,0,0,0.3)">Travel the World with Your Favorite Influencer</span>
         <span class="block w-8 h-px bg-amber/60"></span>
       </div>
 
       <!-- Subheadline -->
-      <p class="font-body text-base sm:text-lg md:text-xl text-off-white/85 max-w-2xl mx-auto mb-10 leading-relaxed">
+      <p class="font-body text-base sm:text-lg md:text-xl text-off-white/85 max-w-2xl mx-auto mb-10 leading-relaxed" style="text-shadow: 0 1px 10px rgba(0,0,0,0.3)">
         Curated group adventures led by your favorite creators. Small groups, big memories, zero planning stress.
       </p>
 
@@ -494,9 +522,9 @@
 
         <!-- Trip 1: Munnar -->
         <div class="trip-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up">
-          <div class="relative overflow-hidden aspect-[4/3]">
+          <div class="relative overflow-hidden aspect-[4/3] bg-warm-beige">
             <img
-              src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=800&q=80"
+              src="https://images.unsplash.com/photo-1598091383021-15ddea10925d?w=800&q=80"
               alt="Munnar tea plantations in Kerala, India"
               class="trip-img w-full h-full object-cover"
               loading="lazy"
@@ -584,7 +612,7 @@
 
         <!-- Trip 2: Bali -->
         <div class="trip-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.1s;">
-          <div class="relative overflow-hidden aspect-[4/3]">
+          <div class="relative overflow-hidden aspect-[4/3] bg-warm-beige">
             <img
               src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80"
               alt="Bali rice terraces and temple in Indonesia"
@@ -648,39 +676,48 @@
 
             <!-- Pricing Summary -->
             <div class="bg-warm-beige/60 rounded-xl p-4 mb-5">
-              <p class="font-body text-[10px] font-semibold text-muted-brown uppercase tracking-wider mb-2">With Flight</p>
-              <div class="grid grid-cols-3 gap-x-3 gap-y-1 mb-3">
-                <div class="flex items-center justify-between col-span-3">
-                  <span class="font-body text-xs text-muted-brown">Single Occupancy</span>
-                  <span class="font-display text-sm font-bold text-warm-brown">₹1,20,000</span>
-                </div>
-                <div class="flex items-center justify-between col-span-3">
-                  <span class="font-body text-xs text-muted-brown">Couple</span>
-                  <span class="font-display text-sm font-bold text-warm-brown">₹1,90,000</span>
-                </div>
-                <div class="flex items-center justify-between col-span-3">
-                  <span class="font-body text-xs text-muted-brown">Twin Sharing</span>
-                  <span class="font-display text-sm font-bold text-warm-brown">₹98,000</span>
-                </div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-body text-xs text-muted-brown">Starting from</span>
+                <span class="font-display text-lg font-bold text-warm-brown">₹52,000 <span class="font-body text-[10px] font-normal text-muted-brown">per person (without flight)</span></span>
               </div>
-              <div class="border-t border-sand/30 pt-2">
-                <p class="font-body text-[10px] font-semibold text-muted-brown uppercase tracking-wider mb-2">Without Flight</p>
-                <div class="grid grid-cols-3 gap-x-3 gap-y-1">
-                  <div class="flex items-center justify-between col-span-3">
-                    <span class="font-body text-xs text-muted-brown">Single Occupancy</span>
-                    <span class="font-display text-sm font-bold text-warm-brown">₹74,000</span>
+              <details class="mt-2">
+                <summary class="font-body text-xs text-sunset font-semibold cursor-pointer hover:text-sunset-dark transition-colors">View all packages</summary>
+                <div class="mt-3 pt-3 border-t border-sand/30">
+                  <p class="font-body text-[10px] font-semibold text-muted-brown uppercase tracking-wider mb-2">With Flight</p>
+                  <div class="space-y-1 mb-3">
+                    <div class="flex items-center justify-between">
+                      <span class="font-body text-xs text-muted-brown">Single Occupancy</span>
+                      <span class="font-display text-sm font-bold text-warm-brown">₹1,20,000</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="font-body text-xs text-muted-brown">Couple</span>
+                      <span class="font-display text-sm font-bold text-warm-brown">₹1,90,000</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="font-body text-xs text-muted-brown">Twin Sharing</span>
+                      <span class="font-display text-sm font-bold text-warm-brown">₹98,000</span>
+                    </div>
                   </div>
-                  <div class="flex items-center justify-between col-span-3">
-                    <span class="font-body text-xs text-muted-brown">Couple</span>
-                    <span class="font-display text-sm font-bold text-warm-brown">₹1,02,000</span>
+                  <div class="border-t border-sand/30 pt-2">
+                    <p class="font-body text-[10px] font-semibold text-muted-brown uppercase tracking-wider mb-2">Without Flight</p>
+                    <div class="space-y-1">
+                      <div class="flex items-center justify-between">
+                        <span class="font-body text-xs text-muted-brown">Single Occupancy</span>
+                        <span class="font-display text-sm font-bold text-warm-brown">₹74,000</span>
+                      </div>
+                      <div class="flex items-center justify-between">
+                        <span class="font-body text-xs text-muted-brown">Couple</span>
+                        <span class="font-display text-sm font-bold text-warm-brown">₹1,02,000</span>
+                      </div>
+                      <div class="flex items-center justify-between">
+                        <span class="font-body text-xs text-muted-brown">Twin Sharing</span>
+                        <span class="font-display text-sm font-bold text-warm-brown">₹52,000</span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="flex items-center justify-between col-span-3">
-                    <span class="font-body text-xs text-muted-brown">Twin Sharing</span>
-                    <span class="font-display text-sm font-bold text-warm-brown">₹52,000</span>
-                  </div>
+                  <p class="font-body text-[9px] text-muted-brown mt-2 text-center">All prices including GST</p>
                 </div>
-              </div>
-              <p class="font-body text-[9px] text-muted-brown mt-2 text-center">All prices including GST</p>
+              </details>
             </div>
 
             <!-- Dual CTAs -->
@@ -800,13 +837,9 @@
       <div class="influencer-scroll flex gap-6 overflow-x-auto pb-6 -mx-6 px-6" style="scrollbar-width: none; -ms-overflow-style: none;">
         <!-- Influencer 1: Aditi Sharma -->
         <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up">
-          <div class="relative overflow-hidden aspect-[3/4]">
+          <div class="relative overflow-hidden aspect-[3/4] bg-warm-beige">
             <img src="brand_assets/images/influencers/aditi-sharma.jpeg" alt="Aditi Sharma" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
-            <!-- Follower Badge -->
-            <div class="absolute bottom-4 right-4 z-10">
-              <span class="inline-flex items-center px-3 py-1.5 bg-teal text-white font-body text-xs font-bold rounded-full shadow-lg">1.5M</span>
-            </div>
             <!-- Top accent line -->
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
           </div>
@@ -832,12 +865,9 @@
 
         <!-- Influencer 2: Nikki Sharma -->
         <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.1s;">
-          <div class="relative overflow-hidden aspect-[3/4]">
+          <div class="relative overflow-hidden aspect-[3/4] bg-warm-beige">
             <img src="brand_assets/images/influencers/nikki-sharma.jpeg" alt="Nikki Sharma" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
-            <div class="absolute bottom-4 right-4 z-10">
-              <span class="inline-flex items-center px-3 py-1.5 bg-teal text-white font-body text-xs font-bold rounded-full shadow-lg">2.1M</span>
-            </div>
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
           </div>
           <div class="p-6">
@@ -862,12 +892,9 @@
 
         <!-- Influencer 3: Nyrraa Banerjee -->
         <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.2s;">
-          <div class="relative overflow-hidden aspect-[3/4]">
+          <div class="relative overflow-hidden aspect-[3/4] bg-warm-beige">
             <img src="brand_assets/images/influencers/nyrraa-banerjee.jpeg" alt="Nyrraa Banerjee" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
-            <div class="absolute bottom-4 right-4 z-10">
-              <span class="inline-flex items-center px-3 py-1.5 bg-teal text-white font-body text-xs font-bold rounded-full shadow-lg">3.8M</span>
-            </div>
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
           </div>
           <div class="p-6">
@@ -891,7 +918,7 @@
         </div>
         <!-- Influencer 4: Aditi Shetty -->
         <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.3s;">
-          <div class="relative overflow-hidden aspect-[3/4]">
+          <div class="relative overflow-hidden aspect-[3/4] bg-warm-beige">
             <img src="brand_assets/images/influencers/aditi-shetty.jpeg" alt="Aditi Shetty" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
             <!-- Top accent line -->
@@ -919,7 +946,7 @@
 
         <!-- Influencer 5: Maera Mishra -->
         <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.4s;">
-          <div class="relative overflow-hidden aspect-[3/4]">
+          <div class="relative overflow-hidden aspect-[3/4] bg-warm-beige">
             <img src="brand_assets/images/influencers/maera-mishra.jpeg" alt="Maera Mishra" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
             <!-- Top accent line -->
@@ -1013,9 +1040,9 @@
     <div class="max-w-7xl mx-auto">
       <div class="grid md:grid-cols-2 items-stretch min-h-[500px]">
         <!-- Left: Image -->
-        <div class="relative overflow-hidden md:rounded-r-none">
+        <div class="relative overflow-hidden md:rounded-r-none bg-warm-beige">
           <img
-            src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=800&q=80"
+            src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=800&q=80"
             alt="Group of happy travelers looking at sunset"
             class="w-full h-full object-cover min-h-[400px] md:min-h-full"
             loading="lazy"
@@ -1054,7 +1081,7 @@
       <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <!-- Founder 1: Parul -->
         <div class="relative group fade-up">
-          <div class="relative overflow-hidden rounded-2xl aspect-[3/4] shadow-[0_8px_32px_rgba(44,36,24,0.1)]">
+          <div class="relative overflow-hidden rounded-2xl aspect-[3/4] shadow-[0_8px_32px_rgba(44,36,24,0.1)] bg-warm-beige">
             <img src="brand_assets/images/founders/parul-chaudhary.jpeg" alt="Parull Chaudhary - Co-Founder" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/70 via-deep-black/20 to-transparent"></div>
 
@@ -1068,7 +1095,7 @@
 
         <!-- Founder 2: Anagh -->
         <div class="relative group fade-up" style="transition-delay: 0.15s;">
-          <div class="relative overflow-hidden rounded-2xl aspect-[3/4] shadow-[0_8px_32px_rgba(44,36,24,0.1)]">
+          <div class="relative overflow-hidden rounded-2xl aspect-[3/4] shadow-[0_8px_32px_rgba(44,36,24,0.1)] bg-warm-beige">
             <img src="brand_assets/images/founders/anagh-bharat.jpeg" alt="Anagh Bharat - Co-Founder" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/70 via-deep-black/20 to-transparent"></div>
 
@@ -1098,9 +1125,9 @@
   <!-- ═══════════════════════════════════════════ -->
   <section id="contact" class="relative py-24 md:py-32 px-6 md:px-12 overflow-hidden noise-overlay">
     <!-- Background -->
-    <div class="absolute inset-0">
+    <div class="absolute inset-0 bg-warm-beige">
       <img
-        src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80"
+        src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&q=80"
         alt="Tropical sunset beach"
         class="w-full h-full object-cover"
         loading="lazy"
