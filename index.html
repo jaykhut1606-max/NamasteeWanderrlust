@@ -255,14 +255,72 @@
       transform: translateY(0);
     }
 
-    /* Navbar scroll state */
+    /* Navbar — transparent over hero with white text, solid on scroll */
     .navbar {
       transition: background-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);
     }
+    .navbar .nav-link,
+    .navbar .nav-login-btn {
+      color: #FFFFFF !important;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+      transition: color 0.4s ease, text-shadow 0.4s ease;
+    }
+    .navbar .nav-link::after {
+      background: #FFFFFF;
+    }
+    .navbar .nav-link:hover {
+      color: #F5D9C0 !important;
+    }
+    .navbar .hamburger-bar {
+      background-color: #FFFFFF;
+      transition: background-color 0.4s ease;
+    }
+    .navbar .nav-logo {
+      filter: brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,0.3));
+      transition: filter 0.4s ease;
+    }
+    .navbar .nav-profile-btn {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+    .navbar .nav-profile-btn .profile-name {
+      color: #FFFFFF;
+      transition: color 0.4s ease;
+    }
+
+    /* Scrolled state — solid beige background, dark text */
     .navbar.scrolled {
-      background-color: rgba(237, 232, 220, 0.92);
+      background: rgba(245, 240, 232, 0.95);
       backdrop-filter: blur(16px);
-      box-shadow: 0 2px 16px rgba(44, 36, 24, 0.06);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 2px 20px rgba(44, 36, 24, 0.08);
+    }
+    .navbar.scrolled .nav-link,
+    .navbar.scrolled .nav-login-btn {
+      color: #2C2418 !important;
+      text-shadow: none;
+    }
+    .navbar.scrolled .nav-link::after {
+      background: #D4773B;
+    }
+    .navbar.scrolled .nav-link:hover {
+      color: #D4773B !important;
+    }
+    .navbar.scrolled .hamburger-bar {
+      background-color: #2C2418;
+    }
+    .navbar.scrolled .nav-logo {
+      filter: none;
+    }
+    .navbar.scrolled .nav-profile-btn {
+      background: rgba(237, 232, 220, 1);
+      border-color: transparent;
+    }
+    .navbar.scrolled .nav-profile-btn .profile-name {
+      color: #2C2418;
     }
 
     /* Star rating */
@@ -615,33 +673,33 @@
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <!-- Logo -->
       <a href="#" class="flex items-center gap-1 group">
-        <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm">
+        <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="nav-logo h-10 md:h-12 w-auto object-contain">
       </a>
 
       <!-- Desktop Nav -->
       <div class="hidden md:flex items-center gap-8">
-        <a href="#trips" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest">Trips</a>
-        <a href="#about" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest">About</a>
-        <a href="#influencers" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest">Influencers</a>
+        <a href="#trips" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">Trips</a>
+        <a href="#about" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">About</a>
+        <a href="#influencers" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">Influencers</a>
         <!-- Login Button (shown when logged out) -->
-        <button id="navLoginBtn" onclick="LoginModal.open()" class="nav-link font-body text-sm font-medium text-warm-brown uppercase tracking-widest cursor-pointer bg-transparent border-none">Login</button>
+        <button id="navLoginBtn" onclick="LoginModal.open()" class="nav-link nav-login-btn font-body text-sm font-semibold uppercase tracking-widest cursor-pointer bg-transparent border-none">Login</button>
         <!-- Profile Button (shown when logged in) -->
-        <button id="navProfileBtn" onclick="ProfileModal.open()" class="hidden inline-flex items-center gap-2 px-4 py-2 bg-warm-beige rounded-full cursor-pointer border-none">
+        <button id="navProfileBtn" onclick="ProfileModal.open()" class="nav-profile-btn hidden inline-flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer border-none">
           <div class="w-7 h-7 rounded-full bg-gradient-to-br from-sunset to-amber flex items-center justify-center">
             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
           </div>
-          <span class="profile-name font-body text-sm font-medium text-warm-brown">Profile</span>
+          <span class="profile-name font-body text-sm font-medium">Profile</span>
         </button>
-        <a href="#trips" class="btn-primary inline-flex items-center px-6 py-3 bg-sunset text-white font-body text-sm font-semibold rounded-lg">
+        <a href="#trips" class="btn-primary inline-flex items-center px-6 py-3 bg-sunset text-white font-body text-sm font-semibold rounded-lg shadow-lg shadow-sunset/20">
           Explore Trips
         </a>
       </div>
 
       <!-- Mobile Hamburger -->
       <button id="menuToggle" class="md:hidden flex flex-col gap-1.5 p-3 -mr-1 group" aria-label="Toggle menu">
-        <span class="block w-6 h-0.5 bg-warm-brown transition-transform duration-300 origin-center" id="bar1"></span>
-        <span class="block w-6 h-0.5 bg-warm-brown transition-opacity duration-300" id="bar2"></span>
-        <span class="block w-6 h-0.5 bg-warm-brown transition-transform duration-300 origin-center" id="bar3"></span>
+        <span class="hamburger-bar block w-6 h-0.5 transition-all duration-300 origin-center" id="bar1"></span>
+        <span class="hamburger-bar block w-6 h-0.5 transition-all duration-300" id="bar2"></span>
+        <span class="hamburger-bar block w-6 h-0.5 transition-all duration-300 origin-center" id="bar3"></span>
       </button>
     </div>
 
