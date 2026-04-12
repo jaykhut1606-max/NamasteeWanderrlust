@@ -1246,18 +1246,21 @@
         </div>
 
         <div id="bookingModalContent">
-          <!-- ─── Step 1: Email ─── -->
+          <!-- ─── Step 1: Sign Up (Name + Phone + Email) ─── -->
           <div class="booking-step modal-body" data-step="1">
             <div class="text-center mb-6">
               <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sunset/10 flex items-center justify-center">
-                <svg class="w-7 h-7 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                <svg class="w-7 h-7 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
               </div>
-              <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Enter Your Email</h4>
-              <p class="font-body text-sm text-muted-brown">We'll send a 6-digit verification code</p>
+              <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Create Your Account</h4>
+              <p class="font-body text-sm text-muted-brown">Sign up to book your trip</p>
             </div>
-            <input id="authEmail" type="email" class="modal-input mb-3" placeholder="your@email.com" autocomplete="email">
+            <input id="authName" type="text" class="modal-input mb-3" placeholder="Full Name" autocomplete="name">
+            <input id="authPhone" type="tel" class="modal-input mb-3" placeholder="Phone Number (10 digits)" maxlength="10" inputmode="numeric">
+            <input id="authEmail" type="email" class="modal-input mb-3" placeholder="Email Address" autocomplete="email">
             <p id="emailError" class="error-text"></p>
             <button id="sendOtpBtn" onclick="BookingModal.submitEmail()" class="modal-btn modal-btn-primary mt-4">Continue</button>
+            <p class="text-center mt-3 font-body text-sm text-muted-brown">Already have an account? <button onclick="BookingModal.showLoginMode()" class="text-sunset font-semibold hover:underline">Sign In</button></p>
           </div>
 
           <!-- ─── Step 2: OTP ─── -->

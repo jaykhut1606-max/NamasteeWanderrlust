@@ -62,23 +62,16 @@ const BookingModal = {
       setTimeout(() => { if (inputs[0]) inputs[0].focus(); }, 100);
     }
     if (step === 3) {
-      // Setup step — show/hide password fields based on new vs returning
+      // Returning user — password login
       const setupTitle = document.getElementById('setupTitle');
       const setupDesc = document.getElementById('setupDesc');
       const namePhoneFields = document.getElementById('namePhoneFields');
       const passwordField = document.getElementById('passwordField');
 
-      if (this.isNewUser) {
-        if (setupTitle) setupTitle.textContent = 'Create Your Account';
-        if (setupDesc) setupDesc.textContent = 'Set up your password and details';
-        if (namePhoneFields) namePhoneFields.classList.remove('hidden');
-        if (passwordField) passwordField.classList.remove('hidden');
-      } else {
-        if (setupTitle) setupTitle.textContent = 'Welcome Back!';
-        if (setupDesc) setupDesc.textContent = 'Enter your password to continue';
-        if (namePhoneFields) namePhoneFields.classList.add('hidden');
-        if (passwordField) passwordField.classList.remove('hidden');
-      }
+      if (setupTitle) setupTitle.textContent = 'Welcome Back!';
+      if (setupDesc) setupDesc.textContent = 'Enter your password to continue';
+      if (namePhoneFields) namePhoneFields.classList.add('hidden');
+      if (passwordField) passwordField.classList.remove('hidden');
     }
   },
 
@@ -100,21 +93,74 @@ const BookingModal = {
     if (headerEl) headerEl.textContent = this.tripName || 'Book Your Trip';
   },
 
-  // ─── Step 1: Email Input ───
+  // Switch step 1 to email-only mode for returning users
+  showLoginMode() {
+    const container = document.querySelector('[data-step="1"]');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sunset/10 flex items-center justify-center">
+          <svg class="w-7 h-7 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+        </div>
+        <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Welcome Back!</h4>
+        <p class="font-body text-sm text-muted-brown">Enter your email to sign in</p>
+      </div>
+      <input id="authEmail" type="email" class="modal-input mb-3" placeholder="Email Address" autocomplete="email">
+      <p id="emailError" class="error-text"></p>
+      <button id="sendOtpBtn" onclick="BookingModal.submitEmail()" class="modal-btn modal-btn-primary mt-4">Continue</button>
+      <p class="text-center mt-3 font-body text-sm text-muted-brown">New here? <button onclick="BookingModal.showSignupMode()" class="text-sunset font-semibold hover:underline">Sign Up</button></p>
+    `;
+  },
+
+  // Switch step 1 back to sign-up mode
+  showSignupMode() {
+    const container = document.querySelector('[data-step="1"]');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sunset/10 flex items-center justify-center">
+          <svg class="w-7 h-7 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+        </div>
+        <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Create Your Account</h4>
+        <p class="font-body text-sm text-muted-brown">Sign up to book your trip</p>
+      </div>
+      <input id="authName" type="text" class="modal-input mb-3" placeholder="Full Name" autocomplete="name">
+      <input id="authPhone" type="tel" class="modal-input mb-3" placeholder="Phone Number (10 digits)" maxlength="10" inputmode="numeric">
+      <input id="authEmail" type="email" class="modal-input mb-3" placeholder="Email Address" autocomplete="email">
+      <p id="emailError" class="error-text"></p>
+      <button id="sendOtpBtn" onclick="BookingModal.submitEmail()" class="modal-btn modal-btn-primary mt-4">Continue</button>
+      <p class="text-center mt-3 font-body text-sm text-muted-brown">Already have an account? <button onclick="BookingModal.showLoginMode()" class="text-sunset font-semibold hover:underline">Sign In</button></p>
+    `;
+  },
+
+  // ─── Step 1: Name + Phone + Email (new users) or Email only (returning) ───
   async submitEmail() {
     const emailInput = document.getElementById('authEmail');
     const email = emailInput.value.trim().toLowerCase();
     const errorEl = document.getElementById('emailError');
     const btn = document.getElementById('sendOtpBtn');
 
-    errorEl.textContent = '';
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errorEl.textContent = 'Please enter a valid email address';
-      return;
+    // If name/phone fields exist (sign-up mode), validate them
+    const nameInput = document.getElementById('authName');
+    const phoneInput = document.getElementById('authPhone');
+
+    if (nameInput && phoneInput) {
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+
+      if (!name || name.length < 2) { errorEl.textContent = 'Please enter your full name'; return; }
+      if (!phone || !/^[6-9]\d{9}$/.test(phone)) { errorEl.textContent = 'Please enter a valid 10-digit phone number'; return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = 'Please enter a valid email address'; return; }
+
+      this.state.name = name;
+      this.state.phone = phone;
+    } else {
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = 'Please enter a valid email address'; return; }
     }
 
+    errorEl.textContent = '';
     btn.disabled = true;
-    btn.textContent = 'Checking...';
+    btn.textContent = 'Sending OTP...';
 
     try {
       const result = await Auth.sendOtp(email);
@@ -137,7 +183,7 @@ const BookingModal = {
     }
   },
 
-  // ─── Step 2: OTP Verification (new users only) ───
+  // ─── Step 2: OTP Verification ───
   async submitOtp() {
     const inputs = document.querySelectorAll('.otp-input');
     const otp = Array.from(inputs).map(i => i.value).join('');
@@ -156,8 +202,17 @@ const BookingModal = {
     try {
       await Auth.verifyOtp(this.state.email, otp);
       this.state.otp = otp;
-      // Go to account setup (password + name/phone)
-      this.goTo(3);
+
+      if (this.isNewUser && this.state.name) {
+        // New user with name+phone already collected — auto-register and go to package
+        const autoPassword = 'NW_' + Math.random().toString(36).slice(2, 10) + '!';
+        await Auth.register(this.state.email, autoPassword, this.state.name, this.state.phone);
+        Auth._updateUI();
+        this.goTo(4); // Skip setup, go to package selection
+      } else {
+        // Go to account setup (password + name/phone)
+        this.goTo(3);
+      }
     } catch (err) {
       errorEl.textContent = err.message || 'Invalid or expired OTP. Please try again.';
     } finally {
@@ -166,7 +221,7 @@ const BookingModal = {
     }
   },
 
-  // ─── Step 3: Password + Details (register or login) ───
+  // ─── Step 3: Password login (returning users) ───
   async submitSetup() {
     const password = document.getElementById('userPassword').value;
     const errorEl = document.getElementById('setupError');
@@ -174,61 +229,25 @@ const BookingModal = {
 
     errorEl.textContent = '';
 
-    if (this.isNewUser) {
-      // New user — register with password + name + phone
-      const name = document.getElementById('userName').value.trim();
-      const phone = document.getElementById('userPhone').value.trim();
+    if (!password) {
+      errorEl.textContent = 'Please enter your password';
+      return;
+    }
 
-      if (!name || name.length < 2) {
-        errorEl.textContent = 'Please enter your full name';
-        return;
-      }
-      if (!phone || !/^[6-9]\d{9}$/.test(phone)) {
-        errorEl.textContent = 'Please enter a valid 10-digit phone number';
-        return;
-      }
-      if (!password || password.length < 6) {
-        errorEl.textContent = 'Password must be at least 6 characters';
-        return;
-      }
+    btn.disabled = true;
+    btn.textContent = 'Logging in...';
 
-      btn.disabled = true;
-      btn.textContent = 'Creating account...';
-
-      try {
-        await Auth.register(this.state.email, password, name, phone);
-        this.state.name = name;
-        this.state.phone = phone;
-        Auth._updateUI();
-        this.goTo(4); // Package selection
-      } catch (err) {
-        errorEl.textContent = err.message || 'Registration failed';
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Create Account & Continue';
-      }
-    } else {
-      // Returning user — login with password
-      if (!password) {
-        errorEl.textContent = 'Please enter your password';
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Logging in...';
-
-      try {
-        const result = await Auth.login(this.state.email, password);
-        this.state.name = result.user.name || '';
-        this.state.phone = result.user.phone || '';
-        Auth._updateUI();
-        this.goTo(4); // Package selection
-      } catch (err) {
-        errorEl.textContent = err.message || 'Invalid password';
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Login & Continue';
-      }
+    try {
+      const result = await Auth.login(this.state.email, password);
+      this.state.name = result.user.name || '';
+      this.state.phone = result.user.phone || '';
+      Auth._updateUI();
+      this.goTo(4); // Package selection
+    } catch (err) {
+      errorEl.textContent = err.message || 'Invalid password';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Login & Continue';
     }
   },
 
@@ -495,10 +514,15 @@ async function submitWaitlist(formEl, trip) {
 
 // ─── Login Modal (standalone, for navbar login) ───
 const LoginModal = {
+  _pendingName: '',
+  _pendingPhone: '',
+
   open() {
     document.getElementById('loginModal').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
-    this.showEmailStep();
+    this._pendingName = '';
+    this._pendingPhone = '';
+    this.showSignupStep();
   },
 
   close() {
@@ -515,31 +539,85 @@ const LoginModal = {
     }
   },
 
-  showEmailStep() {
+  // ─── Step 1: Name + Phone + Email (new users) ───
+  showSignupStep() {
+    document.getElementById('loginModalContent').innerHTML = `
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sunset/10 flex items-center justify-center">
+          <svg class="w-7 h-7 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+        </div>
+        <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Sign Up</h4>
+        <p class="font-body text-sm text-muted-brown">Create your account to get started</p>
+      </div>
+      <input id="loginName" type="text" class="modal-input mb-3" placeholder="Full Name" autocomplete="name">
+      <input id="loginPhone" type="tel" class="modal-input mb-3" placeholder="Phone Number (10 digits)" maxlength="10" inputmode="numeric">
+      <input id="loginEmail" type="email" class="modal-input mb-3" placeholder="Email Address" autocomplete="email">
+      <p id="loginError" class="error-text"></p>
+      <button id="loginSubmitBtn" onclick="LoginModal.submitSignup()" class="modal-btn modal-btn-primary mt-4">Continue</button>
+      <p class="text-center mt-4 font-body text-sm text-muted-brown">Already have an account? <button onclick="LoginModal.showLoginStep()" class="text-sunset font-semibold hover:underline">Sign In</button></p>
+    `;
+  },
+
+  async submitSignup() {
+    const name = document.getElementById('loginName').value.trim();
+    const phone = document.getElementById('loginPhone').value.trim();
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const errorEl = document.getElementById('loginError');
+    const btn = document.getElementById('loginSubmitBtn');
+
+    errorEl.textContent = '';
+    if (!name || name.length < 2) { errorEl.textContent = 'Please enter your full name'; return; }
+    if (!phone || !/^[6-9]\d{9}$/.test(phone)) { errorEl.textContent = 'Please enter a valid 10-digit phone number'; return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = 'Please enter a valid email address'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending OTP...';
+
+    try {
+      const result = await Auth.sendOtp(email);
+
+      if (result.has_password) {
+        // Already registered — redirect to sign in
+        this.showPasswordStep(email);
+        return;
+      }
+
+      // Save name & phone for after OTP verification
+      this._pendingName = name;
+      this._pendingPhone = phone;
+      this.showOtpStep(email, true);
+    } catch (err) {
+      errorEl.textContent = err.message || 'Failed to send OTP';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Continue';
+    }
+  },
+
+  // ─── Sign In (returning users) ───
+  showLoginStep() {
     document.getElementById('loginModalContent').innerHTML = `
       <div class="text-center mb-6">
         <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sunset/10 flex items-center justify-center">
           <svg class="w-7 h-7 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
         </div>
         <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Sign In</h4>
-        <p class="font-body text-sm text-muted-brown">Enter your email to continue</p>
+        <p class="font-body text-sm text-muted-brown">Welcome back! Enter your email</p>
       </div>
-      <input id="loginEmail" type="email" class="modal-input mb-3" placeholder="your@email.com" autocomplete="email">
+      <input id="loginEmail" type="email" class="modal-input mb-3" placeholder="Email Address" autocomplete="email">
       <p id="loginError" class="error-text"></p>
-      <button id="loginSubmitBtn" onclick="LoginModal.submitEmail()" class="modal-btn modal-btn-primary mt-4">Continue</button>
+      <button id="loginSubmitBtn" onclick="LoginModal.submitLogin()" class="modal-btn modal-btn-primary mt-4">Continue</button>
+      <p class="text-center mt-4 font-body text-sm text-muted-brown">New here? <button onclick="LoginModal.showSignupStep()" class="text-sunset font-semibold hover:underline">Sign Up</button></p>
     `;
   },
 
-  async submitEmail() {
+  async submitLogin() {
     const email = document.getElementById('loginEmail').value.trim().toLowerCase();
     const errorEl = document.getElementById('loginError');
     const btn = document.getElementById('loginSubmitBtn');
 
     errorEl.textContent = '';
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errorEl.textContent = 'Please enter a valid email';
-      return;
-    }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = 'Please enter a valid email'; return; }
 
     btn.disabled = true;
     btn.textContent = 'Checking...';
@@ -548,14 +626,18 @@ const LoginModal = {
       const result = await Auth.sendOtp(email);
 
       if (result.has_password) {
-        // Show password login
         this.showPasswordStep(email);
       } else {
-        // Show OTP verification
-        this.showOtpStep(email);
+        // No account yet — redirect to sign up
+        this.showSignupStep();
+        setTimeout(() => {
+          const errEl = document.getElementById('loginError');
+          if (errEl) errEl.textContent = 'No account found. Please sign up first.';
+        }, 100);
       }
     } catch (err) {
       errorEl.textContent = err.message;
+    } finally {
       btn.disabled = false;
       btn.textContent = 'Continue';
     }
@@ -593,17 +675,18 @@ const LoginModal = {
   async forgotPassword(email) {
     try {
       await Auth.sendOtp(email);
-      this.showOtpStep(email);
+      this.showOtpStep(email, false);
     } catch (err) {
       alert('Failed to send OTP: ' + err.message);
     }
   },
 
-  showOtpStep(email) {
+  showOtpStep(email, isNewUser) {
+    this._otpIsNewUser = isNewUser;
     document.getElementById('loginModalContent').innerHTML = `
       <div class="text-center mb-6">
         <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Verify Email</h4>
-        <p class="font-body text-sm text-muted-brown">Enter the code sent to</p>
+        <p class="font-body text-sm text-muted-brown">Enter the 6-digit code sent to</p>
         <p class="font-body text-sm font-semibold text-sunset mt-1">${email}</p>
       </div>
       <div class="otp-container mb-3">
@@ -615,9 +698,22 @@ const LoginModal = {
         <input class="otp-input" type="text" maxlength="1" inputmode="numeric">
       </div>
       <p id="loginError" class="error-text text-center"></p>
-      <button onclick="LoginModal.submitOtp('${email}')" class="modal-btn modal-btn-primary mt-4">Verify</button>
+      <button onclick="LoginModal.submitOtp('${email}')" class="modal-btn modal-btn-primary mt-4">Verify & Continue</button>
+      <button onclick="LoginModal.resendOtp('${email}')" id="loginResendBtn" class="text-sm text-sunset hover:text-sunset/80 font-medium mt-3 block mx-auto">Resend Code</button>
     `;
     setTimeout(() => document.querySelector('#loginModalContent .otp-input')?.focus(), 100);
+  },
+
+  async resendOtp(email) {
+    const btn = document.getElementById('loginResendBtn');
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+    try {
+      await Auth.sendOtp(email);
+      if (btn) { btn.textContent = 'Code resent!'; }
+      setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = 'Resend Code'; } }, 30000);
+    } catch (err) {
+      if (btn) { btn.disabled = false; btn.textContent = 'Resend Code'; }
+    }
   },
 
   async submitOtp(email) {
@@ -630,52 +726,22 @@ const LoginModal = {
     try {
       const result = await Auth.verifyOtp(email, otp);
 
-      if (result.has_password) {
-        // Existing user verified via OTP — log them in and fetch full profile
-        Auth.currentUser = { email };
-        localStorage.setItem('nw_user', JSON.stringify({ email }));
-        try {
-          await Auth.getProfile(email); // fetches and stores full user data
-        } catch(e) { /* profile will load from basic data */ }
+      if (this._otpIsNewUser && this._pendingName) {
+        // New user — auto-register with name & phone collected earlier
+        const autoPassword = 'NW_' + Math.random().toString(36).slice(2, 10) + '!';
+        await Auth.register(email, autoPassword, this._pendingName, this._pendingPhone);
         Auth._updateUI();
         this.close();
       } else {
-        // New user — show registration form
-        this.showRegisterStep(email);
+        // Existing user verified via OTP (forgot password flow)
+        Auth.currentUser = { email };
+        localStorage.setItem('nw_user', JSON.stringify({ email }));
+        try {
+          await Auth.getProfile(email);
+        } catch(e) { /* profile will load from basic data */ }
+        Auth._updateUI();
+        this.close();
       }
-    } catch (err) {
-      errorEl.textContent = err.message;
-    }
-  },
-
-  showRegisterStep(email) {
-    document.getElementById('loginModalContent').innerHTML = `
-      <div class="text-center mb-6">
-        <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Create Account</h4>
-        <p class="font-body text-sm text-muted-brown">Set up your profile</p>
-      </div>
-      <input id="regName" type="text" class="modal-input mb-3" placeholder="Full Name" autocomplete="name">
-      <input id="regPhone" type="tel" class="modal-input mb-3" placeholder="Phone (10 digits)" maxlength="10" inputmode="numeric">
-      <input id="regPassword" type="password" class="modal-input mb-3" placeholder="Create Password (min 6 chars)" autocomplete="new-password">
-      <p id="loginError" class="error-text"></p>
-      <button onclick="LoginModal.submitRegister('${email}')" class="modal-btn modal-btn-primary mt-4">Create Account</button>
-    `;
-  },
-
-  async submitRegister(email) {
-    const name = document.getElementById('regName').value.trim();
-    const phone = document.getElementById('regPhone').value.trim();
-    const password = document.getElementById('regPassword').value;
-    const errorEl = document.getElementById('loginError');
-
-    if (!name || name.length < 2) { errorEl.textContent = 'Enter your full name'; return; }
-    if (!phone || !/^[6-9]\d{9}$/.test(phone)) { errorEl.textContent = 'Enter a valid 10-digit phone number'; return; }
-    if (!password || password.length < 6) { errorEl.textContent = 'Password must be at least 6 characters'; return; }
-
-    try {
-      await Auth.register(email, password, name, phone);
-      Auth._updateUI();
-      this.close();
     } catch (err) {
       errorEl.textContent = err.message;
     }
