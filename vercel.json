@@ -9,6 +9,8 @@
     { "source": "/api/track-download", "destination": "/api/track-download" },
     { "source": "/api/admin-login", "destination": "/api/admin-login" },
     { "source": "/api/admin-data", "destination": "/api/admin-data" },
+    { "source": "/api/create-order", "destination": "/api/create-order" },
+    { "source": "/api/verify-payment", "destination": "/api/verify-payment" },
     { "source": "/admin", "destination": "/admin.html" }
   ],
   "headers": [

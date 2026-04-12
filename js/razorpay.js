@@ -1,59 +1,51 @@
 // ═══════════════════════════════════════════
 // Razorpay Checkout Integration
+// Server-side order creation + signature verification
 // ═══════════════════════════════════════════
-
-const RAZORPAY_KEY_ID = 'rzp_test_PLACEHOLDER'; // Replace with your test key
 
 const RazorpayCheckout = {
   async createOrder(details) {
-    // For now, create booking directly in Supabase (no Edge Function yet)
-    // When Razorpay keys are ready, this will call the create-order Edge Function
-    const bookingId = crypto.randomUUID();
-
-    // Insert pending booking
-    const { data: booking, error } = await supabase
-      .from('bookings')
-      .insert({
-        id: bookingId,
-        user_id: Auth.currentUser.id,
+    // Call server to create Razorpay order + pending booking
+    const res = await fetch('/api/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount: details.amount,
         trip_id: details.tripId,
+        trip_name: details.tripName,
+        package_type: details.packageType,
         user_name: details.userName,
         user_email: details.userEmail,
         user_phone: details.userPhone,
-        package_type: details.packageType,
-        amount_paise: details.amount,
-        payment_status: 'pending',
       })
-      .select()
-      .single();
+    });
 
-    if (error) throw error;
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      throw new Error(data.error || 'Failed to create order');
+    }
 
-    // Open Razorpay checkout
+    // Open Razorpay checkout with server-generated order
     this.openCheckout({
-      orderId: bookingId, // Will be razorpay_order_id when Edge Function is set up
-      amount: details.amount,
+      keyId: data.key_id,
+      orderId: data.order_id,
+      bookingId: data.booking_id,
+      amount: data.amount,
       userName: details.userName,
       userEmail: details.userEmail,
       userPhone: details.userPhone,
       tripName: details.tripName,
-      bookingId: bookingId,
+      packageType: details.packageType,
     });
   },
 
   openCheckout(options) {
-    if (RAZORPAY_KEY_ID === 'rzp_test_PLACEHOLDER') {
-      // Simulate successful payment for development
-      this.simulatePayment(options);
-      return;
-    }
-
     const rzp = new Razorpay({
-      key: RAZORPAY_KEY_ID,
+      key: options.keyId,
       amount: options.amount,
       currency: 'INR',
       name: 'NamasteeWanderrlust',
-      description: `${options.tripName} - Booking`,
+      description: `${options.tripName} Trip Booking`,
       order_id: options.orderId,
       prefill: {
         name: options.userName,
@@ -64,61 +56,56 @@ const RazorpayCheckout = {
         color: '#D4773B',
       },
       handler: async (response) => {
-        await this.handleSuccess(response, options.bookingId);
+        await this.verifyPayment(response, options);
       },
       modal: {
         ondismiss: () => {
-          // Payment cancelled
+          // Payment cancelled — booking stays pending
+          console.log('Payment cancelled by user');
         }
       }
     });
     rzp.open();
   },
 
-  // Development mode: simulate payment
-  async simulatePayment(options) {
-    // Show a simulated payment confirmation
-    const confirmed = confirm(
-      `💳 DEVELOPMENT MODE\n\n` +
-      `Trip: ${options.tripName}\n` +
-      `Amount: ₹${(options.amount / 100).toLocaleString('en-IN')}\n` +
-      `Name: ${options.userName}\n\n` +
-      `Simulate successful payment?`
-    );
-
-    if (confirmed) {
-      const fakePaymentId = 'pay_dev_' + Date.now();
-      await this.handleSuccess({
-        razorpay_payment_id: fakePaymentId,
-        razorpay_order_id: options.orderId,
-        razorpay_signature: 'dev_signature',
-      }, options.bookingId);
-    }
-  },
-
-  async handleSuccess(response, bookingId) {
+  async verifyPayment(response, options) {
     try {
-      // Update booking with payment details
-      const { error } = await supabase
-        .from('bookings')
-        .update({
-          razorpay_payment_id: response.razorpay_payment_id,
-          razorpay_order_id: response.razorpay_order_id,
-          razorpay_signature: response.razorpay_signature,
-          payment_status: 'completed',
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', bookingId);
+      // Show loading state
+      const btn = document.getElementById('proceedPayBtn');
+      if (btn) { btn.disabled = true; btn.textContent = 'Verifying Payment...'; }
 
-      if (error) throw error;
+      // Verify payment signature on server
+      const res = await fetch('/api/verify-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_signature: response.razorpay_signature,
+          booking_id: options.bookingId,
+          user_name: options.userName,
+          user_email: options.userEmail,
+          trip_name: options.tripName,
+          package_type: options.packageType,
+          amount: options.amount,
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        throw new Error(data.error || 'Payment verification failed');
+      }
 
       // Show success in modal
       BookingModal.showSuccess({
-        bookingId: bookingId,
-        paymentId: response.razorpay_payment_id,
+        bookingId: data.booking_id,
+        paymentId: data.payment_id,
       });
+
     } catch (err) {
-      alert('Payment recorded but confirmation failed. Contact support with ID: ' + bookingId);
+      alert('Payment was received but verification encountered an issue. Please contact support.\n\nPayment ID: ' + response.razorpay_payment_id);
+      console.error('Payment verification error:', err);
     }
   }
 };
