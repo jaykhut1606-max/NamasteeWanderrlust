@@ -12,7 +12,6 @@
     { "source": "/api/create-order", "destination": "/api/create-order" },
     { "source": "/api/verify-payment", "destination": "/api/verify-payment" },
     { "source": "/api/set-password", "destination": "/api/set-password" },
-    { "source": "/api/instagram-feed", "destination": "/api/instagram-feed" },
     { "source": "/admin", "destination": "/admin.html" }
   ],
   "headers": [
