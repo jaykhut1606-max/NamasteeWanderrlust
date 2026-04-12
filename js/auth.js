@@ -45,6 +45,18 @@ const Auth = {
     return data;
   },
 
+  // Set password (after OTP sign-up)
+  async setPassword(email, password) {
+    const res = await fetch('/api/set-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to set password');
+    return data;
+  },
+
   // Login with email + password
   async login(email, password) {
     const res = await fetch('/api/login', {

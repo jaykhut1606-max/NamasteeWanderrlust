@@ -62,16 +62,34 @@ const BookingModal = {
       setTimeout(() => { if (inputs[0]) inputs[0].focus(); }, 100);
     }
     if (step === 3) {
-      // Returning user — password login
       const setupTitle = document.getElementById('setupTitle');
       const setupDesc = document.getElementById('setupDesc');
       const namePhoneFields = document.getElementById('namePhoneFields');
       const passwordField = document.getElementById('passwordField');
+      const setupBtn = document.getElementById('setupBtn');
 
-      if (setupTitle) setupTitle.textContent = 'Welcome Back!';
-      if (setupDesc) setupDesc.textContent = 'Enter your password to continue';
-      if (namePhoneFields) namePhoneFields.classList.add('hidden');
-      if (passwordField) passwordField.classList.remove('hidden');
+      if (this.isNewUser) {
+        // New user — set password (optional)
+        if (setupTitle) setupTitle.textContent = 'Account Created!';
+        if (setupDesc) setupDesc.textContent = 'Set a password for faster login next time';
+        if (namePhoneFields) namePhoneFields.classList.add('hidden');
+        if (passwordField) passwordField.classList.remove('hidden');
+        const pwInput = document.getElementById('userPassword');
+        if (pwInput) pwInput.placeholder = 'Create Password (min 6 characters)';
+        if (setupBtn) setupBtn.textContent = 'Set Password & Continue';
+        // Add a skip button dynamically
+        const backBtn = container.querySelector('[data-step="3"] .modal-btn-secondary');
+        if (backBtn) { backBtn.textContent = 'Skip & Continue to Packages'; backBtn.setAttribute('onclick', 'BookingModal.goTo(4)'); }
+      } else {
+        // Returning user — password login
+        if (setupTitle) setupTitle.textContent = 'Welcome Back!';
+        if (setupDesc) setupDesc.textContent = 'Enter your password to continue';
+        if (namePhoneFields) namePhoneFields.classList.add('hidden');
+        if (passwordField) passwordField.classList.remove('hidden');
+        const pwInput = document.getElementById('userPassword');
+        if (pwInput) pwInput.placeholder = 'Your password';
+        if (setupBtn) setupBtn.textContent = 'Login & Continue';
+      }
     }
   },
 
@@ -204,13 +222,14 @@ const BookingModal = {
       this.state.otp = otp;
 
       if (this.isNewUser && this.state.name) {
-        // New user with name+phone already collected — auto-register and go to package
+        // New user with name+phone already collected — auto-register
         const autoPassword = 'NW_' + Math.random().toString(36).slice(2, 10) + '!';
         await Auth.register(this.state.email, autoPassword, this.state.name, this.state.phone);
         Auth._updateUI();
-        this.goTo(4); // Skip setup, go to package selection
+        // Show set password step (step 3)
+        this.goTo(3);
       } else {
-        // Go to account setup (password + name/phone)
+        // Returning user — password login (step 3)
         this.goTo(3);
       }
     } catch (err) {
@@ -221,7 +240,7 @@ const BookingModal = {
     }
   },
 
-  // ─── Step 3: Password login (returning users) ───
+  // ─── Step 3: Set password (new) or Login (returning) ───
   async submitSetup() {
     const password = document.getElementById('userPassword').value;
     const errorEl = document.getElementById('setupError');
@@ -229,25 +248,47 @@ const BookingModal = {
 
     errorEl.textContent = '';
 
-    if (!password) {
-      errorEl.textContent = 'Please enter your password';
-      return;
-    }
+    if (this.isNewUser) {
+      // New user — set password (optional but validated if provided)
+      if (!password || password.length < 6) {
+        errorEl.textContent = 'Password must be at least 6 characters';
+        return;
+      }
 
-    btn.disabled = true;
-    btn.textContent = 'Logging in...';
+      btn.disabled = true;
+      btn.textContent = 'Setting password...';
 
-    try {
-      const result = await Auth.login(this.state.email, password);
-      this.state.name = result.user.name || '';
-      this.state.phone = result.user.phone || '';
-      Auth._updateUI();
-      this.goTo(4); // Package selection
-    } catch (err) {
-      errorEl.textContent = err.message || 'Invalid password';
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Login & Continue';
+      try {
+        await Auth.setPassword(this.state.email, password);
+        this.goTo(4); // Package selection
+      } catch (err) {
+        errorEl.textContent = err.message || 'Failed to set password';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Set Password & Continue';
+      }
+    } else {
+      // Returning user — login with password
+      if (!password) {
+        errorEl.textContent = 'Please enter your password';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Logging in...';
+
+      try {
+        const result = await Auth.login(this.state.email, password);
+        this.state.name = result.user.name || '';
+        this.state.phone = result.user.phone || '';
+        Auth._updateUI();
+        this.goTo(4); // Package selection
+      } catch (err) {
+        errorEl.textContent = err.message || 'Invalid password';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Login & Continue';
+      }
     }
   },
 
@@ -731,7 +772,9 @@ const LoginModal = {
         const autoPassword = 'NW_' + Math.random().toString(36).slice(2, 10) + '!';
         await Auth.register(email, autoPassword, this._pendingName, this._pendingPhone);
         Auth._updateUI();
-        this.close();
+        // Show set password step
+        this.showSetPasswordStep(email);
+        return;
       } else {
         // Existing user verified via OTP (forgot password flow)
         Auth.currentUser = { email };
@@ -744,6 +787,58 @@ const LoginModal = {
       }
     } catch (err) {
       errorEl.textContent = err.message;
+    }
+  },
+
+  // ─── Set Password Step (after sign-up) ───
+  showSetPasswordStep(email) {
+    document.getElementById('loginModalContent').innerHTML = `
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-forest/10 flex items-center justify-center">
+          <svg class="w-7 h-7 text-forest" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h4 class="font-display text-2xl font-bold text-warm-brown mb-1">Account Created!</h4>
+        <p class="font-body text-sm text-muted-brown">Set a password for faster login next time</p>
+      </div>
+      <input id="setNewPassword" type="password" class="modal-input mb-3" placeholder="Create Password (min 6 characters)" autocomplete="new-password">
+      <input id="setConfirmPassword" type="password" class="modal-input mb-3" placeholder="Confirm Password" autocomplete="new-password">
+      <p id="loginError" class="error-text"></p>
+      <button id="setPasswordBtn" onclick="LoginModal.submitSetPassword('${email}')" class="modal-btn modal-btn-primary mt-4">Set Password</button>
+      <button onclick="LoginModal.close()" class="modal-btn modal-btn-secondary mt-2">Skip for Now</button>
+    `;
+    setTimeout(() => document.getElementById('setNewPassword')?.focus(), 100);
+  },
+
+  async submitSetPassword(email) {
+    const password = document.getElementById('setNewPassword').value;
+    const confirm = document.getElementById('setConfirmPassword').value;
+    const errorEl = document.getElementById('loginError');
+    const btn = document.getElementById('setPasswordBtn');
+
+    errorEl.textContent = '';
+    if (!password || password.length < 6) { errorEl.textContent = 'Password must be at least 6 characters'; return; }
+    if (password !== confirm) { errorEl.textContent = 'Passwords do not match'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Setting password...';
+
+    try {
+      await Auth.setPassword(email, password);
+      // Show success briefly then close
+      document.getElementById('loginModalContent').innerHTML = `
+        <div class="text-center py-8">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-forest/10 flex items-center justify-center">
+            <svg class="w-8 h-8 text-forest" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h4 class="font-display text-2xl font-bold text-warm-brown mb-2">All Set!</h4>
+          <p class="font-body text-sm text-muted-brown">Password saved. You can now sign in with email & password.</p>
+        </div>
+      `;
+      setTimeout(() => this.close(), 2000);
+    } catch (err) {
+      errorEl.textContent = err.message || 'Failed to set password';
+      btn.disabled = false;
+      btn.textContent = 'Set Password';
     }
   }
 };

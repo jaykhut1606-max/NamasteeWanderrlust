@@ -11,6 +11,7 @@
     { "source": "/api/admin-data", "destination": "/api/admin-data" },
     { "source": "/api/create-order", "destination": "/api/create-order" },
     { "source": "/api/verify-payment", "destination": "/api/verify-payment" },
+    { "source": "/api/set-password", "destination": "/api/set-password" },
     { "source": "/admin", "destination": "/admin.html" }
   ],
   "headers": [
