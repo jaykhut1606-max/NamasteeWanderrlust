@@ -363,10 +363,225 @@
       border-right: 3px solid #D4A843;
       border-bottom: 3px solid #D4A843;
     }
+
+    /* Ken Burns effect on hero slides */
+    @keyframes kenBurns {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.08) translate(-1%, -1%); }
+    }
+    .hero-slide.active img {
+      animation: kenBurns 10s ease-in-out forwards;
+    }
+
+    /* Hero content stagger reveal */
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-stagger { opacity: 0; animation: heroFadeUp 0.7s cubic-bezier(0.25, 0.4, 0.25, 1) forwards; }
+    .hero-stagger-1 { animation-delay: 0.1s; }
+    .hero-stagger-2 { animation-delay: 0.25s; }
+    .hero-stagger-3 { animation-delay: 0.4s; }
+    .hero-stagger-4 { animation-delay: 0.55s; }
+    .hero-stagger-5 { animation-delay: 0.7s; }
+    .hero-stagger-6 { animation-delay: 0.9s; }
+
+    /* Shimmer on Filling Fast badge */
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .badge-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .badge-shimmer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 2.5s ease-in-out infinite;
+    }
+
+    /* Scroll indicator bounce */
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+    .scroll-bounce {
+      animation: gentleBounce 2s ease-in-out infinite;
+    }
+
+    /* WhatsApp ping */
+    @keyframes whatsappPing {
+      0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+    .whatsapp-ping {
+      animation: whatsappPing 2s ease-in-out infinite;
+    }
+
+    /* Instagram follow button glow */
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 15px rgba(212,119,59,0.3); }
+      50% { box-shadow: 0 0 30px rgba(212,119,59,0.5); }
+    }
+    .glow-pulse {
+      animation: glow 2.5s ease-in-out infinite;
+    }
+
+    /* Scroll progress bar */
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #D4773B, #D4A843);
+      z-index: 9999;
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.1s linear;
+    }
+
+    /* Back to top button */
+    #backToTop {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #D4773B;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(212,119,59,0.4);
+      z-index: 50;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+    #backToTop.visible {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+    #backToTop:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(212,119,59,0.5);
+    }
+
+    /* Scroll-triggered animations - more variants */
+    .fade-left {
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .fade-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .fade-right {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .fade-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .fade-scale {
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .fade-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Stagger children delays */
+    .stagger-1 { transition-delay: 0.05s; }
+    .stagger-2 { transition-delay: 0.1s; }
+    .stagger-3 { transition-delay: 0.15s; }
+    .stagger-4 { transition-delay: 0.2s; }
+    .stagger-5 { transition-delay: 0.25s; }
+    .stagger-6 { transition-delay: 0.3s; }
+    .stagger-7 { transition-delay: 0.35s; }
+    .stagger-8 { transition-delay: 0.4s; }
+
+    /* How It Works step numbers - bounce entrance */
+    .step-number {
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
+    }
+    .step-number:hover {
+      transform: scale(1.1) rotate(5deg);
+      background-color: #D4773B !important;
+      color: white !important;
+    }
+
+    /* Founder photos reveal */
+    .founder-reveal {
+      opacity: 0;
+      transform: scale(0.88) rotate(-2deg);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 0.4, 0.25, 1);
+    }
+    .founder-reveal.visible {
+      opacity: 1;
+      transform: scale(1) rotate(0);
+    }
+
+    /* Animated link underline - center grow */
+    .animated-link {
+      position: relative;
+    }
+    .animated-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 100%;
+      height: 2px;
+      background: #D4773B;
+      transition: transform 0.3s ease;
+      transform-origin: center;
+    }
+    .animated-link:hover::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    /* Respect prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .hero-slide.active img { animation: none; }
+      .hero-stagger { opacity: 1; animation: none; }
+    }
   </style>
   <link rel="stylesheet" href="css/booking-modal.css">
 </head>
 <body class="bg-off-white">
+
+<!-- Scroll Progress Bar -->
+<div id="scrollProgress"></div>
+
+<!-- Back to Top Button -->
+<button id="backToTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7"/></svg>
+</button>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- NAVBAR -->
@@ -425,7 +640,7 @@
     <!-- Hero Carousel Background -->
     <div class="absolute inset-0" id="heroCarousel">
       <!-- Slide 1: Mountains -->
-      <div class="hero-slide absolute inset-0 opacity-100 transition-opacity duration-[1500ms] ease-in-out">
+      <div class="hero-slide active absolute inset-0 opacity-100 transition-opacity duration-[1500ms] ease-in-out">
         <img src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=1920&q=80" alt="Breathtaking mountain landscape" class="w-full h-full object-cover">
       </div>
       <!-- Slide 2: Tropical Beach -->
@@ -453,30 +668,30 @@
     <!-- Hero Content -->
     <div class="hero-brackets relative z-10 max-w-5xl mx-auto px-6 text-center mt-12">
       <!-- Brand Logo -->
-      <div class="mb-4">
+      <div class="mb-4 hero-stagger hero-stagger-1">
         <img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="h-28 sm:h-36 md:h-44 w-auto mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.3)]">
       </div>
 
       <!-- Brand Name -->
-      <h1 class="mb-2">
+      <h1 class="mb-2 hero-stagger hero-stagger-2">
         <span class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]" style="text-shadow: 0 2px 20px rgba(0,0,0,0.5)">Namastee</span>
         <span class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-amber tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]" style="text-shadow: 0 2px 20px rgba(0,0,0,0.5)">Wanderrlust</span>
       </h1>
 
       <!-- Tagline -->
-      <div class="inline-flex items-center gap-2 mb-6">
+      <div class="inline-flex items-center gap-2 mb-6 hero-stagger hero-stagger-3">
         <span class="block w-8 h-px bg-amber/60"></span>
         <span class="font-body text-[11px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-amber/90" style="text-shadow: 0 1px 10px rgba(0,0,0,0.3)">Travel the World with Your Favorite Influencer</span>
         <span class="block w-8 h-px bg-amber/60"></span>
       </div>
 
       <!-- Subheadline -->
-      <p class="font-body text-base sm:text-lg md:text-xl text-off-white/85 max-w-2xl mx-auto mb-10 leading-relaxed" style="text-shadow: 0 1px 10px rgba(0,0,0,0.3)">
+      <p class="font-body text-base sm:text-lg md:text-xl text-off-white/85 max-w-2xl mx-auto mb-10 leading-relaxed hero-stagger hero-stagger-4" style="text-shadow: 0 1px 10px rgba(0,0,0,0.3)">
         Curated group adventures led by your favorite creators. Small groups, big memories, zero planning stress.
       </p>
 
       <!-- CTA Buttons -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 hero-stagger hero-stagger-5">
         <a href="#trips" class="btn-primary px-8 py-4 bg-sunset text-white font-body font-semibold text-base rounded-lg">
           Explore Upcoming Trips
         </a>
@@ -486,7 +701,7 @@
       </div>
 
       <!-- Trust Line -->
-      <p class="mt-8 font-body text-sm text-off-white/60">Join 500+ travelers who've explored with us</p>
+      <p class="mt-8 font-body text-sm text-off-white/60 hero-stagger hero-stagger-6">Join 500+ travelers who've explored with us</p>
     </div>
 
     <!-- Carousel Dots -->
@@ -499,7 +714,7 @@
     </div>
 
     <!-- Scroll Indicator -->
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 animate-bounce">
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 scroll-bounce">
       <svg width="20" height="20" fill="none" stroke="currentColor" class="text-off-white/40" stroke-width="2">
         <path d="M10 4v12M4 10l6 6 6-6"/>
       </svg>
@@ -535,7 +750,7 @@
 
             <!-- Status Badge -->
             <div class="absolute top-4 left-4 z-10">
-              <span class="badge bg-forest/90 text-white backdrop-blur-sm">Filling Fast</span>
+              <span class="badge badge-shimmer bg-forest/90 text-white backdrop-blur-sm">Filling Fast</span>
             </div>
 
             <!-- Price -->
@@ -625,7 +840,7 @@
 
             <!-- Status Badge -->
             <div class="absolute top-4 left-4 z-10">
-              <span class="badge bg-forest/90 text-white backdrop-blur-sm">Filling Fast</span>
+              <span class="badge badge-shimmer bg-forest/90 text-white backdrop-blur-sm">Filling Fast</span>
             </div>
 
             <!-- Price -->
@@ -762,9 +977,9 @@
         <div class="hidden md:block absolute top-[72px] left-[15%] right-[15%] h-px border-t-2 border-dashed border-sand/60 z-0"></div>
 
         <!-- Step 1: Choose Your Trip -->
-        <div class="text-center relative z-10 fade-up">
+        <div class="text-center relative z-10 fade-up stagger-1">
           <!-- Number badge -->
-          <div class="w-9 h-9 mx-auto mb-4 rounded-full bg-teal flex items-center justify-center shadow-sm">
+          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-teal flex items-center justify-center shadow-sm">
             <span class="font-body text-sm font-bold text-white">1</span>
           </div>
           <!-- Icon card -->
@@ -778,8 +993,8 @@
         </div>
 
         <!-- Step 2: Sign Up & Book -->
-        <div class="text-center relative z-10 fade-up" style="transition-delay: 0.1s;">
-          <div class="w-9 h-9 mx-auto mb-4 rounded-full bg-sunset flex items-center justify-center shadow-sm">
+        <div class="text-center relative z-10 fade-up stagger-2">
+          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-sunset flex items-center justify-center shadow-sm">
             <span class="font-body text-sm font-bold text-white">2</span>
           </div>
           <!-- Highlighted card -->
@@ -793,8 +1008,8 @@
         </div>
 
         <!-- Step 3: Make Payment -->
-        <div class="text-center relative z-10 fade-up" style="transition-delay: 0.2s;">
-          <div class="w-9 h-9 mx-auto mb-4 rounded-full bg-amber flex items-center justify-center shadow-sm">
+        <div class="text-center relative z-10 fade-up stagger-3">
+          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-amber flex items-center justify-center shadow-sm">
             <span class="font-body text-sm font-bold text-white">3</span>
           </div>
           <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-amber/8 border border-amber/10 flex items-center justify-center shadow-[0_2px_12px_rgba(212,168,67,0.08)]">
@@ -807,8 +1022,8 @@
         </div>
 
         <!-- Step 4: Travel & Create -->
-        <div class="text-center relative z-10 fade-up" style="transition-delay: 0.3s;">
-          <div class="w-9 h-9 mx-auto mb-4 rounded-full bg-forest flex items-center justify-center shadow-sm">
+        <div class="text-center relative z-10 fade-up stagger-4">
+          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-forest flex items-center justify-center shadow-sm">
             <span class="font-body text-sm font-bold text-white">4</span>
           </div>
           <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-forest/8 border border-forest/10 flex items-center justify-center shadow-[0_2px_12px_rgba(59,107,58,0.08)]">
@@ -1053,13 +1268,13 @@
         </div>
 
         <!-- Right: Content -->
-        <div class="px-8 md:px-16 py-12 md:py-16 flex flex-col justify-center">
+        <div class="px-8 md:px-16 py-12 md:py-16 flex flex-col justify-center fade-right">
           <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-teal mb-4 block fade-up">Join the Vibe</span>
           <h2 class="font-display text-4xl md:text-5xl font-bold text-warm-brown mb-4 fade-up">A Community of <span class="text-sunset">Happy Travelers</span></h2>
           <p class="font-body text-muted-brown text-base mb-8 leading-relaxed fade-up">Experience travel like never before. Join thousands of wanderers sharing stories, creating content, and building friendships that last a lifetime.</p>
 
           <!-- WhatsApp CTA -->
-          <a href="https://chat.whatsapp.com/CvFg3sXzsoXG4h2uoAnzbJ" class="btn-primary inline-flex items-center justify-center gap-3 px-8 py-4 bg-sunset text-white font-body font-semibold text-base rounded-xl w-full max-w-md fade-up">
+          <a href="https://chat.whatsapp.com/CvFg3sXzsoXG4h2uoAnzbJ" class="btn-primary whatsapp-ping inline-flex items-center justify-center gap-3 px-8 py-4 bg-sunset text-white font-body font-semibold text-base rounded-xl w-full max-w-md fade-up">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Join Our WhatsApp Community
           </a>
@@ -1081,7 +1296,7 @@
 
       <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <!-- Founder 1: Parul -->
-        <div class="relative group fade-up">
+        <div class="relative group founder-reveal">
           <div class="relative overflow-hidden rounded-2xl aspect-[3/4] shadow-[0_8px_32px_rgba(44,36,24,0.1)] bg-warm-beige">
             <img src="brand_assets/images/founders/parul-chaudhary.jpeg" alt="Parull Chaudhary - Co-Founder" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/70 via-deep-black/20 to-transparent"></div>
@@ -1095,7 +1310,7 @@
         </div>
 
         <!-- Founder 2: Anagh -->
-        <div class="relative group fade-up" style="transition-delay: 0.15s;">
+        <div class="relative group founder-reveal" style="transition-delay: 0.15s;">
           <div class="relative overflow-hidden rounded-2xl aspect-[3/4] shadow-[0_8px_32px_rgba(44,36,24,0.1)] bg-warm-beige">
             <img src="brand_assets/images/founders/anagh-bharat.jpeg" alt="Anagh Bharat - Co-Founder" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/70 via-deep-black/20 to-transparent"></div>
@@ -1644,6 +1859,9 @@
         slides[current].style.opacity = '1';
         dots[current].setAttribute('data-active', 'true');
         dots[current].setAttribute('aria-selected', 'true');
+        slides.forEach((s, i) => {
+          s.classList.toggle('active', i === current);
+        });
       }
 
       function startAutoplay() {
@@ -1701,15 +1919,34 @@
     }
 
     // Scroll-triggered fade-in animations
-    const observer = new IntersectionObserver((entries) => {
+    const scrollObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          scrollObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.1, rootMargin: '-50px' });
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-up, .fade-left, .fade-right, .fade-scale, .founder-reveal').forEach(el => {
+      scrollObserver.observe(el);
+    });
+
+    // Scroll Progress Bar + Back to Top
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = scrollTop / scrollHeight;
+      document.getElementById('scrollProgress').style.transform = `scaleX(${progress})`;
+
+      // Back to top button
+      const btn = document.getElementById('backToTop');
+      if (scrollTop > 500) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }, { passive: true });
   </script>
 </body>
 </html>
