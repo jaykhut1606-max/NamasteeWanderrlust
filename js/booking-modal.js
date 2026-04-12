@@ -504,6 +504,15 @@ const LoginModal = {
   close() {
     document.getElementById('loginModal').classList.add('hidden');
     document.body.style.overflow = '';
+    // Check if there was a pending itinerary download
+    if (window._pendingItineraryDownload && Auth.isLoggedIn()) {
+      window._pendingItineraryDownload = false;
+      setTimeout(() => downloadItinerary(), 500);
+    }
+    if (window._pendingBaliDownload && Auth.isLoggedIn()) {
+      window._pendingBaliDownload = false;
+      setTimeout(() => downloadBaliItinerary(), 500);
+    }
   },
 
   showEmailStep() {
