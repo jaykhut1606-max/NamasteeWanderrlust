@@ -14,6 +14,8 @@
     { "source": "/api/set-password", "destination": "/api/set-password" },
     { "source": "/admin", "destination": "/admin.html" }
   ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/api/(.*)",
