@@ -1053,20 +1053,19 @@
         <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-brown mb-4">How It <span class="text-sunset">Works</span></h2>
       </div>
 
-      <!-- 4-Step Process with connecting lines -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 relative">
+      <!-- 4-Step Process with connecting line -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 relative">
 
-        <!-- Dashed connecting line (desktop only) -->
-        <div class="hidden md:block absolute top-[72px] left-[15%] right-[15%] h-px border-t-2 border-dashed border-sand/60 z-0"></div>
+        <!-- Connecting line through icon card centers (desktop only) -->
+        <!-- Number badge: h-9(36px) + mb-4(16px) = 52px to top of icon card. Icon card is 80px → center at 40px. Total: 92px -->
+        <div class="hidden md:block absolute z-0" style="top: 92px; left: 12.5%; right: 12.5%; height: 2px; background-image: linear-gradient(to right, rgba(196,169,125,0.5) 8px, transparent 8px); background-size: 16px 2px; background-repeat: repeat-x;"></div>
 
         <!-- Step 1: Choose Your Trip -->
         <div class="text-center relative z-10 fade-up stagger-1">
-          <!-- Number badge -->
-          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-teal flex items-center justify-center shadow-sm">
+          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-teal flex items-center justify-center shadow-md shadow-teal/20">
             <span class="font-body text-sm font-bold text-white">1</span>
           </div>
-          <!-- Icon card -->
-          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-teal/8 border border-teal/10 flex items-center justify-center shadow-[0_2px_12px_rgba(42,123,142,0.08)]">
+          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-white border border-teal/15 flex items-center justify-center shadow-[0_4px_20px_rgba(42,123,142,0.10)]">
             <svg class="w-9 h-9 text-teal" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
             </svg>
@@ -1077,25 +1076,24 @@
 
         <!-- Step 2: Sign Up & Book -->
         <div class="text-center relative z-10 fade-up stagger-2">
-          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-sunset flex items-center justify-center shadow-sm">
+          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-sunset flex items-center justify-center shadow-md shadow-sunset/20">
             <span class="font-body text-sm font-bold text-white">2</span>
           </div>
-          <!-- Highlighted card -->
-          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-sunset/8 border border-sunset/10 flex items-center justify-center shadow-[0_4px_20px_rgba(212,119,59,0.12)] md:scale-110">
+          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-white border border-sunset/15 flex items-center justify-center shadow-[0_4px_20px_rgba(212,119,59,0.10)]">
             <svg class="w-9 h-9 text-sunset" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
             </svg>
           </div>
           <h3 class="font-display text-xl md:text-2xl font-bold text-warm-brown mb-2">Sign Up & Book</h3>
-          <p class="font-body text-muted-brown text-xs md:text-sm leading-relaxed max-w-[200px] mx-auto">Quick sign-in with email OTP. Select your package and secure your spot instantly.</p>
+          <p class="font-body text-muted-brown text-xs md:text-sm leading-relaxed max-w-[200px] mx-auto">Quick sign-in with email & password. Select your package and secure your spot instantly.</p>
         </div>
 
         <!-- Step 3: Make Payment -->
         <div class="text-center relative z-10 fade-up stagger-3">
-          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-amber flex items-center justify-center shadow-sm">
+          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-amber flex items-center justify-center shadow-md shadow-amber/20">
             <span class="font-body text-sm font-bold text-white">3</span>
           </div>
-          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-amber/8 border border-amber/10 flex items-center justify-center shadow-[0_2px_12px_rgba(212,168,67,0.08)]">
+          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-white border border-amber/15 flex items-center justify-center shadow-[0_4px_20px_rgba(212,168,67,0.10)]">
             <svg class="w-9 h-9 text-amber" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
             </svg>
@@ -1106,10 +1104,10 @@
 
         <!-- Step 4: Travel & Create -->
         <div class="text-center relative z-10 fade-up stagger-4">
-          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-forest flex items-center justify-center shadow-sm">
+          <div class="step-number w-9 h-9 mx-auto mb-4 rounded-full bg-forest flex items-center justify-center shadow-md shadow-forest/20">
             <span class="font-body text-sm font-bold text-white">4</span>
           </div>
-          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-forest/8 border border-forest/10 flex items-center justify-center shadow-[0_2px_12px_rgba(59,107,58,0.08)]">
+          <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-white border border-forest/15 flex items-center justify-center shadow-[0_4px_20px_rgba(59,107,58,0.10)]">
             <svg class="w-9 h-9 text-forest" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
             </svg>
