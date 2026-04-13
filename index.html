@@ -36,6 +36,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+  <!-- Preload hero image for faster LCP -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=1920&q=80">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -795,6 +797,51 @@
     ]
   }
   </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://namasteewanderrlust.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Group Trips", "item": "https://namasteewanderrlust.com/#trips" },
+      { "@type": "ListItem", "position": 3, "name": "Influencers", "item": "https://namasteewanderrlust.com/#influencers" },
+      { "@type": "ListItem", "position": 4, "name": "How It Works", "item": "https://namasteewanderrlust.com/#about" }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: Event (Munnar Trip) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Munnar Group Trip with Influencers — NamasteeWanderrlust",
+    "description": "3 Nights / 4 Days curated group trip to Munnar, Kerala. Travel with top Indian influencers, explore tea plantations, waterfalls, and create unforgettable memories.",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": {
+      "@type": "Place",
+      "name": "Munnar, Kerala",
+      "address": { "@type": "PostalAddress", "addressLocality": "Munnar", "addressRegion": "Kerala", "addressCountry": "IN" }
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "NamasteeWanderrlust",
+      "url": "https://namasteewanderrlust.com"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "30010",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://namasteewanderrlust.com/#trips",
+      "validFrom": "2026-01-01"
+    },
+    "image": "https://namasteewanderrlust.com/assets/reels/reel-1.jpg"
+  }
+  </script>
 </head>
 <body class="bg-off-white">
 
@@ -856,6 +903,7 @@
     </div>
   </nav>
 
+  <main>
   <!-- ═══════════════════════════════════════════ -->
   <!-- HERO SECTION -->
   <!-- ═══════════════════════════════════════════ -->
@@ -952,7 +1000,7 @@
       <!-- Section Header -->
       <div class="text-center mb-16 fade-up">
         <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-sunset mb-4 block">Upcoming Adventures</span>
-        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-brown mb-4">Featured Trips</h2>
+        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-brown mb-4">Featured <span class="text-sunset">Group Trips</span></h2>
         <p class="font-body text-muted-brown text-lg max-w-xl mx-auto">Handpicked destinations, expertly planned itineraries, unforgettable memories.</p>
       </div>
 
@@ -1275,7 +1323,7 @@
         <!-- Influencer 1: Aditi Sharma -->
         <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up">
           <div class="relative overflow-hidden aspect-[3/4] bg-warm-beige">
-            <img src="brand_assets/images/influencers/aditi-sharma.jpeg" alt="Aditi Sharma" class="trip-img w-full h-full object-cover" loading="lazy">
+            <img src="brand_assets/images/influencers/aditi-sharma.jpeg" alt="Aditi Sharma — Indian travel influencer and content creator partnering with NamasteeWanderrlust" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
             <!-- Top accent line -->
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
@@ -1303,7 +1351,7 @@
         <!-- Influencer 2: Nikki Sharma -->
         <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.1s;">
           <div class="relative overflow-hidden aspect-[3/4] bg-warm-beige">
-            <img src="brand_assets/images/influencers/nikki-sharma.jpeg" alt="Nikki Sharma" class="trip-img w-full h-full object-cover" loading="lazy">
+            <img src="brand_assets/images/influencers/nikki-sharma.jpeg" alt="Nikki Sharma — popular Indian travel creator hosting group trips with NamasteeWanderrlust" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
           </div>
@@ -1330,7 +1378,7 @@
         <!-- Influencer 3: Nyrraa Banerjee -->
         <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.2s;">
           <div class="relative overflow-hidden aspect-[3/4] bg-warm-beige">
-            <img src="brand_assets/images/influencers/nyrraa-banerjee.jpeg" alt="Nyrraa Banerjee" class="trip-img w-full h-full object-cover" loading="lazy">
+            <img src="brand_assets/images/influencers/nyrraa-banerjee.jpeg" alt="Nyrraa Banerjee — actress and travel influencer leading group trips with NamasteeWanderrlust" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
           </div>
@@ -1356,7 +1404,7 @@
         <!-- Influencer 4: Aditi Shetty -->
         <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.3s;">
           <div class="relative overflow-hidden aspect-[3/4] bg-warm-beige">
-            <img src="brand_assets/images/influencers/aditi-shetty.jpeg" alt="Aditi Shetty" class="trip-img w-full h-full object-cover" loading="lazy">
+            <img src="brand_assets/images/influencers/aditi-shetty.jpeg" alt="Aditi Shetty — lifestyle and travel influencer collaborating with NamasteeWanderrlust" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
             <!-- Top accent line -->
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
@@ -1384,7 +1432,7 @@
         <!-- Influencer 5: Maera Mishra -->
         <div class="influencer-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.4s;">
           <div class="relative overflow-hidden aspect-[3/4] bg-warm-beige">
-            <img src="brand_assets/images/influencers/maera-mishra.jpeg" alt="Maera Mishra" class="trip-img w-full h-full object-cover" loading="lazy">
+            <img src="brand_assets/images/influencers/maera-mishra.jpeg" alt="Maera Mishra — Indian actress and travel content creator with NamasteeWanderrlust" class="trip-img w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black/20 to-transparent"></div>
             <!-- Top accent line -->
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sunset via-amber to-teal"></div>
@@ -1430,7 +1478,7 @@
         <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DW6u2mmCNzl/embed/" onclick="playReel(this)">
           <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
             <div class="reel-cover absolute inset-0 cursor-pointer z-10">
-              <img src="assets/reels/reel-1.jpg" alt="Munnar reel" class="w-full h-full object-cover">
+              <img src="assets/reels/reel-1.jpg" alt="NamasteeWanderrlust Munnar group trip Instagram reel by Parull Chaudhry" class="w-full h-full object-cover" loading="lazy">
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
               <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
               <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
@@ -1446,7 +1494,7 @@
         <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DW294veiCGc/embed/" onclick="playReel(this)">
           <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
             <div class="reel-cover absolute inset-0 cursor-pointer z-10">
-              <img src="assets/reels/reel-2.jpg" alt="Travel reel" class="w-full h-full object-cover">
+              <img src="assets/reels/reel-2.jpg" alt="Travel diaries with NamasteeWanderrlust — Maera Mishra Instagram reel" class="w-full h-full object-cover" loading="lazy">
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
               <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
               <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
@@ -1462,7 +1510,7 @@
         <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/p/DWnsSV3kdA5/embed/" onclick="playReel(this)">
           <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
             <div class="reel-cover absolute inset-0 cursor-pointer z-10">
-              <img src="assets/reels/reel-3.jpg" alt="Munnar trip reel" class="w-full h-full object-cover">
+              <img src="assets/reels/reel-3.jpg" alt="Munnar 3N 4D trip package reel by NamasteeWanderrlust" class="w-full h-full object-cover" loading="lazy">
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
               <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
               <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
@@ -1478,7 +1526,7 @@
         <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DWjRsPtk9aK/embed/" onclick="playReel(this)">
           <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
             <div class="reel-cover absolute inset-0 cursor-pointer z-10">
-              <img src="assets/reels/reel-4.jpg" alt="Munnar adventure reel" class="w-full h-full object-cover">
+              <img src="assets/reels/reel-4.jpg" alt="Munnar adventure group trip reel with Parull Chaudhry" class="w-full h-full object-cover" loading="lazy">
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
               <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
               <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
@@ -1494,7 +1542,7 @@
         <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DWbb3DNkXTz/embed/" onclick="playReel(this)">
           <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
             <div class="reel-cover absolute inset-0 cursor-pointer z-10">
-              <img src="assets/reels/reel-5.jpg" alt="Island adventure reel" class="w-full h-full object-cover">
+              <img src="assets/reels/reel-5.jpg" alt="Island adventure travel reel by NamasteeWanderrlust" class="w-full h-full object-cover" loading="lazy">
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
               <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
               <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
@@ -1612,7 +1660,7 @@
     <div class="absolute inset-0 bg-warm-beige">
       <img
         src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&q=80"
-        alt="Tropical sunset beach"
+        alt="Book your next group travel adventure with NamasteeWanderrlust — tropical sunset beach destination"
         class="w-full h-full object-cover"
         loading="lazy"
       >
@@ -1639,6 +1687,7 @@
       <p class="font-body text-xs text-off-white/55">Free cancellation up to 30 days before departure</p>
     </div>
   </section>
+  </main>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- FOOTER -->
