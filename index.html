@@ -1056,9 +1056,9 @@
       <!-- 4-Step Process with connecting line -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 relative">
 
-        <!-- Connecting line through icon card centers (desktop only) -->
-        <!-- Number badge: h-9(36px) + mb-4(16px) = 52px to top of icon card. Icon card is 80px → center at 40px. Total: 92px -->
-        <div class="hidden md:block absolute z-0" style="top: 92px; left: 12.5%; right: 12.5%; height: 2px; background-image: linear-gradient(to right, rgba(196,169,125,0.5) 8px, transparent 8px); background-size: 16px 2px; background-repeat: repeat-x;"></div>
+        <!-- Connecting line from center of step 1 icon to center of step 4 icon (desktop only) -->
+        <!-- Vertical: badge h-9(36px) + mb-4(16px) + half icon card 40px = 92px. Horizontal: center of col1 (12.5%) to center of col4 (87.5%) -->
+        <div class="hidden md:block absolute z-0" style="top: 91px; left: calc(12.5% + 0px); right: calc(12.5% + 0px); height: 0; border-top: 2px dashed rgba(196,169,125,0.45);"></div>
 
         <!-- Step 1: Choose Your Trip -->
         <div class="text-center relative z-10 fade-up stagger-1">
