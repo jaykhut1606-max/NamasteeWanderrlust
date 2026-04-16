@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://namasteewanderrlust.com/</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -17,6 +17,10 @@
     <image:image>
       <image:loc>https://namasteewanderrlust.com/assets/hero/bali-beach.jpg</image:loc>
       <image:title>Bali Diamond Beach Group Tour — NamasteeWanderrlust</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-cliff.jpg</image:loc>
+      <image:title>Bali Cliff Viewpoint — July Group Trip with NamasteeWanderrlust</image:title>
     </image:image>
     <image:image>
       <image:loc>https://namasteewanderrlust.com/brand_assets/images/founders/parul-chaudhary.jpeg</image:loc>
@@ -33,6 +37,66 @@
     <image:image>
       <image:loc>https://namasteewanderrlust.com/brand_assets/images/influencers/maera-mishra.jpeg</image:loc>
       <image:title>Maera Mishra — Travel Creator with NamasteeWanderrlust</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://namasteewanderrlust.com/brand_assets/images/influencers/nyrraa-banerjee.jpeg</image:loc>
+      <image:title>Nyrraa M Banerji — Travel Influencer with NamasteeWanderrlust</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://namasteewanderrlust.com/brand_assets/images/influencers/nikki-sharma.jpeg</image:loc>
+      <image:title>Nikki Sharma — Travel Influencer with NamasteeWanderrlust</image:title>
+    </image:image>
+  </url>
+
+  <!-- Blog articles -->
+  <url>
+    <loc>https://namasteewanderrlust.com/blog/ultimate-munnar-travel-guide</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1605531321045-59731b348442?w=1200&amp;q=80</image:loc>
+      <image:title>Ultimate Munnar Travel Guide 2025 — Tea Gardens &amp; Waterfalls</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://namasteewanderrlust.com/blog/bali-group-trip-guide-indians</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-beach.jpg</image:loc>
+      <image:title>Why Bali is the Perfect Group Trip Destination for Indians</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://namasteewanderrlust.com/blog/nusa-penida-day-tour-bali</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-cliff.jpg</image:loc>
+      <image:title>Nusa Penida Day Tour Guide — Kelingking Beach &amp; Broken Beach</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://namasteewanderrlust.com/blog/munnar-vs-ooty-vs-coorg-hill-station</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=1200&amp;q=80</image:loc>
+      <image:title>Munnar vs Ooty vs Coorg — Best South India Hill Station</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://namasteewanderrlust.com/blog/bali-packing-visa-budget-guide</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200&amp;q=80</image:loc>
+      <image:title>7 Days in Bali — Packing, Visa &amp; Budget Guide for Indians</image:title>
     </image:image>
   </url>
 </urlset>

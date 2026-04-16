@@ -843,6 +843,97 @@
     "image": "https://namasteewanderrlust.com/assets/reels/reel-1.jpg"
   }
   </script>
+
+  <!-- Structured Data: Event (Bali July Trip) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Bali Group Trip (4–10 July) with Nyrraa Banerji, Aditi Sharma & Nikki Sharma — NamasteeWanderrlust",
+    "description": "6 Nights / 7 Days influencer-led group trip to Bali. Includes Nusa Penida tour, Uluwatu sunset, Benoa Beach watersports, Ubud jungle swing, Mt. Batur views and temple explorations.",
+    "startDate": "2025-07-04",
+    "endDate": "2025-07-10",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": {
+      "@type": "Place",
+      "name": "Bali, Indonesia",
+      "address": { "@type": "PostalAddress", "addressLocality": "Bali", "addressCountry": "ID" }
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "NamasteeWanderrlust",
+      "url": "https://namasteewanderrlust.com"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "49999",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://namasteewanderrlust.com/#trips",
+      "validFrom": "2026-01-01"
+    },
+    "image": "https://namasteewanderrlust.com/assets/hero/bali-cliff.jpg",
+    "performer": [
+      { "@type": "Person", "name": "Nyrraa M Banerji" },
+      { "@type": "Person", "name": "Aditi Sharma" },
+      { "@type": "Person", "name": "Nikki Sharma" }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: Blog ItemList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "NamasteeWanderrlust Travel Blog",
+    "url": "https://namasteewanderrlust.com/#blog",
+    "description": "Travel guides, destination deep-dives and trip-planning tips from the NamasteeWanderrlust team.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "NamasteeWanderrlust",
+      "logo": "https://namasteewanderrlust.com/brand_assets/images/logo.png"
+    },
+    "blogPost": [
+      {
+        "@type": "BlogPosting",
+        "headline": "The Ultimate Munnar Travel Guide 2025 — Tea Gardens, Waterfalls & Best Time to Visit",
+        "url": "https://namasteewanderrlust.com/blog/ultimate-munnar-travel-guide",
+        "image": "https://images.unsplash.com/photo-1605531321045-59731b348442?w=1200&q=80",
+        "datePublished": "2025-04-15"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Why Bali is the Perfect Group Trip Destination for Indians in 2025",
+        "url": "https://namasteewanderrlust.com/blog/bali-group-trip-guide-indians",
+        "image": "https://namasteewanderrlust.com/assets/hero/bali-beach.jpg",
+        "datePublished": "2025-04-15"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Nusa Penida Day Tour from Bali: Complete Guide to Kelingking Beach, Broken Beach & More",
+        "url": "https://namasteewanderrlust.com/blog/nusa-penida-day-tour-bali",
+        "image": "https://namasteewanderrlust.com/assets/hero/bali-cliff.jpg",
+        "datePublished": "2025-04-15"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Munnar vs Ooty vs Coorg: Which South India Hill Station is Right for Your Group Trip?",
+        "url": "https://namasteewanderrlust.com/blog/munnar-vs-ooty-vs-coorg-hill-station",
+        "image": "https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=1200&q=80",
+        "datePublished": "2025-04-15"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "7 Days in Bali: Packing Checklist, Visa Tips & Budget Guide for Indian Travellers",
+        "url": "https://namasteewanderrlust.com/blog/bali-packing-visa-budget-guide",
+        "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200&q=80",
+        "datePublished": "2025-04-15"
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="bg-off-white">
 
@@ -869,6 +960,7 @@
         <a href="#trips" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">Trips</a>
         <a href="#about" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">About</a>
         <a href="#influencers" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">Influencers</a>
+        <a href="#blog" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">Blog</a>
         <!-- Login Button (shown when logged out) -->
         <button id="navLoginBtn" onclick="LoginModal.open()" class="nav-link nav-login-btn font-body text-sm font-semibold uppercase tracking-widest cursor-pointer bg-transparent border-none">Login</button>
         <!-- Profile Button (shown when logged in) -->
@@ -896,6 +988,7 @@
       <a href="#trips" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Trips</a>
       <a href="#about" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">About</a>
       <a href="#influencers" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Influencers</a>
+      <a href="#blog" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Blog</a>
       <button id="navLoginBtnMobile" onclick="closeMobileMenu(); LoginModal.open()" class="font-display text-3xl text-warm-brown bg-transparent border-none cursor-pointer">Login</button>
       <button id="navProfileBtnMobile" onclick="closeMobileMenu(); ProfileModal.open()" class="hidden font-display text-3xl text-sunset bg-transparent border-none cursor-pointer"><span class="profile-name">Profile</span></button>
       <a href="#trips" class="btn-primary inline-flex items-center px-8 py-3 bg-sunset text-white font-body text-base font-semibold rounded-lg" onclick="closeMobileMenu()">
@@ -1006,7 +1099,7 @@
       </div>
 
       <!-- Trip Cards Grid -->
-      <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-8">
 
         <!-- Trip 1: Munnar -->
         <div class="trip-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up">
@@ -1215,6 +1308,146 @@
                 Itinerary
               </button>
               <button onclick="BookingModal.open('bali-trip-2025', 'Bali')" class="btn-primary flex-1 inline-flex items-center gap-2 justify-center px-4 py-3 bg-sunset text-white font-body font-semibold text-sm rounded-lg">
+                Book Now
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trip 3: Bali July -->
+        <div class="trip-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.2s;">
+          <div class="relative overflow-hidden aspect-[4/3] bg-warm-beige">
+            <img
+              src="assets/hero/bali-cliff.jpg"
+              alt="Bali Nusa Penida cliff viewpoint with turquoise ocean — July group trip"
+              class="trip-img w-full h-full object-cover"
+              loading="lazy"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-sunset/10 mix-blend-multiply"></div>
+
+            <!-- Status Badge -->
+            <div class="absolute top-4 left-4 z-10">
+              <span class="badge badge-shimmer bg-sunset/90 text-white backdrop-blur-sm">New Dates</span>
+            </div>
+
+            <!-- Price -->
+            <div class="absolute top-4 right-4 z-10 text-right" style="text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
+              <span class="font-body text-xs text-off-white block">Starting from</span>
+              <span class="font-display text-xl font-bold text-amber">₹49,999</span>
+              <span class="font-body text-[10px] text-off-white/80 block">per person incl. GST</span>
+            </div>
+
+            <!-- Bottom info on image -->
+            <div class="absolute bottom-4 left-4 right-4 z-10" style="text-shadow: 0 1px 8px rgba(0,0,0,0.5);">
+              <h3 class="font-display text-3xl font-bold text-white mb-1">Bali</h3>
+              <p class="font-body text-sm text-off-white/90">Indonesia &middot; 4th Jul – 10th Jul</p>
+            </div>
+          </div>
+
+          <div class="p-6 md:p-8">
+            <!-- Trip Meta -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="badge bg-teal/10 text-teal-dark">7 Days</span>
+              <span class="badge bg-sunset/10 text-sunset">4 Jul – 10 Jul</span>
+              <span class="badge bg-forest/10 text-forest">Small Group</span>
+              <span class="badge bg-lotus/10 text-lotus">Beach & Temples</span>
+            </div>
+
+            <p class="font-body text-muted-brown text-sm mb-5">
+              Nusa Penida's Instagram-famous cliffs, Uluwatu temple sunsets, Ubud's monkey forest and Mt. Batur views — a power-packed 7-day Bali escape in July.
+            </p>
+
+            <!-- Influencers joining this trip -->
+            <div class="mb-6 pb-5 border-b border-sand/30">
+              <p class="font-body text-[10px] font-semibold text-muted-brown uppercase tracking-wider mb-3">Travelling with</p>
+              <div class="flex items-center gap-3">
+                <div class="flex -space-x-2">
+                  <img src="brand_assets/images/influencers/nyrraa-banerjee.jpeg" alt="Nyrraa M Banerji" class="w-9 h-9 rounded-full border-2 border-white object-cover" loading="lazy">
+                  <img src="brand_assets/images/influencers/aditi-sharma.jpeg" alt="Aditi Sharma" class="w-9 h-9 rounded-full border-2 border-white object-cover" loading="lazy">
+                  <img src="brand_assets/images/influencers/nikki-sharma.jpeg" alt="Nikki Sharma" class="w-9 h-9 rounded-full border-2 border-white object-cover" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-body text-xs font-semibold text-warm-brown leading-tight">Nyrraa &middot; Aditi &middot; Nikki</p>
+                  <p class="font-body text-[10px] text-muted-brown">3 creators joining you in Bali</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Highlights -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Nusa Penida Tour</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Uluwatu Sunset</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Benoa Watersports</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Ubud Jungle Swing</span>
+              </div>
+            </div>
+
+            <!-- Pricing Summary -->
+            <div class="bg-warm-beige/60 rounded-xl p-4 mb-5">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-body text-xs text-muted-brown">Starting from</span>
+                <span class="font-display text-lg font-bold text-warm-brown">₹49,999 <span class="font-body text-[10px] font-normal text-muted-brown">per person (twin, no flight)</span></span>
+              </div>
+              <details class="mt-2">
+                <summary class="font-body text-xs text-sunset font-semibold cursor-pointer hover:text-sunset-dark transition-colors">View all packages</summary>
+                <div class="mt-3 pt-3 border-t border-sand/30">
+                  <p class="font-body text-[10px] font-semibold text-muted-brown uppercase tracking-wider mb-2">With Flight</p>
+                  <div class="space-y-1 mb-3">
+                    <div class="flex items-center justify-between">
+                      <span class="font-body text-xs text-muted-brown">Single Occupancy</span>
+                      <span class="font-display text-sm font-bold text-warm-brown">₹1,23,000</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="font-body text-xs text-muted-brown">Couple</span>
+                      <span class="font-display text-sm font-bold text-warm-brown">₹1,90,000</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="font-body text-xs text-muted-brown">Twin Sharing</span>
+                      <span class="font-display text-sm font-bold text-warm-brown">₹98,000</span>
+                    </div>
+                  </div>
+                  <div class="border-t border-sand/30 pt-2">
+                    <p class="font-body text-[10px] font-semibold text-muted-brown uppercase tracking-wider mb-2">Without Flight</p>
+                    <div class="space-y-1">
+                      <div class="flex items-center justify-between">
+                        <span class="font-body text-xs text-muted-brown">Single Occupancy</span>
+                        <span class="font-display text-sm font-bold text-warm-brown">₹66,100</span>
+                      </div>
+                      <div class="flex items-center justify-between">
+                        <span class="font-body text-xs text-muted-brown">Couple (per person)</span>
+                        <span class="font-display text-sm font-bold text-warm-brown">₹87,999</span>
+                      </div>
+                      <div class="flex items-center justify-between">
+                        <span class="font-body text-xs text-muted-brown">Twin Sharing</span>
+                        <span class="font-display text-sm font-bold text-warm-brown">₹49,999</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="font-body text-[9px] text-muted-brown mt-2 text-center">All prices including GST</p>
+                </div>
+              </details>
+            </div>
+
+            <!-- Dual CTAs -->
+            <div class="flex gap-3">
+              <button onclick="downloadBaliJulyItinerary()" class="btn-secondary flex-1 inline-flex items-center gap-2 justify-center px-4 py-3 border-[1.5px] border-warm-brown text-warm-brown font-body font-semibold text-sm rounded-lg">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Itinerary
+              </button>
+              <button onclick="BookingModal.open('bali-july-2025', 'Bali July')" class="btn-primary flex-1 inline-flex items-center gap-2 justify-center px-4 py-3 bg-sunset text-white font-body font-semibold text-sm rounded-lg">
                 Book Now
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
               </button>
@@ -1562,6 +1795,128 @@
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
           Follow @namasteewanderrlust
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- TRAVEL BLOG / STORIES -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="blog" class="py-20 md:py-28 px-6 md:px-12 bg-cream">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 fade-up">
+        <span class="font-body text-xs font-semibold uppercase tracking-[0.25em] text-sunset mb-4 block">Travel Stories & Guides</span>
+        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-warm-brown mb-4">From the <span class="text-sunset">Blog</span></h2>
+        <p class="font-body text-muted-brown text-lg max-w-2xl mx-auto">Insider guides, destination deep-dives and travel tips from the NamasteeWanderrlust team.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Blog 1: Munnar Complete Guide -->
+        <a href="/blog/ultimate-munnar-travel-guide" class="blog-card group bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up hover:shadow-[0_12px_40px_rgba(44,36,24,0.12)] transition-shadow duration-300">
+          <div class="relative overflow-hidden aspect-[16/10] bg-warm-beige">
+            <img
+              src="https://images.unsplash.com/photo-1605531321045-59731b348442?w=800&q=80"
+              alt="Munnar tea gardens rolling hills under cloudy skies"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            >
+            <span class="absolute top-4 left-4 badge bg-forest/90 text-white backdrop-blur-sm">Destination Guide</span>
+          </div>
+          <div class="p-6">
+            <p class="font-body text-[10px] font-semibold text-sunset uppercase tracking-wider mb-2">Munnar &middot; 8 min read</p>
+            <h3 class="font-display text-xl md:text-2xl font-bold text-warm-brown mb-3 leading-tight group-hover:text-sunset transition-colors">The Ultimate Munnar Travel Guide 2025</h3>
+            <p class="font-body text-muted-brown text-sm mb-4 leading-relaxed">Tea gardens, waterfalls, spice plantations and the best time to visit — everything you need to plan an unforgettable Munnar trip.</p>
+            <span class="font-body text-sm font-semibold text-sunset inline-flex items-center gap-1 group-hover:gap-2 transition-all">Read More
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Blog 2: Bali Group Trip -->
+        <a href="/blog/bali-group-trip-guide-indians" class="blog-card group bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up hover:shadow-[0_12px_40px_rgba(44,36,24,0.12)] transition-shadow duration-300" style="transition-delay: 0.05s;">
+          <div class="relative overflow-hidden aspect-[16/10] bg-warm-beige">
+            <img
+              src="assets/hero/bali-beach.jpg"
+              alt="Bali Diamond Beach turquoise waters and limestone cliffs"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            >
+            <span class="absolute top-4 left-4 badge bg-teal/90 text-white backdrop-blur-sm">Group Travel</span>
+          </div>
+          <div class="p-6">
+            <p class="font-body text-[10px] font-semibold text-sunset uppercase tracking-wider mb-2">Bali &middot; 7 min read</p>
+            <h3 class="font-display text-xl md:text-2xl font-bold text-warm-brown mb-3 leading-tight group-hover:text-sunset transition-colors">Why Bali is the Perfect Group Trip for Indians</h3>
+            <p class="font-body text-muted-brown text-sm mb-4 leading-relaxed">From visa-on-arrival to Indian-friendly food and affordable luxury — here's why Bali tops every Indian traveller's wishlist in 2025.</p>
+            <span class="font-body text-sm font-semibold text-sunset inline-flex items-center gap-1 group-hover:gap-2 transition-all">Read More
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Blog 3: Nusa Penida Day Tour -->
+        <a href="/blog/nusa-penida-day-tour-bali" class="blog-card group bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up hover:shadow-[0_12px_40px_rgba(44,36,24,0.12)] transition-shadow duration-300" style="transition-delay: 0.1s;">
+          <div class="relative overflow-hidden aspect-[16/10] bg-warm-beige">
+            <img
+              src="assets/hero/bali-cliff.jpg"
+              alt="Nusa Penida Kelingking Beach T-Rex cliff viewpoint"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            >
+            <span class="absolute top-4 left-4 badge bg-sunset/90 text-white backdrop-blur-sm">Itinerary Tips</span>
+          </div>
+          <div class="p-6">
+            <p class="font-body text-[10px] font-semibold text-sunset uppercase tracking-wider mb-2">Bali &middot; 6 min read</p>
+            <h3 class="font-display text-xl md:text-2xl font-bold text-warm-brown mb-3 leading-tight group-hover:text-sunset transition-colors">Nusa Penida Day Tour: Complete Guide</h3>
+            <p class="font-body text-muted-brown text-sm mb-4 leading-relaxed">Kelingking Beach, Broken Beach, Angel's Billabong and Crystal Bay — your photo-perfect one-day adventure from Bali.</p>
+            <span class="font-body text-sm font-semibold text-sunset inline-flex items-center gap-1 group-hover:gap-2 transition-all">Read More
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Blog 4: Munnar vs Ooty vs Coorg -->
+        <a href="/blog/munnar-vs-ooty-vs-coorg-hill-station" class="blog-card group bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up hover:shadow-[0_12px_40px_rgba(44,36,24,0.12)] transition-shadow duration-300" style="transition-delay: 0.15s;">
+          <div class="relative overflow-hidden aspect-[16/10] bg-warm-beige">
+            <img
+              src="https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=800&q=80"
+              alt="South India hill station tea plantations and misty mountains"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            >
+            <span class="absolute top-4 left-4 badge bg-amber/90 text-white backdrop-blur-sm">Comparison</span>
+          </div>
+          <div class="p-6">
+            <p class="font-body text-[10px] font-semibold text-sunset uppercase tracking-wider mb-2">India &middot; 9 min read</p>
+            <h3 class="font-display text-xl md:text-2xl font-bold text-warm-brown mb-3 leading-tight group-hover:text-sunset transition-colors">Munnar vs Ooty vs Coorg: Which Hill Station?</h3>
+            <p class="font-body text-muted-brown text-sm mb-4 leading-relaxed">Deciding your next South India hill escape? We compare weather, things to do, cost and group-trip vibes across the top three.</p>
+            <span class="font-body text-sm font-semibold text-sunset inline-flex items-center gap-1 group-hover:gap-2 transition-all">Read More
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Blog 5: 7 Days in Bali -->
+        <a href="/blog/bali-packing-visa-budget-guide" class="blog-card group bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up hover:shadow-[0_12px_40px_rgba(44,36,24,0.12)] transition-shadow duration-300" style="transition-delay: 0.2s;">
+          <div class="relative overflow-hidden aspect-[16/10] bg-warm-beige">
+            <img
+              src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80"
+              alt="Bali rice terraces travel planning"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            >
+            <span class="absolute top-4 left-4 badge bg-lotus/90 text-white backdrop-blur-sm">Trip Planning</span>
+          </div>
+          <div class="p-6">
+            <p class="font-body text-[10px] font-semibold text-sunset uppercase tracking-wider mb-2">Bali &middot; 10 min read</p>
+            <h3 class="font-display text-xl md:text-2xl font-bold text-warm-brown mb-3 leading-tight group-hover:text-sunset transition-colors">7 Days in Bali: Packing, Visa & Budget Guide</h3>
+            <p class="font-body text-muted-brown text-sm mb-4 leading-relaxed">The only Bali trip-prep guide you'll need: visa-on-arrival tips, forex, packing checklist, SIM cards and budget breakdown for Indians.</p>
+            <span class="font-body text-sm font-semibold text-sunset inline-flex items-center gap-1 group-hover:gap-2 transition-all">Read More
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </span>
+          </div>
+        </a>
+
       </div>
     </div>
   </section>
@@ -2134,6 +2489,35 @@
       const a = document.createElement('a');
       a.href = 'assets/NamasteeWanderrlust-Bali-Itinerary.pdf';
       a.download = 'NamasteeWanderrlust-Bali-Itinerary.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    async function downloadBaliJulyItinerary() {
+      if (!Auth.isLoggedIn()) {
+        LoginModal.open();
+        window._pendingBaliJulyDownload = true;
+        return;
+      }
+
+      try {
+        await fetch('/api/track-download', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: Auth.currentUser.email,
+            name: Auth.currentUser.name || '',
+            trip: 'Bali July'
+          })
+        });
+      } catch (e) {
+        console.error('Download tracking failed:', e);
+      }
+
+      const a = document.createElement('a');
+      a.href = 'assets/NamasteeWanderrlust-Bali-July-Itinerary.pdf';
+      a.download = 'NamasteeWanderrlust-Bali-July-Itinerary.pdf';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

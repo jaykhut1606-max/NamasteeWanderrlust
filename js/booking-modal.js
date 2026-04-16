@@ -583,6 +583,10 @@ const LoginModal = {
       window._pendingBaliDownload = false;
       setTimeout(() => downloadBaliItinerary(), 500);
     }
+    if (window._pendingBaliJulyDownload && Auth.isLoggedIn()) {
+      window._pendingBaliJulyDownload = false;
+      setTimeout(() => downloadBaliJulyItinerary(), 500);
+    }
   },
 
   // ─── Step 1: Name + Phone + Email (new users) ───
