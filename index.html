@@ -928,7 +928,7 @@
     "@context": "https://schema.org",
     "@type": "Blog",
     "name": "NamasteeWanderrlust Travel Blog",
-    "url": "https://namasteewanderrlust.com/#blog",
+    "url": "https://namasteewanderrlust.com/blog",
     "description": "Travel guides, destination deep-dives and trip-planning tips from the NamasteeWanderrlust team.",
     "publisher": {
       "@type": "Organization",
@@ -941,35 +941,45 @@
         "headline": "The Ultimate Munnar Travel Guide 2025 — Tea Gardens, Waterfalls & Best Time to Visit",
         "url": "https://namasteewanderrlust.com/blog/ultimate-munnar-travel-guide",
         "image": "https://images.unsplash.com/photo-1605531321045-59731b348442?w=1200&q=80",
-        "datePublished": "2025-04-15"
+        "datePublished": "2025-04-15",
+        "dateModified": "2026-04-16",
+        "author": { "@type": "Person", "name": "Parull Chaudhry", "jobTitle": "Co-Founder, NamasteeWanderrlust", "url": "https://namasteewanderrlust.com/#about" }
       },
       {
         "@type": "BlogPosting",
         "headline": "Why Bali is the Perfect Group Trip Destination for Indians in 2025",
         "url": "https://namasteewanderrlust.com/blog/bali-group-trip-guide-indians",
         "image": "https://namasteewanderrlust.com/assets/hero/bali-beach.jpg",
-        "datePublished": "2025-04-15"
+        "datePublished": "2025-04-15",
+        "dateModified": "2026-04-16",
+        "author": { "@type": "Person", "name": "Parull Chaudhry", "jobTitle": "Co-Founder, NamasteeWanderrlust", "url": "https://namasteewanderrlust.com/#about" }
       },
       {
         "@type": "BlogPosting",
         "headline": "Nusa Penida Day Tour from Bali: Complete Guide to Kelingking Beach, Broken Beach & More",
         "url": "https://namasteewanderrlust.com/blog/nusa-penida-day-tour-bali",
         "image": "https://namasteewanderrlust.com/assets/hero/bali-cliff.jpg",
-        "datePublished": "2025-04-15"
+        "datePublished": "2025-04-15",
+        "dateModified": "2026-04-16",
+        "author": { "@type": "Person", "name": "Parull Chaudhry", "jobTitle": "Co-Founder, NamasteeWanderrlust", "url": "https://namasteewanderrlust.com/#about" }
       },
       {
         "@type": "BlogPosting",
         "headline": "Munnar vs Ooty vs Coorg: Which South India Hill Station is Right for Your Group Trip?",
         "url": "https://namasteewanderrlust.com/blog/munnar-vs-ooty-vs-coorg-hill-station",
         "image": "https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=1200&q=80",
-        "datePublished": "2025-04-15"
+        "datePublished": "2025-04-15",
+        "dateModified": "2026-04-16",
+        "author": { "@type": "Person", "name": "Parull Chaudhry", "jobTitle": "Co-Founder, NamasteeWanderrlust", "url": "https://namasteewanderrlust.com/#about" }
       },
       {
         "@type": "BlogPosting",
         "headline": "7 Days in Bali: Packing Checklist, Visa Tips & Budget Guide for Indian Travellers",
         "url": "https://namasteewanderrlust.com/blog/bali-packing-visa-budget-guide",
         "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200&q=80",
-        "datePublished": "2025-04-15"
+        "datePublished": "2025-04-15",
+        "dateModified": "2026-04-16",
+        "author": { "@type": "Person", "name": "Parull Chaudhry", "jobTitle": "Co-Founder, NamasteeWanderrlust", "url": "https://namasteewanderrlust.com/#about" }
       }
     ]
   }
@@ -1000,7 +1010,7 @@
         <a href="#trips" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">Trips</a>
         <a href="#about" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">About</a>
         <a href="#influencers" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">Influencers</a>
-        <a href="#blog" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">Blog</a>
+        <a href="/blog" class="nav-link font-body text-sm font-semibold uppercase tracking-widest">Blog</a>
         <!-- Login Button (shown when logged out) -->
         <button id="navLoginBtn" onclick="LoginModal.open()" class="nav-link nav-login-btn font-body text-sm font-semibold uppercase tracking-widest cursor-pointer bg-transparent border-none">Login</button>
         <!-- Profile Button (shown when logged in) -->
@@ -1028,7 +1038,7 @@
       <a href="#trips" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Trips</a>
       <a href="#about" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">About</a>
       <a href="#influencers" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Influencers</a>
-      <a href="#blog" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Blog</a>
+      <a href="/blog" class="font-display text-3xl text-warm-brown" onclick="closeMobileMenu()">Blog</a>
       <button id="navLoginBtnMobile" onclick="closeMobileMenu(); LoginModal.open()" class="font-display text-3xl text-warm-brown bg-transparent border-none cursor-pointer">Login</button>
       <button id="navProfileBtnMobile" onclick="closeMobileMenu(); ProfileModal.open()" class="hidden font-display text-3xl text-sunset bg-transparent border-none cursor-pointer"><span class="profile-name">Profile</span></button>
       <a href="#trips" class="btn-primary inline-flex items-center px-8 py-3 bg-sunset text-white font-body text-base font-semibold rounded-lg" onclick="closeMobileMenu()">
@@ -1986,6 +1996,14 @@
           </div>
         </a>
 
+      </div>
+
+      <!-- View all blogs CTA -->
+      <div class="text-center mt-12 fade-up">
+        <a href="/blog" class="inline-flex items-center gap-2 border-[1.5px] border-warm-brown text-warm-brown hover:bg-warm-brown hover:text-white font-body font-semibold text-sm px-8 py-3.5 rounded-full transition-colors">
+          View all travel guides
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
       </div>
     </div>
   </section>

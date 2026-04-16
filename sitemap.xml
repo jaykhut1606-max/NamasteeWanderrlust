@@ -48,6 +48,14 @@
     </image:image>
   </url>
 
+  <!-- Blog hub -->
+  <url>
+    <loc>https://namasteewanderrlust.com/blog</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- Blog articles -->
   <url>
     <loc>https://namasteewanderrlust.com/blog/ultimate-munnar-travel-guide</loc>
