@@ -2,55 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://namasteewanderrlust.com/</loc>
+    <loc>https://www.namasteewanderrlust.com/</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/brand_assets/images/logo.png</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/brand_assets/images/logo.png</image:loc>
       <image:title>NamasteeWanderrlust Logo — Influencer-Led Travel Agency India</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/assets/reels/reel-1.jpg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/assets/reels/reel-1.jpg</image:loc>
       <image:title>Munnar Group Trip Instagram Reel Cover — NamasteeWanderrlust</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-beach.jpg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/assets/hero/bali-beach.jpg</image:loc>
       <image:title>Bali Diamond Beach Group Tour — NamasteeWanderrlust</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-cliff.jpg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/assets/hero/bali-cliff.jpg</image:loc>
       <image:title>Bali Cliff Viewpoint — July Group Trip with NamasteeWanderrlust</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/brand_assets/images/founders/parul-chaudhary.jpeg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/brand_assets/images/founders/parul-chaudhary.jpeg</image:loc>
       <image:title>Parull Chaudhry — Co-Founder of NamasteeWanderrlust</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/brand_assets/images/founders/anagh-bharat.jpeg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/brand_assets/images/founders/anagh-bharat.jpeg</image:loc>
       <image:title>Anagh Bharat — Co-Founder of NamasteeWanderrlust</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/brand_assets/images/influencers/aditi-sharma.jpeg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/brand_assets/images/influencers/aditi-sharma.jpeg</image:loc>
       <image:title>Aditi Sharma — Travel Influencer with NamasteeWanderrlust</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/brand_assets/images/influencers/maera-mishra.jpeg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/brand_assets/images/influencers/maera-mishra.jpeg</image:loc>
       <image:title>Maera Mishra — Travel Creator with NamasteeWanderrlust</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/brand_assets/images/influencers/nyrraa-banerjee.jpeg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/brand_assets/images/influencers/nyrraa-banerjee.jpeg</image:loc>
       <image:title>Nyrraa M Banerji — Travel Influencer with NamasteeWanderrlust</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/brand_assets/images/influencers/nikki-sharma.jpeg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/brand_assets/images/influencers/nikki-sharma.jpeg</image:loc>
       <image:title>Nikki Sharma — Travel Influencer with NamasteeWanderrlust</image:title>
     </image:image>
   </url>
 
   <!-- Destinations (commercial landing pages) -->
   <url>
-    <loc>https://namasteewanderrlust.com/destinations/munnar</loc>
+    <loc>https://www.namasteewanderrlust.com/destinations/munnar</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
@@ -60,33 +60,53 @@
     </image:image>
   </url>
   <url>
-    <loc>https://namasteewanderrlust.com/destinations/bali</loc>
+    <loc>https://www.namasteewanderrlust.com/destinations/bali</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-beach.jpg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/assets/hero/bali-beach.jpg</image:loc>
       <image:title>Bali Group Trip — NamasteeWanderrlust Destination Page</image:title>
     </image:image>
   </url>
 
   <!-- Blog hub -->
   <url>
-    <loc>https://namasteewanderrlust.com/blog</loc>
+    <loc>https://www.namasteewanderrlust.com/blog</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
+  <!-- Legal / policy pages -->
+  <url>
+    <loc>https://www.namasteewanderrlust.com/privacy</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.namasteewanderrlust.com/terms</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.namasteewanderrlust.com/refund</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
   <!-- Blog category hubs (topical authority) -->
   <url>
-    <loc>https://namasteewanderrlust.com/blog/category/munnar</loc>
+    <loc>https://www.namasteewanderrlust.com/blog/category/munnar</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://namasteewanderrlust.com/blog/category/bali</loc>
+    <loc>https://www.namasteewanderrlust.com/blog/category/bali</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -94,7 +114,7 @@
 
   <!-- Blog articles -->
   <url>
-    <loc>https://namasteewanderrlust.com/blog/ultimate-munnar-travel-guide</loc>
+    <loc>https://www.namasteewanderrlust.com/blog/ultimate-munnar-travel-guide</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -104,7 +124,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://namasteewanderrlust.com/blog/munnar-honeymoon-package-guide</loc>
+    <loc>https://www.namasteewanderrlust.com/blog/munnar-honeymoon-package-guide</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -114,17 +134,17 @@
     </image:image>
   </url>
   <url>
-    <loc>https://namasteewanderrlust.com/blog/bali-group-trip-guide-indians</loc>
+    <loc>https://www.namasteewanderrlust.com/blog/bali-group-trip-guide-indians</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-beach.jpg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/assets/hero/bali-beach.jpg</image:loc>
       <image:title>Why Bali is the Perfect Group Trip Destination for Indians</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://namasteewanderrlust.com/blog/bali-honeymoon-package-india</loc>
+    <loc>https://www.namasteewanderrlust.com/blog/bali-honeymoon-package-india</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -134,27 +154,27 @@
     </image:image>
   </url>
   <url>
-    <loc>https://namasteewanderrlust.com/blog/best-time-to-visit-bali</loc>
+    <loc>https://www.namasteewanderrlust.com/blog/best-time-to-visit-bali</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-cliff.jpg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/assets/hero/bali-cliff.jpg</image:loc>
       <image:title>Best Time to Visit Bali — Month-by-Month Guide for Indians</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://namasteewanderrlust.com/blog/nusa-penida-day-tour-bali</loc>
+    <loc>https://www.namasteewanderrlust.com/blog/nusa-penida-day-tour-bali</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-cliff.jpg</image:loc>
+      <image:loc>https://www.namasteewanderrlust.com/assets/hero/bali-cliff.jpg</image:loc>
       <image:title>Nusa Penida Day Tour Guide — Kelingking Beach &amp; Broken Beach</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://namasteewanderrlust.com/blog/munnar-vs-ooty-vs-coorg-hill-station</loc>
+    <loc>https://www.namasteewanderrlust.com/blog/munnar-vs-ooty-vs-coorg-hill-station</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -164,7 +184,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://namasteewanderrlust.com/blog/bali-packing-visa-budget-guide</loc>
+    <loc>https://www.namasteewanderrlust.com/blog/bali-packing-visa-budget-guide</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

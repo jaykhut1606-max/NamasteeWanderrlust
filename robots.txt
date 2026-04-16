@@ -3,4 +3,11 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://namasteewanderrlust.com/sitemap.xml
+# Allow search-engine-previewable JS/CSS for better rendering
+Allow: /*.js
+Allow: /*.css
+
+# Host canonical
+Host: www.namasteewanderrlust.com
+
+Sitemap: https://www.namasteewanderrlust.com/sitemap.xml
