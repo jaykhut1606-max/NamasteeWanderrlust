@@ -32,6 +32,31 @@
   <meta name="geo.placename" content="India">
   <meta name="language" content="English">
 
+  <!-- Pinterest rich pins -->
+  <meta name="pinterest" content="nopin" data-nopin-block="false">
+  <meta property="og:image:alt" content="NamasteeWanderrlust — Influencer-Led Group Trips to Munnar, Bali & More">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:publisher" content="https://instagram.com/namasteewanderrlust">
+
+  <!-- WhatsApp / rich link preview -->
+  <meta property="og:image:secure_url" content="https://namasteewanderrlust.com/brand_assets/images/logo.png">
+  <meta property="og:image:type" content="image/png">
+
+  <!-- Mobile / app-like -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="NamasteeWanderrlust">
+  <meta name="format-detection" content="telephone=yes">
+
+  <!-- Publisher metadata -->
+  <meta name="publisher" content="NamasteeWanderrlust">
+  <meta name="copyright" content="NamasteeWanderrlust">
+  <meta name="rating" content="general">
+  <meta name="distribution" content="global">
+  <meta name="revisit-after" content="7 days">
+
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
@@ -692,24 +717,115 @@
   {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
+    "@id": "https://namasteewanderrlust.com/#organization",
     "name": "NamasteeWanderrlust",
+    "legalName": "NamasteeWanderrlust",
+    "alternateName": "Namastee Wanderrlust",
     "url": "https://namasteewanderrlust.com",
-    "logo": "https://namasteewanderrlust.com/brand_assets/images/logo.png",
-    "description": "Curated influencer-led group trips to Munnar, Bali and beyond. Travel with top Indian creators in small, intimate groups.",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://namasteewanderrlust.com/brand_assets/images/logo.png",
+      "width": 512,
+      "height": 512
+    },
+    "image": "https://namasteewanderrlust.com/brand_assets/images/logo.png",
+    "description": "Curated influencer-led group trips to Munnar, Bali and beyond. Travel with top Indian creators in small, intimate groups. All-inclusive packages with stays, meals, transfers and creator-hosted experiences.",
+    "slogan": "Travel with creators. Collect stories, not just photos.",
     "email": "namasteewanderrlust@gmail.com",
     "telephone": "+917208301453",
+    "foundingDate": "2024",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "IN"
     },
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "telephone": "+91-7208301453",
+        "contactType": "customer service",
+        "email": "namasteewanderrlust@gmail.com",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      {
+        "@type": "ContactPoint",
+        "telephone": "+91-7208301453",
+        "contactType": "reservations",
+        "email": "namasteewanderrlust@gmail.com",
+        "areaServed": ["IN", "ID"],
+        "availableLanguage": ["English", "Hindi"]
+      }
+    ],
     "sameAs": [
-      "https://instagram.com/namasteewanderrlust"
+      "https://instagram.com/namasteewanderrlust",
+      "https://www.instagram.com/namasteewanderrlust/",
+      "https://namasteewanderrlust.com"
     ],
     "founder": [
-      { "@type": "Person", "name": "Parull Chaudhry" },
-      { "@type": "Person", "name": "Anagh Bharat" }
+      {
+        "@type": "Person",
+        "name": "Parull Chaudhry",
+        "jobTitle": "Co-Founder",
+        "image": "https://namasteewanderrlust.com/brand_assets/images/founders/parul-chaudhary.jpeg",
+        "url": "https://namasteewanderrlust.com/#about"
+      },
+      {
+        "@type": "Person",
+        "name": "Anagh Bharat",
+        "jobTitle": "Co-Founder",
+        "image": "https://namasteewanderrlust.com/brand_assets/images/founders/anagh-bharat.jpeg",
+        "url": "https://namasteewanderrlust.com/#about"
+      }
     ],
-    "priceRange": "₹₹"
+    "employee": [
+      { "@type": "Person", "name": "Parull Chaudhry", "jobTitle": "Co-Founder" },
+      { "@type": "Person", "name": "Anagh Bharat", "jobTitle": "Co-Founder" }
+    ],
+    "priceRange": "₹₹",
+    "currenciesAccepted": "INR",
+    "paymentAccepted": ["Credit Card", "Debit Card", "UPI", "Net Banking"],
+    "areaServed": [
+      { "@type": "Country", "name": "India" },
+      { "@type": "Country", "name": "Indonesia" }
+    ],
+    "knowsAbout": [
+      "Influencer-led group travel",
+      "Munnar tours",
+      "Bali group tours",
+      "Kerala travel packages",
+      "Creator-hosted trips",
+      "South India hill stations",
+      "Indonesia holidays for Indians",
+      "Curated travel experiences",
+      "Honeymoon packages",
+      "Adventure group trips"
+    ],
+    "makesOffer": [
+      {
+        "@type": "Offer",
+        "name": "Munnar Group Trip — 3N/4D",
+        "price": "30010",
+        "priceCurrency": "INR",
+        "url": "https://namasteewanderrlust.com/destinations/munnar",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": { "@type": "TouristTrip", "name": "Munnar 3N/4D Influencer Group Trip" }
+      },
+      {
+        "@type": "Offer",
+        "name": "Bali Group Trip — 6N/7D",
+        "priceCurrency": "INR",
+        "url": "https://namasteewanderrlust.com/destinations/bali",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": { "@type": "TouristTrip", "name": "Bali 6N/7D Influencer Group Trip" }
+      }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "47",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
   }
   </script>
 
@@ -1252,6 +1368,9 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
               </button>
             </div>
+            <a href="/destinations/munnar" class="block text-center mt-3 font-body text-xs text-muted-brown hover:text-sunset transition-colors">
+              Explore full Munnar destination guide →
+            </a>
           </div>
         </div>
 
@@ -1391,6 +1510,9 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
               </button>
             </div>
+            <a href="/destinations/bali" class="block text-center mt-3 font-body text-xs text-muted-brown hover:text-sunset transition-colors">
+              Explore full Bali destination guide →
+            </a>
           </div>
         </div>
 
@@ -1531,6 +1653,9 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
               </button>
             </div>
+            <a href="/destinations/bali" class="block text-center mt-3 font-body text-xs text-muted-brown hover:text-sunset transition-colors">
+              Explore full Bali destination guide →
+            </a>
           </div>
         </div>
       </div>

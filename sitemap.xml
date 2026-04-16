@@ -48,12 +48,48 @@
     </image:image>
   </url>
 
+  <!-- Destinations (commercial landing pages) -->
+  <url>
+    <loc>https://namasteewanderrlust.com/destinations/munnar</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1605531321045-59731b348442?w=1200&amp;q=80</image:loc>
+      <image:title>Munnar Group Trip — NamasteeWanderrlust Destination Page</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://namasteewanderrlust.com/destinations/bali</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-beach.jpg</image:loc>
+      <image:title>Bali Group Trip — NamasteeWanderrlust Destination Page</image:title>
+    </image:image>
+  </url>
+
   <!-- Blog hub -->
   <url>
     <loc>https://namasteewanderrlust.com/blog</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- Blog category hubs (topical authority) -->
+  <url>
+    <loc>https://namasteewanderrlust.com/blog/category/munnar</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://namasteewanderrlust.com/blog/category/bali</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
 
   <!-- Blog articles -->
@@ -68,6 +104,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://namasteewanderrlust.com/blog/munnar-honeymoon-package-guide</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1580889240911-ede6e04f84c4?w=1200&amp;q=80</image:loc>
+      <image:title>Munnar Honeymoon Package 2026 — 4-Day Guide, Stays &amp; Costs</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://namasteewanderrlust.com/blog/bali-group-trip-guide-indians</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
@@ -75,6 +121,26 @@
     <image:image>
       <image:loc>https://namasteewanderrlust.com/assets/hero/bali-beach.jpg</image:loc>
       <image:title>Why Bali is the Perfect Group Trip Destination for Indians</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://namasteewanderrlust.com/blog/bali-honeymoon-package-india</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200&amp;q=80</image:loc>
+      <image:title>Bali Honeymoon Package from India 2026 — Full Guide &amp; Costs</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://namasteewanderrlust.com/blog/best-time-to-visit-bali</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://namasteewanderrlust.com/assets/hero/bali-cliff.jpg</image:loc>
+      <image:title>Best Time to Visit Bali — Month-by-Month Guide for Indians</image:title>
     </image:image>
   </url>
   <url>
