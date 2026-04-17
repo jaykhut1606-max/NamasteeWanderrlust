@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NamasteeWanderrlust — Influencer-Led Group Trips to Munnar, Bali & More</title>
-  <meta name="description" content="Book curated group trips with top Indian influencers. NamasteeWanderrlust offers unforgettable travel experiences to Munnar, Bali and beyond. Small groups, big memories — travel with Parull Chaudhry, Maera Mishra & more creators.">
-  <meta name="keywords" content="NamasteeWanderrlust, influencer trips India, group travel with influencers, Munnar trip packages, Bali group tour, travel with creators, influencer travel agency, curated group trips, travel with Parull Chaudhry, Maera Mishra travel, Nikki Sharma trip, Aditi Sharma travel, Nyrraa Banerjee tour, group travel packages India, adventure trips India, creator led trips">
+  <title>NamasteeWanderrlust — Influencer-Led Group Trips to Munnar, Bali, Mauritius &amp; More</title>
+  <meta name="description" content="Book curated group trips with top Indian influencers. NamasteeWanderrlust offers unforgettable travel experiences to Munnar, Bali, Mauritius and beyond. Small groups, big memories — travel with Parull Chaudhry, Aditi Shetty, Maera Mishra &amp; more creators.">
+  <meta name="keywords" content="NamasteeWanderrlust, influencer trips India, group travel with influencers, Munnar trip packages, Bali group tour, Mauritius group trip, Mauritius honeymoon package, travel with creators, influencer travel agency, curated group trips, travel with Parull Chaudhry, Aditi Shetty travel, Maera Mishra travel, Nikki Sharma trip, Aditi Sharma travel, Nyrraa Banerjee tour, group travel packages India, adventure trips India, creator led trips, Indian Ocean islands">
   <meta name="author" content="NamasteeWanderrlust">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://www.namasteewanderrlust.com/">
@@ -13,12 +13,12 @@
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.namasteewanderrlust.com/">
-  <meta property="og:title" content="NamasteeWanderrlust — Influencer-Led Group Trips to Munnar, Bali & More">
-  <meta property="og:description" content="Book curated group trips with top Indian influencers. Small groups, big memories — travel with your favorite creators to Munnar, Bali and beyond.">
+  <meta property="og:title" content="NamasteeWanderrlust — Influencer-Led Group Trips to Munnar, Bali, Mauritius &amp; More">
+  <meta property="og:description" content="Book curated group trips with top Indian influencers. Small groups, big memories — travel with your favorite creators to Munnar, Bali, Mauritius and beyond.">
   <meta property="og:image" content="https://www.namasteewanderrlust.com/assets/hero/bali-cliff.jpg">
   <meta property="og:image:width" content="1920">
   <meta property="og:image:height" content="1280">
-  <meta property="og:image:alt" content="NamasteeWanderrlust — Influencer-Led Group Trips to Bali, Munnar &amp; more">
+  <meta property="og:image:alt" content="NamasteeWanderrlust — Influencer-Led Group Trips to Bali, Munnar, Mauritius &amp; more">
   <meta property="og:site_name" content="NamasteeWanderrlust">
   <meta property="og:locale" content="en_IN">
 
@@ -26,7 +26,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://www.namasteewanderrlust.com/">
   <meta name="twitter:title" content="NamasteeWanderrlust — Influencer-Led Group Trips">
-  <meta name="twitter:description" content="Book curated group trips with top Indian influencers. Munnar, Bali & more. Small groups, big memories.">
+  <meta name="twitter:description" content="Book curated group trips with top Indian influencers. Munnar, Bali, Mauritius &amp; more. Small groups, big memories.">
   <meta name="twitter:image" content="https://www.namasteewanderrlust.com/assets/hero/bali-cliff.jpg">
   <meta name="twitter:image:alt" content="NamasteeWanderrlust — Influencer-Led Group Trips">
 
@@ -68,10 +68,15 @@
   <meta name="distribution" content="global">
   <meta name="revisit-after" content="7 days">
 
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+  <!-- Favicons — /favicon.ico at root is required for Google Search crawler -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
   <link rel="manifest" href="/manifest.json">
   <!-- Preload hero image for faster LCP -->
   <link rel="preload" as="image" href="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=1920&q=80">
@@ -627,6 +632,32 @@
       box-shadow: 0 6px 28px rgba(212,119,59,0.5);
     }
 
+    /* ═══ Flying airliner silhouette (top-down, warm-brown) ═══ */
+    #paperPlane {
+      position: fixed;
+      top: 0;
+      left: 0;
+      color: #2C2418; /* warm-brown silhouette */
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0;
+      will-change: transform, opacity;
+      transform-origin: 50% 50%;
+      filter: drop-shadow(0 6px 12px rgba(44, 36, 24, 0.18));
+    }
+    body.plane-active #paperPlane {
+      opacity: 0.9;
+      transition: opacity 0.6s ease;
+    }
+    @media (hover: none), (pointer: coarse) {
+      #paperPlane { display: none; }
+    }
+
+    /* ═══ Destination marquee ═══ */
+    .destination-marquee .marquee-track {
+      width: max-content;
+    }
+
     /* Scroll-triggered animations - more variants */
     .fade-left {
       opacity: 0;
@@ -795,16 +826,20 @@
     "paymentAccepted": ["Credit Card", "Debit Card", "UPI", "Net Banking"],
     "areaServed": [
       { "@type": "Country", "name": "India" },
-      { "@type": "Country", "name": "Indonesia" }
+      { "@type": "Country", "name": "Indonesia" },
+      { "@type": "Country", "name": "Mauritius" }
     ],
     "knowsAbout": [
       "Influencer-led group travel",
       "Munnar tours",
       "Bali group tours",
+      "Mauritius group tours",
       "Kerala travel packages",
       "Creator-hosted trips",
       "South India hill stations",
       "Indonesia holidays for Indians",
+      "Mauritius holidays for Indians",
+      "Indian Ocean island getaways",
       "Curated travel experiences",
       "Honeymoon packages",
       "Adventure group trips"
@@ -826,6 +861,14 @@
         "url": "https://www.namasteewanderrlust.com/destinations/bali",
         "availability": "https://schema.org/InStock",
         "itemOffered": { "@type": "TouristTrip", "name": "Bali 6N/7D Influencer Group Trip" }
+      },
+      {
+        "@type": "Offer",
+        "name": "Mauritius Group Trip — August 2026",
+        "priceCurrency": "INR",
+        "url": "https://www.namasteewanderrlust.com/#trips",
+        "availability": "https://schema.org/PreOrder",
+        "itemOffered": { "@type": "TouristTrip", "name": "Mauritius Influencer Group Trip (August 2026)" }
       }
     ],
     "aggregateRating": {
@@ -874,7 +917,7 @@
     "@type": "WebSite",
     "name": "NamasteeWanderrlust",
     "url": "https://www.namasteewanderrlust.com",
-    "description": "Influencer-led group trips to Munnar, Bali and more",
+    "description": "Influencer-led group trips to Munnar, Bali, Mauritius and more",
     "publisher": {
       "@type": "Organization",
       "name": "NamasteeWanderrlust"
@@ -893,7 +936,7 @@
         "name": "What is NamasteeWanderrlust?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "NamasteeWanderrlust is a travel agency that organizes curated group trips led by popular Indian influencers and content creators. We offer trips to destinations like Munnar and Bali with small, intimate groups."
+          "text": "NamasteeWanderrlust is a travel agency that organizes curated group trips led by popular Indian influencers and content creators. We offer trips to destinations like Munnar, Bali and Mauritius with small, intimate groups."
         }
       },
       {
@@ -914,10 +957,18 @@
       },
       {
         "@type": "Question",
+        "name": "Is NamasteeWanderrlust planning a Mauritius group trip?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — our next international launch is a Mauritius group trip in August 2026, hosted by Parull Chaudhry and Aditi Shetty. Dates and pricing will be announced shortly. Drop us a WhatsApp on +91 72083 01453 to join the early-access list."
+        }
+      },
+      {
+        "@type": "Question",
         "name": "Which influencers travel with NamasteeWanderrlust?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We collaborate with top Indian creators including Parull Chaudhry, Maera Mishra, Aditi Sharma, Nikki Sharma, Nyrraa Banerjee, and Aditi Shetty. Each trip features a different influencer host."
+          "text": "We collaborate with top Indian creators including Parull Chaudhry, Maera Mishra, Aditi Sharma, Nikki Sharma, Nyrraa Banerjee, and Aditi Shetty. Each trip features a different influencer host — for example, Mauritius (August 2026) is hosted by Parull Chaudhry and Aditi Shetty."
         }
       }
     ]
@@ -1113,6 +1164,12 @@
   </script>
 </head>
 <body class="bg-off-white">
+
+<!-- Simple dark airplane — classic side-view flight icon, nose pointing up. -->
+<!-- Animation adds +90° to align nose with the path tangent. -->
+<svg id="paperPlane" aria-hidden="true" viewBox="0 0 24 24" width="36" height="36">
+  <path fill="currentColor" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+</svg>
 
 <!-- Scroll Progress Bar -->
 <div id="scrollProgress"></div>
@@ -1669,6 +1726,111 @@
             </a>
           </div>
         </div>
+
+        <!-- Trip 4: Mauritius (August — Dates TBA) -->
+        <div class="trip-card bg-white rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.06)] fade-up" style="transition-delay: 0.3s;">
+          <div class="relative overflow-hidden aspect-[4/3] bg-warm-beige">
+            <img
+              src="https://images.unsplash.com/photo-1589197331516-4d84b72ebde3?w=800&q=80"
+              alt="Mauritius turquoise lagoon and white-sand beach — August group trip with NamasteeWanderrlust"
+              class="trip-img w-full h-full object-cover"
+              loading="lazy"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-black/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-teal/10 mix-blend-multiply"></div>
+
+            <!-- Status Badge -->
+            <div class="absolute top-4 left-4 z-10">
+              <span class="badge badge-shimmer bg-sunset/90 text-white backdrop-blur-sm">Coming Soon</span>
+            </div>
+
+            <!-- Price -->
+            <div class="absolute top-4 right-4 z-10 text-right" style="text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
+              <span class="font-body text-xs text-off-white block">Launching in</span>
+              <span class="font-display text-xl font-bold text-amber">August 2026</span>
+              <span class="font-body text-[10px] text-off-white/80 block">dates to be announced</span>
+            </div>
+
+            <!-- Bottom info on image -->
+            <div class="absolute bottom-4 left-4 right-4 z-10" style="text-shadow: 0 1px 8px rgba(0,0,0,0.5);">
+              <h3 class="font-display text-3xl font-bold text-white mb-1">Mauritius</h3>
+              <p class="font-body text-sm text-off-white/90">Indian Ocean &middot; August 2026</p>
+            </div>
+          </div>
+
+          <div class="p-6 md:p-8">
+            <!-- Trip Meta -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="badge bg-teal/10 text-teal-dark">August</span>
+              <span class="badge bg-sunset/10 text-sunset">Dates TBA</span>
+              <span class="badge bg-forest/10 text-forest">Small Group</span>
+              <span class="badge bg-lotus/10 text-lotus">Beach &amp; Island</span>
+            </div>
+
+            <p class="font-body text-muted-brown text-sm mb-5">
+              Crystal lagoons, volcanic peaks, underwater waterfalls and island hops — Mauritius is the honeymoon capital of the Indian Ocean. Dates &amp; pricing drop soon.
+            </p>
+
+            <!-- Influencers joining this trip -->
+            <div class="mb-6 pb-5 border-b border-sand/30">
+              <p class="font-body text-[10px] font-semibold text-muted-brown uppercase tracking-wider mb-3">Travelling with</p>
+              <div class="flex items-center gap-3">
+                <div class="flex -space-x-2">
+                  <img src="brand_assets/images/founders/parul-chaudhary.jpeg" alt="Parull Chaudhry — travelling with group on Mauritius trip" class="w-9 h-9 rounded-full border-2 border-white object-cover" loading="lazy">
+                  <img src="brand_assets/images/influencers/aditi-shetty.jpeg" alt="Aditi Shetty — travelling with group on Mauritius trip" class="w-9 h-9 rounded-full border-2 border-white object-cover" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-body text-xs font-semibold text-warm-brown leading-tight">Parull &middot; Aditi Shetty</p>
+                  <p class="font-body text-[10px] text-muted-brown">2 creators joining you in Mauritius</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Highlights -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Île aux Cerfs Day</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Underwater Waterfall</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Chamarel 7 Colours</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-forest flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span class="font-body text-xs text-muted-brown">Catamaran &amp; Snorkel</span>
+              </div>
+            </div>
+
+            <!-- Pricing Summary -->
+            <div class="bg-warm-beige/60 rounded-xl p-4 mb-5">
+              <div class="text-center">
+                <p class="font-body text-[10px] font-semibold text-muted-brown uppercase tracking-wider mb-1">Pricing</p>
+                <p class="font-display text-lg font-bold text-warm-brown">Announcing Soon</p>
+                <p class="font-body text-[10px] text-muted-brown mt-1">Join the early-access list for launch pricing</p>
+              </div>
+            </div>
+
+            <!-- Dual CTAs -->
+            <div class="flex gap-3">
+              <a href="https://wa.me/917208301453?text=Hi%20NamasteeWanderrlust%21%20I%27d%20love%20early%20access%20to%20the%20Mauritius%20August%20trip%20with%20Parull%20%26%20Aditi%20Shetty.%20Please%20notify%20me%20when%20dates%20%26%20pricing%20are%20announced." target="_blank" rel="noopener" class="btn-secondary flex-1 inline-flex items-center gap-2 justify-center px-4 py-3 border-[1.5px] border-warm-brown text-warm-brown font-body font-semibold text-sm rounded-lg">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                Notify Me
+              </a>
+              <a href="https://wa.me/917208301453?text=Hi%20NamasteeWanderrlust%21%20I%27m%20interested%20in%20the%20Mauritius%20August%202026%20trip.%20Could%20you%20share%20more%20details%3F" target="_blank" rel="noopener" class="btn-primary flex-1 inline-flex items-center gap-2 justify-center px-4 py-3 bg-sunset text-white font-body font-semibold text-sm rounded-lg">
+                Enquire Now
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+              </a>
+            </div>
+            <a href="https://wa.me/917208301453" target="_blank" rel="noopener" class="block text-center mt-3 font-body text-xs text-muted-brown hover:text-sunset transition-colors">
+              Questions? WhatsApp us directly →
+            </a>
+          </div>
+        </div>
       </div>
 
       <!-- Coming Soon Teaser -->
@@ -1677,6 +1839,29 @@
         <p class="font-display text-2xl md:text-3xl text-warm-brown italic">Where should we go next?</p>
       </div>
     </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- DESTINATION MARQUEE TICKER — infinite scrolling typographic strip -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="destination-marquee relative overflow-hidden bg-warm-beige border-y border-warm-brown/10 py-6 md:py-10" aria-hidden="true">
+    <div class="marquee-track flex items-center gap-10 md:gap-20 whitespace-nowrap will-change-transform">
+      <span class="font-display text-5xl md:text-7xl lg:text-8xl font-bold italic text-warm-brown tracking-tight">Bali</span>
+      <span class="font-display text-4xl md:text-6xl lg:text-7xl text-sunset">✦</span>
+      <span class="font-display text-5xl md:text-7xl lg:text-8xl font-bold italic text-warm-brown/30 tracking-tight">Munnar</span>
+      <span class="font-display text-4xl md:text-6xl lg:text-7xl text-amber">✦</span>
+      <span class="font-display text-5xl md:text-7xl lg:text-8xl font-bold italic text-warm-brown tracking-tight">Mauritius</span>
+      <span class="font-display text-4xl md:text-6xl lg:text-7xl text-teal">✦</span>
+      <span class="font-display text-5xl md:text-7xl lg:text-8xl font-bold italic text-warm-brown/30 tracking-tight">Nusa&nbsp;Penida</span>
+      <span class="font-display text-4xl md:text-6xl lg:text-7xl text-sunset">✦</span>
+      <span class="font-display text-5xl md:text-7xl lg:text-8xl font-bold italic text-warm-brown tracking-tight">Ubud</span>
+      <span class="font-display text-4xl md:text-6xl lg:text-7xl text-amber">✦</span>
+      <span class="font-display text-5xl md:text-7xl lg:text-8xl font-bold italic text-warm-brown/30 tracking-tight">Île&nbsp;aux&nbsp;Cerfs</span>
+      <span class="font-display text-4xl md:text-6xl lg:text-7xl text-forest">✦</span>
+    </div>
+    <!-- Edge soft-fade masks so the strip dissolves at both ends -->
+    <div class="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-warm-beige to-transparent pointer-events-none z-10"></div>
+    <div class="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-warm-beige to-transparent pointer-events-none z-10"></div>
   </section>
 
   <!-- ═══════════════════════════════════════════ -->
@@ -2618,12 +2803,18 @@
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2/dist/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1/dist/confetti.browser.min.js"></script>
 
+  <!-- GSAP 3.12 + ScrollTrigger + CustomEase (for cinematic motion) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
+
   <!-- App JS Modules -->
   <script src="js/supabase-config.js"></script>
   <script src="js/auth.js?v=2"></script>
   <script src="js/booking-modal.js?v=2"></script>
   <script src="js/razorpay.js"></script>
   <script src="js/pdf.js"></script>
+  <script src="js/animations.js?v=1"></script>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- REEL PLAYER — loads Instagram embed on click -->
