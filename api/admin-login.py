@@ -1,22 +1,38 @@
 from http.server import BaseHTTPRequestHandler
 import json
 import os
+import time
 import urllib.request
+import urllib.error
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://aczvtyyjliocxtmfhflx.supabase.co")
 SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
 
 
 def supabase_rpc(fn, params):
+    """Call a Supabase RPC. Retries on transient Vercel cold-start network
+    errors like '[Errno 16] Device or resource busy' which surface from
+    urllib.request when DNS / socket setup contends with another request."""
     url = f"{SUPABASE_URL}/rest/v1/rpc/{fn}"
     data = json.dumps(params).encode("utf-8")
-    req = urllib.request.Request(url, data=data, method="POST")
-    req.add_header("Content-Type", "application/json")
-    req.add_header("apikey", SUPABASE_ANON_KEY)
-    req.add_header("Authorization", f"Bearer {SUPABASE_ANON_KEY}")
-    req.add_header("User-Agent", "NamasteeWanderrlust/1.0")
-    resp = urllib.request.urlopen(req)
-    return json.loads(resp.read().decode("utf-8"))
+    last_err = None
+    for attempt in range(4):  # 1 initial + 3 retries
+        try:
+            req = urllib.request.Request(url, data=data, method="POST")
+            req.add_header("Content-Type", "application/json")
+            req.add_header("apikey", SUPABASE_ANON_KEY)
+            req.add_header("Authorization", f"Bearer {SUPABASE_ANON_KEY}")
+            req.add_header("User-Agent", "NamasteeWanderrlust/1.0")
+            resp = urllib.request.urlopen(req, timeout=15)
+            return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError:
+            # Non-2xx — surface to caller without retrying
+            raise
+        except (urllib.error.URLError, OSError) as e:
+            last_err = e
+            # Backoff: 100ms, 250ms, 500ms
+            time.sleep(0.1 * (2 ** attempt) if attempt < 3 else 0)
+    raise last_err  # type: ignore[misc]
 
 
 class handler(BaseHTTPRequestHandler):

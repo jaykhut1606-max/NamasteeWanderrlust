@@ -21,8 +21,18 @@ def supabase_rpc(fn, params):
     req.add_header("apikey", SUPABASE_ANON_KEY)
     req.add_header("Authorization", f"Bearer {SUPABASE_ANON_KEY}")
     req.add_header("User-Agent", "NamasteeWanderrlust/1.0")
-    resp = urllib.request.urlopen(req)
-    return json.loads(resp.read().decode("utf-8"))
+    _last_err = None
+    for _attempt in range(4):
+        try:
+            resp = urllib.request.urlopen(req, timeout=15)
+            return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError:
+            raise
+        except (urllib.error.URLError, OSError) as _e:
+            _last_err = _e
+            if _attempt < 3:
+                time.sleep(0.1 * (2 ** _attempt))
+    raise _last_err
 
 
 CONFIRMATION_TEMPLATE = """<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f5f0e8;font-family:'Helvetica Neue',Arial,sans-serif;">
