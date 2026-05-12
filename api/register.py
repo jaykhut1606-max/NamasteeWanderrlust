@@ -4,6 +4,7 @@ import os
 import urllib.request
 import urllib.error
 import time
+import requests
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://aczvtyyjliocxtmfhflx.supabase.co")
 SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
@@ -12,27 +13,32 @@ FROM_EMAIL = os.environ.get("FROM_EMAIL", "NamasteeWanderrlust <hello@namasteewa
 
 
 def supabase_rpc(fn, params):
+    """Call a Supabase RPC using `requests` (urllib3 under the hood).
+    Switched from urllib.request to bypass Vercel Python 3.12 cold-start
+    DNS bug where _socket.getaddrinfo returns [Errno 16] Device or
+    resource busy consistently for the first ~seconds of a fresh container."""
     url = f"{SUPABASE_URL}/rest/v1/rpc/{fn}"
-    data = json.dumps(params).encode("utf-8")
-    req = urllib.request.Request(url, data=data, method="POST")
-    req.add_header("Content-Type", "application/json")
-    req.add_header("apikey", SUPABASE_ANON_KEY)
-    req.add_header("Authorization", f"Bearer {SUPABASE_ANON_KEY}")
-    req.add_header("User-Agent", "NamasteeWanderrlust/1.0")
-    _last_err = None
-    # 5 attempts with progressive backoff: 0.3s, 0.6s, 1.2s, 2.4s (~4.5s total)
-    # Targets Vercel Python cold-start DNS EBUSY from _socket.getaddrinfo.
-    for _attempt in range(5):
+    headers = {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": f"Bearer {SUPABASE_ANON_KEY}",
+        "User-Agent": "NamasteeWanderrlust/1.0",
+    }
+    # Retry on transient connection errors (separate from HTTP-level errors).
+    last_err = None
+    for attempt in range(4):
         try:
-            resp = urllib.request.urlopen(req, timeout=15)
-            return json.loads(resp.read().decode("utf-8"))
-        except urllib.error.HTTPError:
+            r = requests.post(url, json=params, headers=headers, timeout=15)
+            r.raise_for_status()
+            return r.json()
+        except requests.HTTPError:
+            # Bubble 4xx/5xx without retry — auth failures shouldn't retry.
             raise
-        except (urllib.error.URLError, OSError) as _e:
-            _last_err = _e
-            if _attempt < 4:
-                time.sleep(0.3 * (2 ** _attempt))
-    raise _last_err
+        except requests.RequestException as e:
+            last_err = e
+            if attempt < 3:
+                time.sleep(0.3 * (2 ** attempt))
+    raise last_err
 
 
 WELCOME_TEMPLATE = """<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f5f0e8;font-family:'Helvetica Neue',Arial,sans-serif;">
@@ -87,7 +93,7 @@ class handler(BaseHTTPRequestHandler):
             if isinstance(result, dict) and result.get("error"):
                 return self._json(400, {"error": result["error"]})
 
-            # Send welcome email
+            # Send welcome email (via requests to avoid Vercel DNS bug)
             try:
                 first_name = name.split()[0]
                 payload = {
@@ -95,11 +101,15 @@ class handler(BaseHTTPRequestHandler):
                     "subject": f"Welcome aboard, {first_name}! Your adventure begins here",
                     "html": WELCOME_TEMPLATE.replace("{{NAME}}", first_name)
                 }
-                data = json.dumps(payload).encode("utf-8")
-                req = urllib.request.Request("https://api.resend.com/emails", data=data, method="POST")
-                req.add_header("Content-Type", "application/json")
-                req.add_header("Authorization", f"Bearer {RESEND_API_KEY}")
-                urllib.request.urlopen(req)
+                requests.post(
+                    "https://api.resend.com/emails",
+                    json=payload,
+                    headers={
+                        "Content-Type": "application/json",
+                        "Authorization": f"Bearer {RESEND_API_KEY}",
+                    },
+                    timeout=15,
+                )
             except Exception:
                 pass
 
