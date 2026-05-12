@@ -16,7 +16,9 @@ def supabase_rpc(fn, params):
     url = f"{SUPABASE_URL}/rest/v1/rpc/{fn}"
     data = json.dumps(params).encode("utf-8")
     last_err = None
-    for attempt in range(4):  # 1 initial + 3 retries
+    # 5 attempts with progressive backoff: 0.3s, 0.6s, 1.2s, 2.4s (~4.5s total)
+    # Targets Vercel Python cold-start DNS EBUSY from _socket.getaddrinfo.
+    for attempt in range(5):
         try:
             req = urllib.request.Request(url, data=data, method="POST")
             req.add_header("Content-Type", "application/json")
@@ -30,8 +32,8 @@ def supabase_rpc(fn, params):
             raise
         except (urllib.error.URLError, OSError) as e:
             last_err = e
-            # Backoff: 100ms, 250ms, 500ms
-            time.sleep(0.1 * (2 ** attempt) if attempt < 3 else 0)
+            if attempt < 4:
+                time.sleep(0.3 * (2 ** attempt))
     raise last_err  # type: ignore[misc]
 
 

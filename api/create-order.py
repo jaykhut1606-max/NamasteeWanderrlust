@@ -3,6 +3,7 @@ import json
 import os
 import urllib.request
 import urllib.error
+import time
 import base64
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
@@ -20,7 +21,9 @@ def supabase_rpc(fn, params):
     req.add_header("Authorization", f"Bearer {SUPABASE_ANON_KEY}")
     req.add_header("User-Agent", "NamasteeWanderrlust/1.0")
     _last_err = None
-    for _attempt in range(4):
+    # 5 attempts with progressive backoff: 0.3s, 0.6s, 1.2s, 2.4s (~4.5s total)
+    # Targets Vercel Python cold-start DNS EBUSY from _socket.getaddrinfo.
+    for _attempt in range(5):
         try:
             resp = urllib.request.urlopen(req, timeout=15)
             return json.loads(resp.read().decode("utf-8"))
@@ -28,8 +31,8 @@ def supabase_rpc(fn, params):
             raise
         except (urllib.error.URLError, OSError) as _e:
             _last_err = _e
-            if _attempt < 3:
-                time.sleep(0.1 * (2 ** _attempt))
+            if _attempt < 4:
+                time.sleep(0.3 * (2 ** _attempt))
     raise _last_err
 
 
