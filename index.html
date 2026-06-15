@@ -241,13 +241,20 @@
     .influencer-scroll > .influencer-card {
       scroll-snap-align: start;
       flex-shrink: 0;
-      width: 260px;
+      width: 300px;
     }
     @media (min-width: 768px) {
-      .influencer-scroll > .influencer-card { width: 300px; }
+      .influencer-scroll > .influencer-card { width: 380px; }
     }
     @media (min-width: 1024px) {
-      .influencer-scroll > .influencer-card { width: 340px; }
+      .influencer-scroll > .influencer-card { width: 480px; }
+    }
+    /* Only a couple of influencers → show them centered side-by-side, no infinite scroll */
+    .influencer-scroll.influencer-static {
+      justify-content: center;
+      flex-wrap: wrap;
+      overflow: visible;
+      scroll-snap-type: none;
     }
 
     /* Influencer card */
@@ -2658,8 +2665,16 @@
       const scroll = document.querySelector('.influencer-scroll');
       if (!scroll) return;
 
-      // Clone all cards and append for seamless loop
       const cards = Array.from(scroll.children);
+
+      // With only a couple of influencers, an infinite loop just repeats them.
+      // Show them centered side-by-side instead — no cloning, no auto-scroll.
+      if (cards.length < 3) {
+        scroll.classList.add('influencer-static');
+        return;
+      }
+
+      // Clone all cards and append for seamless loop
       cards.forEach(card => {
         const clone = card.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
