@@ -8,3 +8,4 @@ __pycache__/
 .ghconfig/
 .vercel
 .DS_Store
+images/
