@@ -296,6 +296,15 @@
       border: 0;
     }
 
+    /* Live Instagram embed used as the card preview (native IG card: handle + media). */
+    .reel-embed {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+    }
+
     /* Line clamp */
     .line-clamp-2 {
       display: -webkit-box;
@@ -1845,99 +1854,50 @@
         <p class="font-body text-muted-brown text-lg max-w-2xl mx-auto">Watch our latest reels and relive the magic of every adventure — right here!</p>
       </div>
 
-      <!-- Horizontal scroll reels — click cover to play inside card -->
-      <div class="flex gap-5 overflow-x-auto pb-6 snap-x snap-mandatory -mx-6 px-6" style="scrollbar-width: none; -ms-overflow-style: none;">
+      <!-- Horizontal scroll reels — live Instagram embeds as previews (marquee disabled via data-gsap-marquee-ready) -->
+      <div class="flex gap-5 overflow-x-auto pb-6 snap-x snap-mandatory -mx-6 px-6" data-gsap-marquee-ready="1" style="scrollbar-width: none; -ms-overflow-style: none;">
 
-        <!-- Reel 1 — wanderrwithnamastee -->
-        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/p/DZQWOmgCHpH/embed/" onclick="playReel(this)">
-          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
-            <div class="reel-cover absolute inset-0 cursor-pointer z-10" style="background: linear-gradient(135deg,#d4773b,#c49a4e);">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20"></div>
-              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
-              <div class="absolute bottom-0 left-0 right-0 p-4">
-                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">wanderrwithnamastee</span></div>
-                <p class="font-body text-[11px] text-white/80 line-clamp-2">Latest from @wanderrwithnamastee ✨</p>
-              </div>
-            </div>
+        <!-- Reel 1 — wanderrwithnamastee (live embed) -->
+        <div class="reel-card flex-shrink-0 w-[330px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white border border-sand/30" style="height: 545px;">
+            <iframe class="reel-embed" src="https://www.instagram.com/p/DZQWOmgCHpH/embed/" loading="lazy" scrolling="no" title="Instagram post by wanderrwithnamastee"></iframe>
           </div>
         </div>
 
-        <!-- Reel 2 — wanderrwithnamastee -->
-        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DY7uS_7xKdU/embed/" onclick="playReel(this)">
-          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
-            <div class="reel-cover absolute inset-0 cursor-pointer z-10" style="background: linear-gradient(135deg,#2a7b8e,#3b6b3a);">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20"></div>
-              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
-              <div class="absolute bottom-0 left-0 right-0 p-4">
-                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">wanderrwithnamastee</span></div>
-                <p class="font-body text-[11px] text-white/80 line-clamp-2">On the road with us 🌍</p>
-              </div>
-            </div>
+        <!-- Reel 2 — wanderrwithnamastee (live embed) -->
+        <div class="reel-card flex-shrink-0 w-[330px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white border border-sand/30" style="height: 545px;">
+            <iframe class="reel-embed" src="https://www.instagram.com/reel/DY7uS_7xKdU/embed/" loading="lazy" scrolling="no" title="Instagram post by wanderrwithnamastee"></iframe>
           </div>
         </div>
 
-        <!-- Reel 3 — wanderrwithnamastee -->
-        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DY42lH3zueo/embed/" onclick="playReel(this)">
-          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
-            <div class="reel-cover absolute inset-0 cursor-pointer z-10" style="background: linear-gradient(135deg,#c49a4e,#d4773b);">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20"></div>
-              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
-              <div class="absolute bottom-0 left-0 right-0 p-4">
-                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">wanderrwithnamastee</span></div>
-                <p class="font-body text-[11px] text-white/80 line-clamp-2">Reel of the week 🎬</p>
-              </div>
-            </div>
+        <!-- Reel 3 — wanderrwithnamastee (live embed) -->
+        <div class="reel-card flex-shrink-0 w-[330px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white border border-sand/30" style="height: 545px;">
+            <iframe class="reel-embed" src="https://www.instagram.com/reel/DY42lH3zueo/embed/" loading="lazy" scrolling="no" title="Instagram post by wanderrwithnamastee"></iframe>
           </div>
         </div>
 
-        <!-- Reel 4 — wanderrwithnamastee -->
-        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/p/DYIBr_sIUb7/embed/" onclick="playReel(this)">
-          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
-            <div class="reel-cover absolute inset-0 cursor-pointer z-10" style="background: linear-gradient(135deg,#7a5aa0,#d4773b);">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20"></div>
-              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
-              <div class="absolute bottom-0 left-0 right-0 p-4">
-                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">wanderrwithnamastee</span></div>
-                <p class="font-body text-[11px] text-white/80 line-clamp-2">Moments worth wandering for</p>
-              </div>
-            </div>
+        <!-- Reel 4 — wanderrwithnamastee (live embed) -->
+        <div class="reel-card flex-shrink-0 w-[330px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white border border-sand/30" style="height: 545px;">
+            <iframe class="reel-embed" src="https://www.instagram.com/p/DYIBr_sIUb7/embed/" loading="lazy" scrolling="no" title="Instagram post by wanderrwithnamastee"></iframe>
           </div>
         </div>
 
-        <!-- Reel 5 — wanderrwithnamastee -->
-        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DX3tsMKzXmL/embed/" onclick="playReel(this)">
-          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
-            <div class="reel-cover absolute inset-0 cursor-pointer z-10" style="background: linear-gradient(135deg,#3b6b3a,#2a7b8e);">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20"></div>
-              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
-              <div class="absolute bottom-0 left-0 right-0 p-4">
-                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">wanderrwithnamastee</span></div>
-                <p class="font-body text-[11px] text-white/80 line-clamp-2">Adventure, captured 📸</p>
-              </div>
-            </div>
+        <!-- Reel 5 — wanderrwithnamastee (live embed) -->
+        <div class="reel-card flex-shrink-0 w-[330px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white border border-sand/30" style="height: 545px;">
+            <iframe class="reel-embed" src="https://www.instagram.com/reel/DX3tsMKzXmL/embed/" loading="lazy" scrolling="no" title="Instagram post by wanderrwithnamastee"></iframe>
           </div>
         </div>
 
-        <!-- Reel 6 — wanderrwithnamastee -->
-        <div class="reel-card flex-shrink-0 w-[280px] md:w-[320px] snap-start" data-reel-url="https://www.instagram.com/reel/DX1J0DFzjUv/embed/" onclick="playReel(this)">
-          <div class="reel-wrapper relative rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-deep-black" style="height: 500px;">
-            <div class="reel-cover absolute inset-0 cursor-pointer z-10" style="background: linear-gradient(135deg,#d4a743,#2a7b8e);">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20"></div>
-              <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/35 hover:scale-110 transition-all duration-300"><svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-              <div class="absolute top-3 right-3"><svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg></div>
-              <div class="absolute bottom-0 left-0 right-0 p-4">
-                <div class="flex items-center gap-2 mb-1"><img src="brand_assets/images/logo.png" alt="NamasteeWanderrlust" class="w-6 h-6 rounded-full"><span class="font-body text-xs font-semibold text-white">wanderrwithnamastee</span></div>
-                <p class="font-body text-[11px] text-white/80 line-clamp-2">Come wander with us →</p>
-              </div>
-            </div>
+        <!-- Reel 6 — wanderrwithnamastee (live embed) -->
+        <div class="reel-card flex-shrink-0 w-[330px] snap-start">
+          <div class="rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(44,36,24,0.08)] bg-white border border-sand/30" style="height: 545px;">
+            <iframe class="reel-embed" src="https://www.instagram.com/reel/DX1J0DFzjUv/embed/" loading="lazy" scrolling="no" title="Instagram post by wanderrwithnamastee"></iframe>
           </div>
         </div>
-
 
       </div>
 
