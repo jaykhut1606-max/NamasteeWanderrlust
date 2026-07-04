@@ -587,6 +587,10 @@ const LoginModal = {
       window._pendingBaliJulyDownload = false;
       setTimeout(() => downloadBaliJulyItinerary(), 500);
     }
+    if (window._pendingValleyDownload && Auth.isLoggedIn()) {
+      window._pendingValleyDownload = false;
+      setTimeout(() => downloadValleyItinerary(), 500);
+    }
   },
 
   // ─── Step 1: Name + Phone + Email (new users) ───
