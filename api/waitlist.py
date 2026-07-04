@@ -10,7 +10,7 @@ SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 NOTIFY_EMAIL = os.environ.get("NOTIFY_EMAIL", "namasteewanderrlust@gmail.com")
-NOTIFY_FROM = os.environ.get("NOTIFY_FROM", "NamasteeWanderrlust <onboarding@resend.dev>")
+NOTIFY_FROM = os.environ.get("NOTIFY_FROM", "NamasteeWanderrlust <hello@namasteewanderrlust.com>")
 
 
 def supabase_rpc(fn, params):
