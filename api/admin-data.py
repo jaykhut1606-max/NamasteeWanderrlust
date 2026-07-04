@@ -50,6 +50,16 @@ class handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(length)) if length else {}
             action = body.get("action", "")
 
+            # Every request must carry valid admin credentials — this endpoint
+            # exposes customer data and must never be open to the public.
+            email = body.get("email", "").strip().lower()
+            password = body.get("password", "")
+            if not email or not password:
+                return self._json(401, {"error": "Admin credentials required"})
+            auth = supabase_rpc("admin_login", {"admin_email": email, "admin_password": password})
+            if not isinstance(auth, dict) or auth.get("error") or not auth.get("success"):
+                return self._json(401, {"error": "Invalid admin credentials"})
+
             if action == "stats":
                 result = supabase_rpc("get_admin_stats")
                 self._json(200, result)

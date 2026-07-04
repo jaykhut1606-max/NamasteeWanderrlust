@@ -280,8 +280,9 @@
             throw new Error(data.error || 'Invalid credentials');
           }
 
-          // Store admin session
-          sessionStorage.setItem('nw_admin', JSON.stringify({ email: data.email }));
+          // Store admin session (credentials re-sent with every data request —
+          // the data API validates them server-side each time)
+          sessionStorage.setItem('nw_admin', JSON.stringify({ email: data.email, password }));
           this.showDashboard(data.email);
         } catch (err) {
           errorEl.textContent = err.message;
@@ -308,7 +309,8 @@
         if (stored) {
           try {
             const admin = JSON.parse(stored);
-            if (admin.email) this.showDashboard(admin.email);
+            if (admin.email && admin.password) this.showDashboard(admin.email);
+            else sessionStorage.removeItem('nw_admin');
           } catch(e) {
             sessionStorage.removeItem('nw_admin');
           }
@@ -365,11 +367,17 @@
       },
 
       async apiCall(action) {
+        let creds = {};
+        try { creds = JSON.parse(sessionStorage.getItem('nw_admin')) || {}; } catch (e) {}
         const res = await fetch('/api/admin-data', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action })
+          body: JSON.stringify({ action, email: creds.email, password: creds.password })
         });
+        if (res.status === 401) {
+          AdminAuth.logout();
+          return null;
+        }
         return await res.json();
       },
 
